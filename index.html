@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>뀨의 상점</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Nanum+Myeongjo:wght@400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#FDF8F0;--bg2:#F5EDD8;--bg3:#EDE3CC;
+  --border:#D4C4A0;--border2:#C4B080;
+  --text:#2C1F0E;--text2:#6B5230;--text3:#9B7D50;
+  --gold:#B8860B;--gold2:#8B6508;--gold-light:#FFF3CC;
+  --green:#2D6A2D;--green-light:#E8F5E8;
+  --purple:#5B4FCF;--purple-light:#EEEDFE;
+  --red:#B03030;--red-light:#FEE8E8;
+  --blue:#1565C0;--blue-light:#E3F2FD;
+  --sun:#E65100;--sun-light:#FFF3E0;
+  --radius:10px;--radius-sm:6px;
+  font-size:14px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Nanum Gothic',sans-serif;min-height:100vh;}
+#G{max-width:700px;margin:0 auto;padding:12px;user-select:none;}
+
+/* HEADER */
+.hdr{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;margin-bottom:0;}
+.gold-disp{font-size:17px;font-weight:800;color:var(--gold);white-space:nowrap;font-family:'Nanum Myeongjo',serif;}
+.prog-wrap{flex:1;min-width:0;}
+.prog-lbl{font-size:10px;color:var(--text3);margin-bottom:3px;}
+.prog{height:7px;background:var(--bg3);border-radius:4px;overflow:hidden;}
+.prog-f{height:100%;background:linear-gradient(90deg,var(--gold),#E8A020);border-radius:4px;transition:width .4s ease;}
+.dayl{font-size:11px;color:var(--text2);white-space:nowrap;font-weight:700;text-align:right;line-height:1.5;}
+.day-sun{color:var(--sun);font-weight:800;}
+
+/* STATUS BAR */
+.sbar{display:flex;align-items:stretch;background:var(--bg3);border:1.5px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);margin-bottom:10px;overflow:hidden;}
+.sbar-cell{flex:1;display:flex;align-items:center;gap:5px;padding:6px 10px;border-right:1px solid var(--border);cursor:pointer;transition:background .15s;min-width:0;}
+.sbar-cell:last-child{border-right:none;}
+.sbar-cell:hover{background:var(--bg2);}
+.sbar-icon{font-size:14px;flex-shrink:0;}
+.sbar-val{font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sbar-sub{font-size:9px;color:var(--text3);font-weight:700;white-space:nowrap;}
+.sbar-mini-bar{height:3px;border-radius:2px;margin-top:2px;}
+
+/* STATUS DRAWER */
+.sdrawer{background:var(--bg);border:1.5px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);margin-top:-10px;margin-bottom:10px;overflow:hidden;transition:max-height .3s ease;}
+.sdrawer-inner{padding:12px 14px;}
+.sdrawer-tabs{display:flex;gap:6px;margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:8px;}
+.sdrawer-tab{padding:4px 12px;border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;color:var(--text3);transition:all .15s;}
+.sdrawer-tab.on{background:var(--text);color:#fff;}
+.sdrawer-tab:hover:not(.on){background:var(--bg2);}
+
+/* SHOP STATUS CARDS */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.stat-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;}
+.stat-card-title{font-size:9px;font-weight:800;color:var(--text3);letter-spacing:.5px;margin-bottom:4px;text-transform:uppercase;}
+.stat-card-val{font-size:18px;font-weight:800;font-family:'Nanum Myeongjo',serif;}
+.stat-card-sub{font-size:10px;color:var(--text3);margin-top:2px;}
+.stat-mini-prog{height:5px;background:var(--bg3);border-radius:3px;margin-top:6px;overflow:hidden;}
+.stat-mini-fill{height:100%;border-radius:3px;}
+.rep-bar-wrap{margin-top:6px;}
+.rep-zone{display:flex;gap:2px;margin-top:3px;}
+.rep-seg{flex:1;height:5px;border-radius:2px;}
+
+/* RAPPORT LIST */
+.rapport-list{display:flex;flex-direction:column;gap:6px;}
+.rapport-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg2);}
+.rapport-row.vip{border-color:var(--gold);background:var(--gold-light);}
+.rapport-row.regular{border-color:var(--green);background:var(--green-light);}
+.rapport-e{font-size:22px;flex-shrink:0;}
+.rapport-info{flex:1;min-width:0;}
+.rapport-name{font-size:12px;font-weight:800;display:flex;align-items:center;gap:4px;}
+.rapport-bar-bg{height:5px;background:var(--bg3);border-radius:3px;margin-top:4px;overflow:hidden;}
+.rapport-bar-fill{height:100%;border-radius:3px;transition:width .4s;}
+.rapport-grade{font-size:10px;font-weight:800;white-space:nowrap;text-align:right;flex-shrink:0;}
+.quest-badge{display:inline-block;padding:1px 6px;border-radius:8px;font-size:9px;font-weight:800;background:var(--sun-light);color:var(--sun);border:1px solid #FFAB40;margin-left:3px;}
+
+/* QUEST LIST */
+.quest-list{display:flex;flex-direction:column;gap:7px;}
+.quest-row{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;background:var(--bg2);}
+.quest-row.active{border-color:var(--sun);background:var(--sun-light);}
+.quest-row.done{border-color:var(--green);background:var(--green-light);opacity:.7;}
+.quest-row.failed{border-color:var(--red);background:var(--red-light);opacity:.6;}
+.quest-head{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.quest-prog-bar{height:6px;background:var(--bg3);border-radius:3px;margin-top:5px;overflow:hidden;}
+.quest-prog-fill{height:100%;border-radius:3px;background:var(--sun);transition:width .4s;}
+
+/* TABS */
+.tabs{display:flex;margin-bottom:10px;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.tab{flex:1;padding:9px 4px;text-align:center;font-size:11px;cursor:pointer;border-right:1px solid var(--border);font-family:'Nanum Gothic',sans-serif;font-weight:700;transition:background .2s;line-height:1.3;}
+.tab:last-child{border-right:none;}
+.tab-active{background:var(--bg);color:var(--text);}
+.tab-idle{background:var(--bg2);color:var(--text3);}
+.tab-done{background:var(--green-light);color:var(--green);}
+.tab-locked{opacity:.35;cursor:not-allowed;}
+
+/* PANELS */
+.panel{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.sec{font-size:10px;font-weight:800;color:var(--text3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:8px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg2);cursor:pointer;font-size:13px;color:var(--text);font-family:'Nanum Gothic',sans-serif;font-weight:700;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--gold);background:var(--gold-light);}
+.btn:active{transform:scale(.97);}
+.btn-gold{background:var(--gold);border-color:var(--gold);color:#fff;}
+.btn-gold:hover{background:var(--gold2);border-color:var(--gold2);}
+.btn-purple{background:var(--purple);border-color:var(--purple);color:#fff;}
+.btn-purple:hover{background:#4A3FBF;}
+.btn-red{background:var(--red);border-color:var(--red);color:#fff;}
+.btn-red:hover{background:#8B2020;}
+.btn-green{background:var(--green);border-color:var(--green);color:#fff;}
+.btn-green:hover{background:#1F4F1F;}
+.btn-sun{background:var(--sun);border-color:var(--sun);color:#fff;}
+.btn-sun:hover{background:#BF360C;}
+.btn-sm{padding:5px 10px;font-size:11px;}
+.btn-lg{padding:11px 24px;font-size:14px;}
+.btn:disabled,.btn[disabled]{opacity:.35;cursor:not-allowed;transform:none;}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-top:12px;}
+
+/* ITEM GRIDS */
+.igrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px;}
+.icard{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:7px 5px;text-align:center;background:var(--bg2);}
+.ie{font-size:24px;display:block;margin-bottom:2px;line-height:1.2;}
+.in{font-size:10px;color:var(--text);font-weight:700;display:block;}
+.is{font-size:10px;color:var(--text3);margin-top:1px;display:block;}
+
+/* CUSTOMER */
+.custcard{border:1.5px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--bg2);margin-bottom:10px;}
+.chead{display:flex;align-items:center;gap:10px;}
+.ce{font-size:34px;line-height:1;}
+.cn{font-size:14px;font-weight:800;}
+.cnote{font-size:11px;color:var(--text3);margin-top:2px;}
+.cbubble{background:var(--gold-light);border:1px solid var(--border2);border-radius:8px;padding:7px 11px;margin-top:8px;font-size:12px;color:var(--text2);font-style:italic;}
+.offer-badge{display:inline-flex;align-items:center;gap:4px;background:var(--red-light);border:1px solid #F0B0B0;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:800;color:var(--red);margin-top:6px;}
+
+/* SHOP ITEMS */
+.scard{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px;background:var(--bg2);cursor:pointer;transition:all .15s;text-align:center;}
+.scard:hover{border-color:var(--gold);}
+.scard.sel{border-color:var(--purple);background:var(--purple-light);}
+.scard.wanted{border-color:var(--gold);background:var(--gold-light);}
+.scard.sel.wanted{border-color:var(--purple);background:var(--purple-light);}
+
+/* BARGAIN */
+.bargain-panel{background:var(--purple-light);border:1.5px solid var(--purple);border-radius:var(--radius);padding:11px;margin-top:10px;}
+.pricerow{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.pin{width:85px;padding:7px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'Nanum Gothic',sans-serif;font-weight:700;background:var(--bg);color:var(--text);text-align:center;}
+.bm-wrap{margin-top:9px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 11px;}
+.bm-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.bm-emoji{font-size:22px;line-height:1;flex-shrink:0;}
+.bm-label{font-size:11px;font-weight:800;flex:1;line-height:1.3;}
+.bm-pct{font-size:14px;font-weight:800;white-space:nowrap;font-family:'Nanum Myeongjo',serif;}
+.bm-bar-bg{height:11px;background:var(--bg3);border-radius:6px;overflow:hidden;position:relative;margin-bottom:3px;}
+.bm-bar-fill{height:100%;border-radius:6px;transition:width .2s,background .2s;}
+.bm-mark{position:absolute;top:0;height:100%;width:2px;background:rgba(0,0,0,.25);}
+.bm-zones{display:flex;gap:0;margin-bottom:6px;}
+.bm-zone{font-size:9px;text-align:center;color:var(--text3);font-weight:700;padding:0 2px;}
+.bm-warn{padding:5px 9px;border-radius:6px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:5px;line-height:1.4;}
+.bm-ok  {background:#E8F5E8;color:#1B5E20;border:1px solid #81C784;}
+.bm-low {background:#FFF8E1;color:#E65100;border:1px solid #FFB74D;}
+.bm-high{background:#FFF3E0;color:#BF360C;border:1px solid #FF8A65;}
+.bm-over{background:var(--red-light);color:var(--red);border:1px solid #EF9A9A;}
+/* 합성 재료 뱃지 */
+.craft-mat-item{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:700;background:#E8F0FE;border:1px solid #90CAF9;color:#1565C0;margin:1px;}
+.craft-mat-item.miss{background:var(--red-light);border-color:#EF9A9A;color:var(--red);}
+
+/* EXPLORE */
+.loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.loc-card{border:2px solid var(--border);border-radius:var(--radius);padding:13px 11px;background:var(--bg2);cursor:pointer;text-align:left;transition:all .18s;position:relative;overflow:hidden;}
+.loc-card:hover{border-color:var(--gold);background:var(--gold-light);transform:translateY(-2px);box-shadow:0 4px 12px rgba(184,134,11,.15);}
+.loc-card.done{opacity:.5;cursor:default;transform:none;box-shadow:none;}
+.loc-card.special{border-color:var(--sun);background:var(--sun-light);}
+.loc-card.special:hover{border-color:var(--sun);background:#FFE0B2;}
+.loc-top{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.loc-e{font-size:26px;line-height:1;}
+.loc-name{font-size:12px;font-weight:800;}
+.loc-desc{font-size:10px;color:var(--text3);margin-bottom:7px;line-height:1.5;}
+.loc-drops{display:flex;flex-wrap:wrap;gap:3px;}
+.loc-drop{font-size:10px;padding:2px 5px;border-radius:8px;font-weight:700;}
+.loc-drop-c{background:var(--green-light);color:var(--green);}
+.loc-drop-u{background:#FAEEDA;color:#7A4500;}
+.loc-drop-r{background:var(--purple-light);color:var(--purple);}
+.loc-drop-s{background:var(--sun-light);color:var(--sun);}
+.loc-bonus-badge{position:absolute;top:6px;right:6px;font-size:9px;font-weight:800;padding:2px 5px;border-radius:6px;background:var(--purple-light);color:var(--purple);}
+.time-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:16px;font-size:11px;font-weight:800;margin-bottom:12px;}
+.time-am{background:#FFF8E1;color:#B8860B;border:1.5px solid #E8C840;}
+.time-pm{background:#EDE8FE;color:var(--purple);border:1.5px solid var(--purple);}
+.time-sun{background:var(--sun-light);color:var(--sun);border:1.5px solid #FFAB40;}
+.exp-result{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius);padding:10px;margin-bottom:8px;}
+.exp-result-hdr{font-size:10px;font-weight:800;color:var(--text3);margin-bottom:6px;}
+.found-row{display:flex;flex-wrap:wrap;gap:6px;}
+.found-chip{padding:4px 10px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:11px;font-weight:700;}
+.found-chip.bonus{border-color:var(--purple);background:var(--purple-light);color:var(--purple);}
+.found-chip.special{border-color:var(--sun);background:var(--sun-light);color:var(--sun);}
+
+/* CRAFT - CATEGORIES */
+.cat-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.cat-tab{padding:5px 12px;border:1.5px solid var(--border);border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;background:var(--bg2);color:var(--text3);transition:all .15s;}
+.cat-tab:hover{border-color:var(--gold);}
+.cat-tab.active{background:var(--text);color:var(--bg);border-color:var(--text);}
+.craft-list{display:flex;flex-direction:column;gap:8px;}
+.craft-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg2);transition:all .15s;}
+.craft-row.can{border-color:var(--green);background:var(--green-light);}
+.craft-row.special-recipe{border-color:var(--sun);background:var(--sun-light);}
+.craft-row.special-recipe.can{border-color:var(--sun);background:#FFE0B2;}
+.craft-emoji{font-size:26px;flex-shrink:0;}
+.craft-info{flex:1;min-width:0;}
+.craft-name{font-size:13px;font-weight:800;display:flex;align-items:center;gap:5px;}
+.craft-cost{font-size:10px;color:var(--text3);margin-top:2px;}
+.craft-tags{display:flex;gap:3px;flex-wrap:wrap;margin-top:3px;}
+.craft-price{font-size:13px;font-weight:800;color:var(--gold2);white-space:nowrap;flex-shrink:0;}
+.craft-qty-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;min-width:90px;}
+.craft-slider{width:80px;accent-color:var(--purple);}
+.craft-qty-row{display:flex;align-items:center;gap:5px;}
+.craft-qty-num{font-size:13px;font-weight:800;min-width:20px;text-align:center;}
+.chip{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;background:var(--bg2);border:1px solid var(--border);font-weight:700;}
+.chip-sun{background:var(--sun-light);border-color:#FFAB40;color:var(--sun);}
+
+/* CUSTOMER QUEUE */
+.qpanel{border:1.5px solid var(--border);border-radius:var(--radius);background:var(--bg2);margin-bottom:10px;overflow:hidden;}
+.qpanel-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;cursor:pointer;user-select:none;transition:background .15s;}
+.qpanel-hdr:hover{background:var(--bg3);}
+.qpanel-hdr-left{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:800;color:var(--text2);}
+.qpanel-body{padding:10px 12px;border-top:1px solid var(--border);background:var(--bg);}
+.qlist{display:flex;flex-direction:column;gap:5px;}
+.qrow{display:flex;align-items:center;gap:7px;padding:7px 9px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg2);cursor:pointer;transition:all .15s;}
+.qrow:hover{border-color:var(--gold);background:var(--gold-light);}
+.qrow.qrow-current{border-color:var(--purple);background:var(--purple-light);}
+.qrow.qrow-done{opacity:.4;cursor:default;text-decoration:line-through;}
+.qrow.qrow-preview{border-color:var(--gold);background:var(--gold-light);}
+.qrow-e{font-size:20px;flex-shrink:0;}
+.qrow-info{flex:1;min-width:0;}
+.qrow-name{font-size:11px;font-weight:800;}
+.qrow-tags{font-size:10px;color:var(--text3);}
+.qrow-match{display:flex;gap:3px;flex-wrap:wrap;margin-top:2px;}
+.qrow-status{font-size:10px;font-weight:700;flex-shrink:0;}
+.status-wait{color:var(--text3);}
+.status-cur{color:var(--purple);}
+.preview-panel{background:var(--gold-light);border:1.5px solid var(--border2);border-radius:var(--radius);padding:11px;margin-bottom:10px;}
+.preview-items{display:flex;flex-wrap:wrap;gap:5px;}
+.preview-item{padding:4px 8px;border:1.5px solid var(--border2);border-radius:var(--radius-sm);font-size:11px;font-weight:700;background:#fff8e8;display:flex;align-items:center;gap:3px;}
+.preview-item.best{border-color:var(--gold);}
+
+/* DAY REPORT (영업 종료 리포트) */
+.report-panel{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+.report-title{font-size:14px;font-weight:800;margin-bottom:12px;font-family:'Nanum Myeongjo',serif;display:flex;align-items:center;gap:6px;}
+.report-section{margin-bottom:12px;}
+.report-sec-title{font-size:10px;font-weight:800;color:var(--text3);letter-spacing:.6px;margin-bottom:7px;text-transform:uppercase;}
+.cust-recap-row{display:flex;align-items:center;gap:7px;padding:6px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg2);margin-bottom:4px;font-size:11px;}
+.cust-recap-e{font-size:18px;}
+.tag-need{display:inline-block;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700;background:var(--purple-light);color:var(--purple);margin:1px;}
+.hint-row{display:flex;align-items:flex-start;gap:7px;padding:7px 10px;background:var(--gold-light);border:1px solid var(--border2);border-radius:var(--radius-sm);margin-bottom:4px;font-size:11px;line-height:1.5;}
+.hint-icon{font-size:16px;flex-shrink:0;}
+.reservation-row{display:flex;align-items:center;gap:7px;padding:7px 10px;background:#E3F2FD;border:1px solid #90CAF9;border-radius:var(--radius-sm);margin-bottom:4px;font-size:11px;}
+
+/* SUNDAY SPECIAL */
+.sunday-banner{background:linear-gradient(135deg,var(--sun-light),#FFF3CC);border:2px solid #FFAB40;border-radius:var(--radius);padding:14px;text-align:center;margin-bottom:10px;}
+.sunday-title{font-size:18px;font-weight:800;color:var(--sun);font-family:'Nanum Myeongjo',serif;margin-bottom:4px;}
+.discovery-card{border:2px solid var(--sun);border-radius:var(--radius);padding:12px;background:var(--sun-light);margin-bottom:8px;}
+
+/* MISC */
+.empty{font-size:12px;color:var(--text3);text-align:center;padding:16px;}
+.bot{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.end-btn-wrap{background:var(--bg2);border-top:1.5px solid var(--border);padding:11px;margin:-14px -14px -14px;border-radius:0 0 var(--radius) var(--radius);margin-top:11px;display:flex;justify-content:flex-end;gap:7px;}
+.log{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius);padding:11px;}
+.logitem{padding:4px 0;font-size:11px;color:var(--text);border-bottom:1px solid var(--border);line-height:1.5;}
+.logitem:last-child{border-bottom:none;}
+.over{text-align:center;padding:32px 16px;}
+.over-emoji{font-size:60px;margin-bottom:12px;}
+.over-title{font-size:22px;font-weight:800;margin-bottom:6px;font-family:'Nanum Myeongjo',serif;}
+.over-sub{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6;}
+
+input[type=range]{-webkit-appearance:none;height:4px;border-radius:2px;background:var(--bg3);outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--purple);cursor:pointer;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+
+@media(max-width:560px){
+  #G{padding:8px;}
+  .loc-grid{grid-template-columns:1fr 1fr;}
+  .bot{grid-template-columns:1fr;}
+  .igrid{grid-template-columns:repeat(auto-fill,minmax(70px,1fr));}
+  .btn-lg{padding:10px 18px;font-size:13px;}
+  .craft-qty-wrap{min-width:80px;}
+  .craft-slider{width:70px;}
+}
+@media(max-width:380px){
+  .loc-grid{grid-template-columns:1fr;}
+  .igrid{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+<body>
+<div id="G"></div>
+<script>
+// ===== 데이터 =====
+const INGR=[
+  {id:'herb',     e:'🌿',n:'허브',        r:0,dropMin:2,dropMax:5},
+  {id:'water',    e:'💧',n:'물방울',      r:0,dropMin:2,dropMax:5},
+  {id:'mushroom', e:'🍄',n:'버섯',        r:0,dropMin:2,dropMax:4},
+  {id:'flower',   e:'🌸',n:'꽃',          r:0,dropMin:2,dropMax:4},
+  {id:'berry',    e:'🫐',n:'열매',        r:0,dropMin:2,dropMax:5},
+  {id:'root',     e:'🌱',n:'뿌리',        r:0,dropMin:2,dropMax:4},
+  {id:'honey',    e:'🍯',n:'꿀',          r:0,dropMin:1,dropMax:3},
+  {id:'leaf',     e:'🍃',n:'잎사귀',      r:0,dropMin:2,dropMax:5},
+  {id:'seed',     e:'🌰',n:'씨앗',        r:0,dropMin:2,dropMax:4},
+  {id:'flame',    e:'🔥',n:'불꽃',        r:1,dropMin:1,dropMax:2},
+  {id:'wind',     e:'🌀',n:'바람 조각',   r:1,dropMin:1,dropMax:2},
+  {id:'shadow',   e:'🌑',n:'그림자 조각', r:1,dropMin:1,dropMax:2},
+  {id:'crystal',  e:'💎',n:'수정',        r:2,dropMin:1,dropMax:2},
+  {id:'stardust', e:'✨',n:'별가루',      r:2,dropMin:1,dropMax:1},
+  {id:'moonstone',e:'🌙',n:'달빛석',      r:2,dropMin:1,dropMax:1},
+];
+const IW=[50,50,40,38,42,38,30,40,38,18,15,12,8,6,5];
+const IWT=IW.reduce((a,b)=>a+b,0);
+const RLBL=['일반','희귀','전설'];
+const RKCLS=['tag-c','tag-u','tag-r'];
+
+// 레시피 카테고리
+const CAT_DEFS=[
+  {id:'all',      label:'전체'},
+  {id:'potion',   label:'포션/회복'},
+  {id:'food',     label:'음식/음료'},
+  {id:'magic',    label:'마법'},
+  {id:'battle',   label:'전투'},
+  {id:'gift',     label:'선물/일상'},
+  {id:'farm',     label:'농업'},
+  {id:'compound', label:'🔗 합성'},
+  {id:'special',  label:'✨ 특별'},
+];
+
+const RECIPES=[
+  // 포션/회복
+  {id:'hp',     e:'🧪',n:'체력 포션',    cat:'potion', cost:{herb:1,water:1},       p:55,  tags:['전투','회복']},
+  {id:'herb2',  e:'🌾',n:'회복 약초다발',cat:'potion', cost:{herb:2},               p:48,  tags:['회복']},
+  {id:'honeyp', e:'🍯',n:'꿀 시럽',      cat:'potion', cost:{honey:1,water:1},      p:52,  tags:['음식','회복']},
+  {id:'anti',   e:'🍵',n:'해독제',        cat:'potion', cost:{mushroom:1,herb:1},    p:72,  tags:['회복','전투']},
+  {id:'mp',     e:'💜',n:'마나 포션',    cat:'potion', cost:{crystal:1,stardust:1}, p:110, tags:['마법','전투']},
+  {id:'super',  e:'⚗️',n:'슈퍼 포션',    cat:'potion', cost:{herb:1,crystal:1,water:1},p:160,tags:['전투','회복']},
+  // 음식/음료
+  {id:'tea',    e:'☕',n:'뿌리차',        cat:'food',   cost:{root:1,water:1},       p:50,  tags:['일상','음료']},
+  {id:'jam',    e:'🫙',n:'열매잼',        cat:'food',   cost:{berry:2},              p:45,  tags:['음식']},
+  {id:'leaft',  e:'🍵',n:'잎사귀 차',    cat:'food',   cost:{leaf:2},               p:44,  tags:['음료']},
+  {id:'honey2', e:'🍫',n:'마법 캔디',    cat:'food',   cost:{honey:1,stardust:1},   p:90,  tags:['마법']},
+  // 마법
+  {id:'shd2',   e:'🌑',n:'그림자 인형',  cat:'magic',  cost:{shadow:1,root:1},      p:85,  tags:['마법','희귀']},
+  {id:'luck',   e:'🍀',n:'행운의 부적',  cat:'magic',  cost:{flower:1,stardust:1},  p:105, tags:['마법','희귀']},
+  {id:'mcrys',  e:'🔮',n:'마법 결정',    cat:'magic',  cost:{crystal:2},            p:165, tags:['마법','희귀']},
+  {id:'moon2',  e:'🌙',n:'달빛 부적',    cat:'magic',  cost:{moonstone:1,stardust:1},p:185,tags:['마법','전설']},
+  {id:'shadow3',e:'🌑',n:'어둠의 결정',  cat:'magic',  cost:{shadow:2,moonstone:1}, p:200, tags:['마법','전설']},
+  // 전투
+  {id:'wind2',  e:'💨',n:'바람의 약',    cat:'battle', cost:{wind:1,leaf:1},        p:80,  tags:['전투','마법']},
+  {id:'mush2',  e:'🍄',n:'버섯 폭탄',   cat:'battle', cost:{mushroom:2,flame:1},   p:95,  tags:['전투']},
+  {id:'fire',   e:'💣',n:'화염 폭탄',    cat:'battle', cost:{flame:1,crystal:1},    p:125, tags:['전투']},
+  {id:'ice',    e:'❄️',n:'냉기 폭탄',    cat:'battle', cost:{water:2,crystal:1},    p:138, tags:['전투']},
+  // 선물/일상
+  {id:'flowp',  e:'💐',n:'꽃다발',       cat:'gift',   cost:{flower:2},             p:55,  tags:['선물']},
+  {id:'bloom',  e:'🌺',n:'만개의 향수',  cat:'gift',   cost:{flower:1,honey:1},     p:78,  tags:['선물','일상']},
+  // 농업
+  {id:'seed2',  e:'🌱',n:'씨앗 묶음',    cat:'farm',   cost:{seed:2},               p:40,  tags:['농업']},
+];
+
+// 일요일 특별 레시피 (발견 후 RECIPES에 추가됨)
+const SPECIAL_RECIPES=[
+  {id:'spe_elixir', e:'🌟',n:'황금 엘릭서',cat:'special',cost:{stardust:2,moonstone:1,honey:1},p:320,tags:['마법','전설','전투'],sunOnly:true},
+  {id:'spe_dream',  e:'🌈',n:'꿈의 약',    cat:'special',cost:{moonstone:1,flower:2,crystal:1},p:280,tags:['마법','선물'],sunOnly:true},
+  {id:'spe_dark',   e:'🖤',n:'심연의 포션',cat:'special',cost:{shadow:3,moonstone:1},          p:250,tags:['마법','전설'],sunOnly:true},
+  {id:'spe_sun',    e:'☀️',n:'태양의 결정',  cat:'special',cost:{flame:2,crystal:1,stardust:1}, p:300,tags:['전투','희귀'],sunOnly:true},
+  {id:'spe_forest', e:'🌳',n:'숲의 정수',   cat:'special',cost:{herb:3,flower:2,leaf:2},        p:220,tags:['회복','선물'],sunOnly:true},
+];
+
+// 합성 레시피 — 완성품을 재료로 사용하는 고급 레시피
+// craftedCost: {레시피id: 수량} 형태로 shopInv에서 차감
+const COMPOUND_RECIPES=[
+  // 포션 계열
+  {id:'c_hp2',      e:'🔴',n:'강화 체력 포션',     cat:'compound',
+   cost:{crystal:1},              craftedCost:{hp:2},
+   p:165, tags:['전투','회복'],   note:'체력 포션 2개를 농축한 강력한 포션'},
+  {id:'c_fullhp',   e:'❤️', n:'완전 회복 포션',    cat:'compound',
+   cost:{moonstone:1},            craftedCost:{hp:1,anti:1,honeyp:1},
+   p:360, tags:['전투','회복','전설'], note:'세 가지 회복 아이템을 합친 궁극의 포션'},
+  {id:'c_mphp',     e:'💎',n:'쌍수 포션',          cat:'compound',
+   cost:{stardust:1},             craftedCost:{hp:1,mp:1},
+   p:320, tags:['마법','전투','회복'], note:'체력과 마나를 동시에 회복'},
+  // 마법 계열
+  {id:'c_cursed',   e:'🖤',n:'저주의 마법진',      cat:'compound',
+   cost:{shadow:1},               craftedCost:{shd2:1,mcrys:1},
+   p:430, tags:['마법','전설','희귀'], note:'그림자 인형과 마법 결정을 봉인한 금단의 도구'},
+  {id:'c_oracle',   e:'🔮',n:'예언의 수정구',      cat:'compound',
+   cost:{moonstone:1,stardust:1}, craftedCost:{mcrys:1,luck:1},
+   p:540, tags:['마법','전설','선물'], note:'마법 결정과 행운의 부적이 공명한 신비로운 구슬'},
+  {id:'c_moonamu',  e:'🌕',n:'보름달 부적',        cat:'compound',
+   cost:{},                       craftedCost:{moon2:1,luck:1},
+   p:390, tags:['마법','전설','선물'], note:'달빛 부적과 행운의 부적을 하나로 합친 수호물'},
+  // 전투 계열
+  {id:'c_inferno',  e:'🌋',n:'인페르노 폭탄',      cat:'compound',
+   cost:{flame:1},                craftedCost:{fire:2,mush2:1},
+   p:460, tags:['전투'],          note:'화염 폭탄 두 개와 버섯 폭탄을 합친 파괴적인 무기'},
+  {id:'c_blizzard', e:'🌨️',n:'블리자드 폭탄',     cat:'compound',
+   cost:{crystal:1},              craftedCost:{ice:2,wind2:1},
+   p:440, tags:['전투','마법'],   note:'냉기 폭탄과 바람의 약이 결합한 얼음 폭풍'},
+  {id:'c_stormkit', e:'⚡',n:'폭풍 전사 키트',     cat:'compound',
+   cost:{stardust:1},             craftedCost:{fire:1,ice:1,wind2:1},
+   p:560, tags:['전투','마법','희귀'], note:'불·얼음·바람을 하나로 모은 극한 전투 장비'},
+  // 선물 계열
+  {id:'c_luxbouq',  e:'🌸',n:'사치스러운 꽃바구니',cat:'compound',
+   cost:{honey:1},                craftedCost:{flowp:2,bloom:1},
+   p:295, tags:['선물','일상'],   note:'꽃다발과 향수로 만든 고급 선물 세트'},
+  {id:'c_sweetbox', e:'🎁', n:'달콤한 선물 세트',  cat:'compound',
+   cost:{},                       craftedCost:{honeyp:1,jam:1,honey2:1},
+   p:255, tags:['선물','음식','일상'], note:'꿀 시럽·열매잼·마법 캔디 3종 세트'},
+  // 농업
+  {id:'c_growkit',  e:'🌻',n:'마법 씨앗 키트',     cat:'compound',
+   cost:{stardust:1},             craftedCost:{seed2:2,herb2:1},
+   p:215, tags:['농업','회복'],   note:'씨앗 묶음과 약초다발로 만든 풍요의 키트'},
+];
+
+// 손님 아키타입: 유형마다 이름 풀 5개, 하루에 중복 없이 뽑힘
+const CUST_ARCHETYPES=[
+  {
+    e:'⚔️', char:'공격적',
+    note:'전투 아이템을 선호합니다',
+    wantTags:['전투'], bud:1.2,budMax:1.4,
+    names:['레온','가렛','브란','칼리스','두란'],
+  },
+  {
+    e:'🧙‍♀️', char:'호기심',
+    note:'마법 아이템에 지갑을 활짝 열죠',
+    wantTags:['마법'], bud:1.3,budMax:1.6,
+    names:['엘라','세라핀','이졸데','미르나','아리엘'],
+  },
+  {
+    e:'🛒', char:'절약형',
+    note:'흥정꾼. 가성비가 최우선!',
+    wantTags:['음식','일상'], bud:0.85,budMax:1.0,
+    names:['톰','베른','오스카','클라우스','펠릭스'],
+  },
+  {
+    e:'🧝‍♀️', char:'까다로움',
+    note:'희귀하고 특별한 것만 원해요',
+    wantTags:['희귀','전설'], bud:1.4,budMax:1.8,
+    names:['아리아','실바나','에올린','라에나','파엘린'],
+  },
+  {
+    e:'👦', char:'귀여움',
+    note:'용돈이 많지 않아요...',
+    wantTags:['음식','농업'], bud:0.8,budMax:0.95,
+    names:['루카','티모','핀','덱스터','올리'],
+  },
+  {
+    e:'🛡️', char:'진지',
+    note:'품질 좋은 전투 아이템이라면!',
+    wantTags:['전투','회복'], bud:1.2,budMax:1.5,
+    names:['갈란','토르발','에드릭','시그문','베이런'],
+  },
+  {
+    e:'🌿', char:'친절',
+    note:'회복 아이템이라면 뭐든 사요',
+    wantTags:['회복','음료'], bud:1.0,budMax:1.2,
+    names:['미아','세레나','로잘린','헤더','이바나'],
+  },
+  {
+    e:'🎭', char:'낭만',
+    note:'선물용 아이템을 찾고 있어요',
+    wantTags:['선물','일상'], bud:1.1,budMax:1.3,
+    names:['벨','트리스탄','올리비에','다리우스','카스파'],
+  },
+  {
+    e:'🔬', char:'집착',
+    note:'희귀 재료로 만든 것에 집착해요',
+    wantTags:['희귀','마법'], bud:1.35,budMax:1.7,
+    names:['지크','알렉시우스','파우스트','오르소','멜키오르'],
+  },
+  {
+    e:'👑', char:'귀족',
+    note:'최고급만 사겠어요. 흥정은 NO',
+    wantTags:['전설','선물'], bud:1.6,budMax:2.0,
+    names:['카밀라','이사벨라','콘스탄체','엘레오노르','빅토리아'],
+  },
+  {
+    e:'🧑‍🌾', char:'실용',
+    note:'실용적인 걸 좋아해요',
+    wantTags:['농업','음식'], bud:0.9,budMax:1.1,
+    names:['한스','요하네스','게오르크','알브레히트','빌헬름'],
+  },
+  {
+    e:'🦊', char:'교활',
+    note:'싸게 사서 비싸게 팔 생각이에요',
+    wantTags:['전투','마법'], bud:0.75,budMax:0.95,
+    names:['리코','닉스','쉐이드','볼페','라파로'],
+  },
+];
+
+// 손님 인스턴스 생성 — 아키타입에서 이름 뽑기
+// usedNames: 오늘 이미 뽑힌 이름 Set (중복 방지)
+function makeCust(archetype, usedNames){
+  const available=archetype.names.filter(n=>!usedNames.has(n));
+  const pool=available.length>0?available:archetype.names; // 다 쓰면 재사용
+  const name=pool[Math.floor(Math.random()*pool.length)];
+  usedNames.add(name);
+  return {
+    e:archetype.e,
+    n:name,
+    note:archetype.note,
+    wantTags:archetype.wantTags,
+    bud:archetype.bud,
+    budMax:archetype.budMax,
+    char:archetype.char,
+    archetypeIdx:CUST_ARCHETYPES.indexOf(archetype),
+  };
+}
+
+// 단골 드로어에서 CUSTS 참조 대신 아키타입 기반으로 조회
+// rapport 키 = 이름 (그대로 유지)
+function getCustByName(name){
+  for(const arch of CUST_ARCHETYPES){
+    if(arch.names.includes(name)){
+      return {e:arch.e,n:name,note:arch.note,wantTags:arch.wantTags,bud:arch.bud,budMax:arch.budMax,char:arch.char};
+    }
+  }
+  return null;
+}
+
+// 예약용 — 아키타입 인덱스 기반
+function makeCustFromArchIdx(idx){
+  const arch=CUST_ARCHETYPES[idx];
+  return makeCust(arch,new Set());
+}
+
+// 기존 CUSTS 참조 호환용 (예약 탭 렌더 등)
+const CUSTS=CUST_ARCHETYPES.map(a=>({
+  e:a.e,n:a.names[0],note:a.note,wantTags:a.wantTags,bud:a.bud,budMax:a.budMax,char:a.char,
+}));
+
+const BARGAIN_LINES={
+  '공격적':{accept:['좋아! 거래야!','이 정도면 봐줄 수 있지.'],reject:['말도 안 돼!','너무 비싸!']},
+  '호기심':{accept:['오, 흥미롭네요! 살게요~','훌륭한 품질이에요!'],reject:['예산이 안 맞네요.','다음에 올게요!']},
+  '절약형':{accept:['이 정도면 괜찮지!','싸게 잘 샀다!'],reject:['더 싸게 해줘요!','너무 비싸요.']},
+  '까다로움':{accept:['품질이 좋으니 사겠어요.','만족스럽군요.'],reject:['실망이에요.','다른 곳 가볼게요.']},
+  '귀여움':{accept:['와아! 살게요!','행복해요!'],reject:['돈이 없어요...','너무 비싸요...']},
+  '진지':{accept:['합리적인 가격이오.','거래 성사!'],reject:['과한 가격이오.','다음 기회에.']},
+  '친절':{accept:['감사해요!','좋은 거래예요!'],reject:['조금 비싸네요...','다음에 꼭 살게요!']},
+  '낭만':{accept:['선물할게요!','완벽해요!'],reject:['예산이 안 맞네요.','다음엔 꼭!']},
+  '집착':{accept:['드디어!','이건 꼭 가져야 해!'],reject:['아직 부족해.','다시 협상하죠.']},
+  '귀족':{accept:['수준이 있군요.','품격 있는 거래네요.'],reject:['천민 같은 가격!','모욕이에요!']},
+  '실용':{accept:['딱 알맞네요!','실용적인 거래예요.'],reject:['너무 비쌉니다.','생각해볼게요.']},
+  '교활':{accept:['흐흐... 남는 장사지.','잘 됐군.'],reject:['더 싸게 안 되나요?','흥정이 안 되네.']},
+};
+
+const LOCATIONS=[
+  {id:'forest',   e:'🌲',n:'초록 숲',   desc:'허브와 열매가 풍부한 숲.',        pool:['herb','berry','flower','leaf','mushroom','seed'],bonusAM:{ids:['herb','berry','leaf'],qty:[2,3]},bonusPM:{ids:['mushroom','wind','shadow'],qty:[1,2]}},
+  {id:'cave',     e:'🪨',n:'깊은 동굴', desc:'광물과 결정이 숨어있는 동굴.',    pool:['crystal','root','flame','shadow','mushroom'],   bonusAM:{ids:['root','mushroom','flame'],qty:[1,2]},bonusPM:{ids:['crystal','stardust','shadow'],qty:[1,1]}},
+  {id:'lake',     e:'🏞️',n:'맑은 호수', desc:'깨끗한 물과 수생 식물의 호수.',   pool:['water','flower','honey','berry','seed'],        bonusAM:{ids:['water','flower','honey'],qty:[2,3]},bonusPM:{ids:['moonstone','stardust','water'],qty:[1,1]}},
+  {id:'ruin',     e:'🏚️',n:'고대 폐허', desc:'마법 잔재가 남은 위험한 장소.',   pool:['flame','wind','shadow','crystal','root'],       bonusAM:{ids:['flame','wind','root'],qty:[1,2]},bonusPM:{ids:['moonstone','crystal','shadow'],qty:[1,2]}},
+  {id:'magicwood',e:'🌌',n:'마법의 숲', desc:'별빛과 달빛이 가득한 신비로운 숲.',pool:['stardust','moonstone','flower','crystal','wind'],bonusAM:{ids:['flower','wind','leaf'],qty:[1,3]},bonusPM:{ids:['stardust','moonstone','crystal'],qty:[1,1]}},
+];
+
+// 일요일 전용 탐험지
+const SUN_LOCATIONS=[
+  {id:'sun_shrine', e:'⛩️',n:'고대 신전',  desc:'일요일에만 열리는 성스러운 공간. 특별한 레시피 발견 가능.',pool:['stardust','moonstone','crystal','flower'],bonusAM:{ids:['stardust','moonstone'],qty:[1,2]},bonusPM:{ids:['moonstone','crystal'],qty:[1,2]},special:true},
+  {id:'sun_volcano',e:'🌋',n:'불의 산',     desc:'활화산. 희귀 재료가 가득하지만 위험해요.',               pool:['flame','crystal','shadow','wind'],         bonusAM:{ids:['flame','crystal'],qty:[1,2]},bonusPM:{ids:['crystal','stardust'],qty:[1,1]},special:true},
+  {id:'sun_sky',    e:'🌤️',n:'하늘 정원',   desc:'구름 위의 정원. 전설 재료를 얻을 수 있어요.',            pool:['stardust','moonstone','flower','honey'],   bonusAM:{ids:['stardust','flower'],qty:[1,3]},bonusPM:{ids:['moonstone','stardust'],qty:[1,2]},special:true},
+];
+
+// ===== 상태 =====
+let uidN=0;
+const mkUid=()=>++uidN;
+const byId=(arr,id)=>arr.find(x=>x.id===id);
+
+// 현재 해금된 레시피 (기본 + 발견한 특별 레시피)
+let unlockedSpecial=new Set();
+
+function allRecipes(){return [...RECIPES,...SPECIAL_RECIPES.filter(r=>unlockedSpecial.has(r.id)),...COMPOUND_RECIPES];}
+
+// 합성 레시피 재료 체크: 일반 재료(ingInv) + 완성품(shopInv) 모두 만족해야 함
+function canCraftCompound(r,inv,shopInv,n=1){
+  const rawOk=Object.entries(r.cost||{}).every(([id,q])=>(inv[id]||0)>=q*n);
+  const craftedOk=Object.entries(r.craftedCost||{}).every(([id,q])=>{
+    const have=shopInv.filter(s=>s.id===id).length;
+    return have>=q*n;
+  });
+  return rawOk&&craftedOk;
+}
+function canCraft(r,inv,n=1){
+  if(r.craftedCost)return canCraftCompound(r,inv,S.shopInv,n);
+  return Object.entries(r.cost).every(([id,q])=>(inv[id]||0)>=q*n);
+}
+function maxCraftableCompound(r,inv,shopInv){
+  const rawMax=Object.keys(r.cost||{}).length===0?99:
+    Math.min(...Object.entries(r.cost).map(([id,q])=>Math.floor((inv[id]||0)/q)));
+  const cMax=Object.keys(r.craftedCost||{}).length===0?99:
+    Math.min(...Object.entries(r.craftedCost).map(([id,q])=>{
+      return Math.floor(shopInv.filter(s=>s.id===id).length/q);
+    }));
+  return Math.min(rawMax,cMax);
+}
+function maxCraftable(r,inv){
+  if(r.craftedCost)return maxCraftableCompound(r,inv,S.shopInv);
+  if(!Object.keys(r.cost).length)return 0;
+  return Math.min(...Object.entries(r.cost).map(([id,q])=>Math.floor((inv[id]||0)/q)));
+}
+function costStr(r,n=1){
+  const rawParts=Object.entries(r.cost||{}).map(([id,q])=>{
+    const i=byId(INGR,id);return i?`${i.e}${i.n}×${q*n}`:null;
+  }).filter(Boolean);
+  const craftedParts=Object.entries(r.craftedCost||{}).map(([id,q])=>{
+    const ri=byId(allRecipes(),id);return ri?`[${ri.e}${ri.n}]×${q*n}`:null;
+  }).filter(Boolean);
+  return [...rawParts,...craftedParts].join(' + ')||'재료 없음';
+}
+function isSunday(day){return day%7===0;}
+function getCustWants(cust,shopInv){
+  return shopInv.filter(item=>{const r=byId(allRecipes(),item.id);return r&&r.tags&&r.tags.some(t=>cust.wantTags.includes(t));});
+}
+function getDayOfWeek(day){const d=['월','화','수','목','금','토','일'];return d[(day-1)%7];}
+
+function newState(){
+  return {
+    gold:50,day:1,maxDays:30,goal:3000,
+    totalRevenue:0,         // 누적 매출 (상점 레벨용)
+    shopLevel:1,            // 상점 레벨 1~5
+    reputation:50,          // 가격 평판 0~100
+    rapport:{},             // {손님이름: 0~100}
+    activeQuests:[],        // [{id,cust,item,qty,need,deadline,reward,status:'active'|'done'|'failed'}]
+    phase:'daytime',phase2:'explore',
+    ingInv:{},shopInv:[],
+    exploredSlots:[],
+    maxExploreSlots:2,
+    msgs:['🌅 새로운 날이 밝았습니다! 오늘도 화이팅!'],
+    cust:null,custsDone:0,maxCusts:0,
+    custQueue:[],doneIdxs:new Set(),custCurIdx:null,
+    reservations:[],
+    todayReservations:[],
+    selUid:null,priceVal:'',custOffer:0,
+    queueOpen:true,previewIdx:null,
+    craftCat:'all',craftQty:{},
+    todaySalesLog:[],
+    tomorrowHints:[],
+    showDayReport:false,
+    sunDiscoveries:[],
+    drawerOpen:false,       // 상태 드로어 펼침
+    drawerTab:'shop',       // 'shop'|'rapport'|'quest'
+    gameOver:false,won:false,
+  };
+}
+let S=newState();
+function log(m){S.msgs=[m,...S.msgs].slice(0,10);}
+
+// ===== 상점 레벨 =====
+const SHOP_LEVELS=[
+  {lv:1,name:'새싹 상점',e:'🌱',minRev:0,    maxSlots:6, maxQueue:5},
+  {lv:2,name:'동네 상점',e:'🏠',minRev:500,  maxSlots:8, maxQueue:6},
+  {lv:3,name:'인기 상점',e:'⭐',minRev:1500, maxSlots:10,maxQueue:7},
+  {lv:4,name:'명품 상점',e:'💎',minRev:3500, maxSlots:12,maxQueue:8},
+  {lv:5,name:'전설 상점',e:'👑',minRev:7000, maxSlots:16,maxQueue:10},
+];
+function getShopLevel(){return SHOP_LEVELS.find(l=>S.totalRevenue>=l.minRev&&(SHOP_LEVELS[l.lv]?S.totalRevenue<SHOP_LEVELS[l.lv].minRev:true))||SHOP_LEVELS[SHOP_LEVELS.length-1];}
+function checkLevelUp(){
+  const prev=S.shopLevel;
+  const cur=getShopLevel();
+  if(cur.lv>prev){
+    S.shopLevel=cur.lv;
+    log(`🎉 상점이 "${cur.e}${cur.name}"으로 레벨업!`);
+  }
+}
+
+// ===== 평판 =====
+const REP_GRADES=[
+  {min:80,label:'정직한 상인',e:'😇',color:'var(--green)'},
+  {min:60,label:'평범한 상인',e:'🙂',color:'var(--text2)'},
+  {min:40,label:'수상한 상인',e:'😐',color:'var(--sun)'},
+  {min:0, label:'악덕 상인', e:'😈',color:'var(--red)'},
+];
+function getRepGrade(){return REP_GRADES.find(g=>S.reputation>=g.min)||REP_GRADES[REP_GRADES.length-1];}
+function changeRep(delta){S.reputation=Math.max(0,Math.min(100,S.reputation+delta));}
+
+// ===== 단골 (친밀도) =====
+const RAPPORT_GRADES=[
+  {min:75,label:'👑 VIP',   color:'var(--gold)',  budBonus:0.20},
+  {min:50,label:'💛 단골',  color:'var(--green)', budBonus:0.10},
+  {min:25,label:'⭐ 단골후보',color:'var(--blue)',budBonus:0},
+  {min:0, label:'🤝 일반',  color:'var(--text3)', budBonus:0},
+];
+function getRapportGrade(name){
+  const v=S.rapport[name]||0;
+  return RAPPORT_GRADES.find(g=>v>=g.min)||RAPPORT_GRADES[RAPPORT_GRADES.length-1];
+}
+function changeRapport(name,delta){
+  S.rapport[name]=Math.max(0,Math.min(100,(S.rapport[name]||0)+delta));
+  // VIP 달성 시 퀘스트 생성
+  if(delta>0&&S.rapport[name]>=75){
+    const cust=CUSTS.find(c=>c.n===name);
+    if(cust)maybeGenerateQuest(cust);
+  }
+}
+
+// ===== 퀘스트 =====
+function maybeGenerateQuest(cust){
+  if(S.activeQuests.some(q=>q.custName===cust.n&&q.status==='active'))return;
+  const candidates=allRecipes().filter(r=>r.tags.some(t=>cust.wantTags.includes(t)));
+  if(!candidates.length)return;
+  const r=candidates[Math.floor(Math.random()*candidates.length)];
+  const qty=1+Math.floor(Math.random()*3);
+  const reward=Math.round(r.p*qty*1.4);
+  const deadline=S.day+4+Math.floor(Math.random()*3);
+  S.activeQuests.push({
+    id:`q_${Date.now()}`,custName:cust.n,custE:cust.e,
+    itemId:r.id,itemE:r.e,itemN:r.n,
+    qty,delivered:0,deadline,reward,status:'active',
+  });
+  log(`📜 ${cust.e}${cust.n}의 의뢰! "${r.n}" ${qty}개를 ${deadline}일 전까지 — 보상: ${reward}G`);
+}
+
+function deliverQuest(qid){
+  const q=S.activeQuests.find(x=>x.id===qid);
+  if(!q||q.status!=='active')return;
+  const have=S.shopInv.filter(i=>i.id===q.itemId).length;
+  const canDeliver=Math.min(have,q.qty-q.delivered);
+  if(canDeliver<=0){log('⚠️ 납품할 아이템이 없습니다!');render();return;}
+  let rem=canDeliver;
+  S.shopInv=S.shopInv.filter(i=>{if(i.id===q.itemId&&rem>0){rem--;return false;}return true;});
+  q.delivered+=canDeliver;
+  if(q.delivered>=q.qty){
+    q.status='done';
+    S.gold+=q.reward;
+    S.totalRevenue+=q.reward;
+    changeRapport(q.custName,15);
+    changeRep(3);
+    log(`✅ ${q.custE}${q.custName} 의뢰 완료! +${q.reward}G 보상!`);
+  } else {
+    log(`📦 ${canDeliver}개 납품 (${q.delivered}/${q.qty})`);
+  }
+  render();
+}
+
+function checkQuestDeadlines(){
+  S.activeQuests.forEach(q=>{
+    if(q.status==='active'&&S.day>q.deadline){
+      q.status='failed';
+      changeRapport(q.custName,-10);
+      changeRep(-5);
+      log(`❌ ${q.custE}${q.custName} 의뢰 실패... 친밀도 감소`);
+    }
+  });
+}
+
+// ===== 탐험 =====
+function pickWeighted(pool){
+  const entries=pool.map(id=>{const idx=INGR.findIndex(i=>i.id===id);return{id,ing:INGR[idx],w:idx>=0?IW[idx]:10};}).filter(e=>e.ing);
+  const total=entries.reduce((a,e)=>a+e.w,0);
+  let r=Math.random()*total,acc=0;
+  for(const e of entries){acc+=e.w;if(r<acc)return e.ing;}
+  return entries[entries.length-1].ing;
+}
+
+function doExplore(locId,slotIdx){
+  const sun=isSunday(S.day);
+  const maxSlots=sun?4:2;
+  if(S.exploredSlots.length>=maxSlots){log('⚠️ 오늘 탐험 횟수를 모두 사용했습니다!');render();return;}
+  if(S.exploredSlots.some(s=>s.slot===slotIdx)){log('⚠️ 이미 탐험한 시간대입니다!');render();return;}
+
+  const locs=sun?[...LOCATIONS,...SUN_LOCATIONS]:LOCATIONS;
+  const loc=locs.find(l=>l.id===locId);
+  if(!loc)return;
+
+  const found=[],foundMap={};
+  const isAM=slotIdx<2;
+  const numTypes=3+Math.floor(Math.random()*3);
+  for(let i=0;i<numTypes;i++){
+    const ing=pickWeighted(loc.pool);
+    const qty=ing.dropMin+Math.floor(Math.random()*(ing.dropMax-ing.dropMin+1));
+    S.ingInv[ing.id]=(S.ingInv[ing.id]||0)+qty;
+    if(foundMap[ing.id])foundMap[ing.id].qty+=qty;
+    else{foundMap[ing.id]={...ing,qty};found.push(foundMap[ing.id]);}
+  }
+  const bonus=isAM?loc.bonusAM:loc.bonusPM;
+  const bonusId=bonus.ids[Math.floor(Math.random()*bonus.ids.length)];
+  const bonusIng=INGR.find(i=>i.id===bonusId);
+  if(bonusIng){
+    const[qMin,qMax]=bonus.qty;
+    const bqty=qMin+Math.floor(Math.random()*(qMax-qMin+1));
+    S.ingInv[bonusIng.id]=(S.ingInv[bonusIng.id]||0)+bqty;
+    if(foundMap[bonusIng.id])foundMap[bonusIng.id].qty+=bqty;
+    else{foundMap[bonusIng.id]={...bonusIng,qty:bqty,isBonus:true};found.push(foundMap[bonusIng.id]);}
+  }
+
+  // 일요일 특별 장소: 레시피 발견 or 특별 아이템 찾기
+  let discovery=null;
+  if(loc.special&&Math.random()<0.55){
+    const notYet=SPECIAL_RECIPES.filter(r=>!unlockedSpecial.has(r.id));
+    if(notYet.length>0){
+      const r=notYet[Math.floor(Math.random()*notYet.length)];
+      unlockedSpecial.add(r.id);
+      discovery={type:'recipe',recipe:r};
+      S.sunDiscoveries.push(discovery);
+      log(`🌟 특별 레시피 발견! "${r.n}" 제조법을 익혔어요!`);
+    }
+  }
+
+  const slotLabels=['🌤️ 오전1','🌤️ 오전2','🌆 오후1','🌆 오후2'];
+  S.exploredSlots.push({slot:slotIdx,locId,found,discovery});
+  log(`${slotLabels[slotIdx]||'탐험'} ${loc.e}${loc.n} 완료! `+found.map(i=>`${i.e}${i.n}×${i.qty}`).join(', '));
+  render();
+}
+
+// ===== 제조 =====
+function setCraftQty(id,v){S.craftQty[id]=parseInt(v)||1;render();}
+function doCraft(id){
+  const r=byId(allRecipes(),id);
+  const qty=Math.max(1,S.craftQty[id]||1);
+  if(!canCraft(r,S.ingInv,qty)){log('⚠️ 재료가 부족합니다!');render();return;}
+  // 일반 재료 차감
+  Object.entries(r.cost||{}).forEach(([cid,q])=>{S.ingInv[cid]-=q*qty;});
+  // 합성 재료(완성품) 차감 — shopInv에서 제거
+  if(r.craftedCost){
+    Object.entries(r.craftedCost).forEach(([cid,q])=>{
+      let need=q*qty;
+      S.shopInv=S.shopInv.filter(s=>{
+        if(s.id===cid&&need>0){need--;return false;}
+        return true;
+      });
+    });
+  }
+  for(let i=0;i<qty;i++)S.shopInv.push({...r,uid:mkUid()});
+  delete S.craftQty[id];
+  const compound=!!r.craftedCost;
+  log(`${compound?'🔗':'✅'} ${r.e}${r.n} ×${qty} ${compound?'합성':'제조'} 완료!`);
+  render();
+}
+
+// ===== 상점 =====
+function generateCustQueue(forReservation=false){
+  if(forReservation){
+    return S.todayReservations.map(rv=>rv.cust);
+  }
+  const lvInfo=getShopLevel();
+  const base=lvInfo.maxQueue-2+Math.floor(Math.random()*3); // 레벨별 손님 수
+  const total=Math.min(base,S.shopInv.length+2);
+  const usedNames=new Set();
+  const q=[];
+  // 아키타입 풀을 섞어서 중복 없이 뽑기
+  const shuffled=[...CUST_ARCHETYPES].sort(()=>Math.random()-.5);
+  for(let i=0;i<total;i++){
+    const arch=shuffled[i%shuffled.length];
+    q.push(makeCust(arch,usedNames));
+  }
+  return q;
+}
+
+function generateTomorrowHints(){
+  if(isSunday(S.day+1)){
+    S.tomorrowHints=[{type:'sunday',msg:'내일은 일요일! 상점은 닫지만 예약 손님만 받아요. 탐험을 4번 갈 수 있어요.'}];
+    return;
+  }
+  const usedNames=new Set();
+  const cnt=4+Math.floor(Math.random()*3);
+  const shuffled=[...CUST_ARCHETYPES].sort(()=>Math.random()-.5);
+  const nextQ=[];
+  for(let i=0;i<cnt;i++){
+    const arch=shuffled[i%shuffled.length];
+    nextQ.push(makeCust(arch,usedNames));
+  }
+  S.tomorrowHints=nextQ.map(c=>({type:'cust',cust:c}));
+  const nextRes=S.reservations.filter(r=>r.day===S.day+1);
+  nextRes.forEach(r=>S.tomorrowHints.push({type:'reservation',cust:r.cust}));
+}
+
+// ===== 트렌드 시스템 =====
+// 오늘의 트렌드: 매일 변하는 수요 태그 (1~2개 HOT)
+// 주간 트렌드: 7일 주기로 갱신되는 태그 (더 강한 보정)
+const ALL_TAGS=['전투','마법','회복','음식','음료','일상','선물','농업','희귀','전설'];
+
+function getTodayTrend(day){
+  // 날짜 시드로 결정론적 랜덤 (같은 날은 항상 같은 트렌드)
+  const seed=(day*31+7)%ALL_TAGS.length;
+  const seed2=(day*17+3)%ALL_TAGS.length;
+  const hot=[ALL_TAGS[seed]];
+  if(seed!==seed2)hot.push(ALL_TAGS[seed2]);
+  const cold=ALL_TAGS.filter(t=>!hot.includes(t))
+    .slice(0,(day*13+5)%3+1);
+  return {hot,cold};
+}
+
+function getWeeklyTrend(day){
+  const week=Math.floor((day-1)/7);
+  const seed1=(week*41+11)%ALL_TAGS.length;
+  const seed2=(week*23+7)%ALL_TAGS.length;
+  const tags=[ALL_TAGS[seed1]];
+  if(seed1!==seed2)tags.push(ALL_TAGS[seed2]);
+  return tags;
+}
+
+function getTrendBonus(tags){
+  // 트렌드 태그가 포함된 레시피들 추천
+  return allRecipes().filter(r=>r.tags.some(t=>tags.includes(t))).slice(0,4);
+}
+
+function openShop(){
+  const sun=isSunday(S.day);
+  if(sun){
+    // 일요일: 예약 손님만 허용
+    if(S.todayReservations.length===0){log('📅 일요일이라 일반 영업은 없어요. 예약 손님도 없네요.');render();return;}
+    S.phase='shop';S.phase2='shop';
+    S.custQueue=generateCustQueue(true);
+    S.maxCusts=S.custQueue.length;
+  } else {
+    if(S.shopInv.length===0){log('⚠️ 판매할 상품이 없습니다!');render();return;}
+    S.phase='shop';S.phase2='shop';
+    S.custQueue=generateCustQueue();
+    // 예약 손님 맨 앞에 추가
+    const res=S.todayReservations.map(r=>r.cust);
+    S.custQueue=[...res,...S.custQueue];
+    S.maxCusts=S.custQueue.length;
+  }
+  S.doneIdxs=new Set();S.queueOpen=true;S.previewIdx=null;S.todaySalesLog=[];
+  log(`🏪 상점 오픈! 오늘 손님 ${S.maxCusts}명`);
+  spawnCust();
+}
+
+function spawnCust(){
+  S.selUid=null;S.priceVal='';S.custOffer=0;S.previewIdx=null;
+  let nextIdx=-1;
+  for(let i=0;i<S.custQueue.length;i++){if(!S.doneIdxs.has(i)){nextIdx=i;break;}}
+  if(nextIdx===-1||S.shopInv.length===0){
+    S.cust=null;S.custsDone=S.doneIdxs.size;
+    log(nextIdx===-1?'🌙 오늘 손님이 모두 다녀갔어요.':'🌙 진열 상품 소진.');
+    // 영업 종료 → 힌트 생성 & 리포트 표시
+    generateTomorrowHints();
+    S.showDayReport=true;
+    render();return;
+  }
+  S.custCurIdx=nextIdx;S.cust=S.custQueue[nextIdx];S.custsDone=S.doneIdxs.size;
+  const wanted=getCustWants(S.cust,S.shopInv);
+  const hint=wanted.length>0?`"${wanted[Math.floor(Math.random()*wanted.length)].n} 있나요?"`:'\"뭔가 좋은 거 없나요?\"';
+  log(`${S.cust.e} ${S.cust.n}이(가) 들어왔어요. ${hint}`);
+  render();
+}
+
+function jumpToCust(idx){
+  if(S.doneIdxs.has(idx)||idx===S.custCurIdx)return;
+  log(`${S.custQueue[idx].e}${S.custQueue[idx].n}을(를) 먼저 응대합니다.`);
+  S.selUid=null;S.priceVal='';S.custOffer=0;S.previewIdx=null;
+  S.custCurIdx=idx;S.cust=S.custQueue[idx];S.custsDone=S.doneIdxs.size;render();
+}
+function toggleQueue(){S.queueOpen=!S.queueOpen;render();}
+function setPreview(idx){S.previewIdx=(S.previewIdx===idx)?null:idx;render();}
+
+function selItem(u){
+  if(S.selUid===u){S.selUid=null;S.priceVal='';S.custOffer=0;}
+  else{
+    S.selUid=u;
+    const item=S.shopInv.find(i=>i.uid===u);
+    if(item){
+      S.priceVal=String(item.p);
+      if(S.cust){
+        const isWanted=getCustWants(S.cust,S.shopInv).some(i=>i.uid===u);
+        const varRange=(S.cust.budMax-S.cust.bud)*0.5;
+        const actualMult=S.cust.bud+Math.random()*varRange+(isWanted?varRange*0.5:0);
+        S.custOffer=Math.round(item.p*Math.min(actualMult,S.cust.budMax));
+      }
+    }
+  }
+  render();
+  const pi=document.getElementById('pin');
+  if(pi){pi.focus();pi.select();}
+}
+
+function trySell(){
+  const item=S.shopInv.find(i=>i.uid===S.selUid);
+  if(!item){log('⚠️ 아이템을 선택하세요!');render();return;}
+  const price=parseInt(S.priceVal)||0;
+  if(!price||price<=0){log('⚠️ 올바른 가격을 입력하세요.');render();return;}
+  const isWanted=getCustWants(S.cust,S.shopInv).some(i=>i.uid===S.selUid);
+  const maxPay=S.custOffer>0?S.custOffer:Math.round(item.p*(isWanted?S.cust.budMax:S.cust.bud));
+  const lines=BARGAIN_LINES[S.cust.char]||BARGAIN_LINES['친절'];
+  if(price<=maxPay){
+    S.gold+=price;
+    S.totalRevenue+=price;
+    S.todaySalesLog.push({cust:S.cust,item:{...item},price});
+    S.shopInv=S.shopInv.filter(i=>i.uid!==S.selUid);
+    S.selUid=null;S.priceVal='';S.custOffer=0;
+    const rxn=lines.accept[Math.floor(Math.random()*lines.accept.length)];
+    // 가격 비율로 평판/친밀도 계산
+    const ratio=price/maxPay;
+    const isBargain=ratio>0.95; // 95% 초과 = 거의 한도
+    const rapportDelta=isWanted?(isBargain?4:12):(isBargain?3:8);
+    const repDelta=ratio<=0.8?3:ratio<=0.95?2:-3; // 싸게 팔수록 평판↑, 바가지치면 ↓
+    changeRapport(S.cust.n,rapportDelta);
+    changeRep(repDelta);
+    checkLevelUp();
+    const emoji=ratio>0.95?'🤑':ratio>0.8?'✅':'😄';
+    log(`${S.cust.e} "${rxn}" ${emoji} ${price}G! (친밀도+${rapportDelta})`);
+    if(S.gold>=S.goal){S.won=true;S.gameOver=true;render();return;}
+    S.doneIdxs.add(S.custCurIdx);
+    setTimeout(spawnCust,100);
+  } else {
+    const rxn=lines.reject[Math.floor(Math.random()*lines.reject.length)];
+    // 너무 비쌌으면 친밀도/평판 하락
+    const over=price/maxPay;
+    if(over>1.2){changeRapport(S.cust.n,-5);changeRep(-4);log(`${S.cust.e} "${rxn}" ❌ 🚨 바가지! (최대 ${maxPay}G, 평판↓)`);}
+    else{changeRapport(S.cust.n,-2);log(`${S.cust.e} "${rxn}" ❌ (최대 ${maxPay}G)`);}
+    render();
+  }
+}
+
+function skipCust(){
+  log(`${S.cust.e}${S.cust.n}이(가) 그냥 나갔습니다.`);
+  changeRapport(S.cust.n,-5);
+  changeRep(-1);
+  S.doneIdxs.add(S.custCurIdx);spawnCust();
+}
+
+function endBusiness(){
+  const remaining=S.custQueue.length-S.doneIdxs.size;
+  S.cust=null;
+  for(let i=0;i<S.custQueue.length;i++)S.doneIdxs.add(i);
+  S.custsDone=S.doneIdxs.size;
+  generateTomorrowHints();
+  S.showDayReport=true;
+  log(`🌙 영업 종료. (남은 손님 ${remaining}명)`);
+  render();
+}
+
+// 일요일 예약 접수
+function takeReservation(custIdx){
+  const c=CUSTS[custIdx];
+  const nextNonSun=[...Array(7)].map((_,i)=>S.day+1+i).find(d=>!isSunday(d))||S.day+1;
+  S.reservations.push({cust:c,day:nextNonSun,wantTags:c.wantTags});
+  log(`📅 ${c.e}${c.n} 예약 접수! ${nextNonSun}일째 방문 예정.`);
+  render();
+}
+
+function nextDay(){
+  if(S.day>=S.maxDays){S.gameOver=true;render();return;}
+  S.day++;
+  checkQuestDeadlines();
+  S.phase='daytime';S.phase2='explore';
+  S.exploredSlots=[];S.maxExploreSlots=isSunday(S.day)?4:2;
+  S.cust=null;S.custsDone=0;S.custQueue=[];
+  S.doneIdxs=new Set();S.custCurIdx=null;S.previewIdx=null;
+  S.selUid=null;S.priceVal='';S.custOffer=0;
+  S.showDayReport=false;S.sunDiscoveries=[];S.todaySalesLog=[];
+  // 오늘 예약 손님 세팅
+  S.todayReservations=S.reservations.filter(r=>r.day===S.day);
+  const dow=getDayOfWeek(S.day);
+  const sunMsg=isSunday(S.day)?'☀️ 오늘은 일요일! 탐험을 4번 갈 수 있고, 특별 탐험지가 열려요.':'';
+  log(`🌅 ${S.day}일째(${dow}요일)가 밝았습니다! ${sunMsg}`);
+  render();
+}
+
+function setTab(t){
+  if(S.phase==='shop'&&!S.showDayReport&&t!=='trend')return;
+  if(S.showDayReport&&t!=='report')S.showDayReport=false;
+  S.phase2=t;render();
+}
+function closeReport(){S.showDayReport=false;S.phase='daytime';S.phase2='explore';render();}
+function toggleDrawer(tab){
+  if(S.drawerOpen&&S.drawerTab===tab){S.drawerOpen=false;}
+  else{S.drawerOpen=true;S.drawerTab=tab;}
+  render();
+}
+
+// ===== 렌더링 =====
+function renderHdr(){
+  const pct=Math.min(100,Math.round(S.gold/S.goal*100));
+  const dow=getDayOfWeek(S.day);
+  const sun=isSunday(S.day);
+  const lvInfo=getShopLevel();
+  const repGrade=getRepGrade();
+  const nextLv=SHOP_LEVELS[lvInfo.lv]||null;
+  const lvPct=nextLv?Math.min(100,Math.round((S.totalRevenue-lvInfo.minRev)/(nextLv.minRev-lvInfo.minRev)*100)):100;
+
+  // 단골 수 계산
+  const regularCount=Object.entries(S.rapport).filter(([,v])=>v>=50).length;
+  const vipCount=Object.entries(S.rapport).filter(([,v])=>v>=75).length;
+  // 활성 퀘스트
+  const activeQ=S.activeQuests.filter(q=>q.status==='active');
+  const urgentQ=activeQ.filter(q=>q.deadline-S.day<=1);
+
+  return `
+  <div class="hdr">
+    <div class="gold-disp">💰 ${S.gold.toLocaleString()}G</div>
+    <div class="prog-wrap">
+      <div class="prog-lbl">목표 ${S.goal.toLocaleString()}G · 남음 ${Math.max(0,S.goal-S.gold).toLocaleString()}G (${pct}%)</div>
+      <div class="prog"><div class="prog-f" style="width:${pct}%"></div></div>
+    </div>
+    <div class="dayl">
+      <div class="${sun?'day-sun':''}">📅 ${S.day} / ${S.maxDays}일</div>
+      <div class="${sun?'day-sun':''}">( ${dow}요일${sun?' ☀️':''} )</div>
+    </div>
+  </div>
+  <div class="sbar">
+    <div class="sbar-cell" onclick="toggleDrawer('shop')" title="상점 상태">
+      <span class="sbar-icon">${lvInfo.e}</span>
+      <div style="min-width:0">
+        <div class="sbar-val">${lvInfo.name}</div>
+        <div class="sbar-sub">Lv${lvInfo.lv} · ${nextLv?`다음 ${(nextLv.minRev-S.totalRevenue).toLocaleString()}G`:'MAX'}</div>
+        <div class="sbar-mini-bar" style="background:var(--bg3);border-radius:2px;height:3px;margin-top:2px">
+          <div style="width:${lvPct}%;height:100%;background:var(--gold);border-radius:2px"></div>
+        </div>
+      </div>
+    </div>
+    <div class="sbar-cell" onclick="toggleDrawer('shop')" title="평판">
+      <span class="sbar-icon">${repGrade.e}</span>
+      <div style="min-width:0">
+        <div class="sbar-val" style="color:${repGrade.color}">${repGrade.label}</div>
+        <div class="sbar-sub">평판 ${S.reputation}/100</div>
+        <div class="sbar-mini-bar" style="background:var(--bg3);border-radius:2px;height:3px;margin-top:2px">
+          <div style="width:${S.reputation}%;height:100%;background:${repGrade.color};border-radius:2px"></div>
+        </div>
+      </div>
+    </div>
+    <div class="sbar-cell" onclick="toggleDrawer('rapport')" title="단골 현황">
+      <span class="sbar-icon">👥</span>
+      <div style="min-width:0">
+        <div class="sbar-val">${vipCount>0?`👑×${vipCount} `:''}<span style="color:var(--green)">💛×${regularCount}</span></div>
+        <div class="sbar-sub">단골 ${regularCount}명 · VIP ${vipCount}명</div>
+      </div>
+    </div>
+    <div class="sbar-cell" onclick="toggleDrawer('quest')" title="퀘스트">
+      <span class="sbar-icon">${urgentQ.length>0?'🔥':'📜'}</span>
+      <div style="min-width:0">
+        <div class="sbar-val" style="${urgentQ.length>0?'color:var(--red)':''}">의뢰 ${activeQ.length}건${urgentQ.length>0?` ⚠️${urgentQ.length}`:''}</div>
+        <div class="sbar-sub">${activeQ.length===0?'없음':urgentQ.length>0?'마감 임박!':'진행 중'}</div>
+      </div>
+    </div>
+  </div>
+  ${S.drawerOpen?renderStatusDrawer():''}
+  `;
+}
+
+function renderStatusDrawer(){
+  const tab=S.drawerTab;
+  return `<div class="sdrawer" style="margin-top:0;margin-bottom:10px">
+    <div class="sdrawer-inner">
+      <div class="sdrawer-tabs">
+        <div class="sdrawer-tab${tab==='shop'?' on':''}" onclick="toggleDrawer('shop')">🏪 상점</div>
+        <div class="sdrawer-tab${tab==='rapport'?' on':''}" onclick="toggleDrawer('rapport')">👥 단골</div>
+        <div class="sdrawer-tab${tab==='quest'?' on':''}" onclick="toggleDrawer('quest')">📜 의뢰</div>
+        <div style="flex:1"></div>
+        <div class="sdrawer-tab" onclick="S.drawerOpen=false;render()" style="color:var(--text3)">✕ 닫기</div>
+      </div>
+      ${tab==='shop'?renderDrawerShop():tab==='rapport'?renderDrawerRapport():renderDrawerQuest()}
+    </div>
+  </div>`;
+}
+
+function renderDrawerShop(){
+  const lvInfo=getShopLevel();
+  const nextLv=SHOP_LEVELS[lvInfo.lv]||null;
+  const repGrade=getRepGrade();
+  const lvPct=nextLv?Math.min(100,Math.round((S.totalRevenue-lvInfo.minRev)/(nextLv.minRev-lvInfo.minRev)*100)):100;
+  return `
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-card-title">상점 레벨</div>
+        <div class="stat-card-val">${lvInfo.e} Lv${lvInfo.lv}</div>
+        <div class="stat-card-sub">${lvInfo.name}</div>
+        <div class="stat-mini-prog"><div class="stat-mini-fill" style="width:${lvPct}%;background:var(--gold)"></div></div>
+        <div class="stat-card-sub" style="margin-top:3px">${nextLv?`다음 레벨까지 ${(nextLv.minRev-S.totalRevenue).toLocaleString()}G`:'최고 레벨 달성!'}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-title">누적 매출</div>
+        <div class="stat-card-val" style="color:var(--gold)">${S.totalRevenue.toLocaleString()}G</div>
+        <div class="stat-card-sub">진열 슬롯 ${lvInfo.maxSlots}칸 · 손님 최대 ${lvInfo.maxQueue}명</div>
+      </div>
+      <div class="stat-card" style="grid-column:1/-1">
+        <div class="stat-card-title">가격 평판</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:22px">${repGrade.e}</span>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:800;color:${repGrade.color}">${repGrade.label} (${S.reputation}/100)</div>
+            <div class="rep-bar-wrap">
+              <div style="height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:4px">
+                <div style="width:${S.reputation}%;height:100%;background:${repGrade.color};border-radius:4px;transition:width .4s"></div>
+              </div>
+              <div class="rep-zone">
+                <div class="rep-seg" style="background:var(--red-light);border:1px solid var(--red)"></div>
+                <div class="rep-seg" style="background:#FFF8E1;border:1px solid #FFB74D"></div>
+                <div class="rep-seg" style="background:var(--green-light);border:1px solid var(--green)"></div>
+                <div class="rep-seg" style="background:#E3F2FD;border:1px solid #90CAF9"></div>
+              </div>
+              <div style="display:flex;font-size:9px;color:var(--text3);font-weight:700;margin-top:1px">
+                <div style="flex:1">악덕(0)</div><div style="flex:1;text-align:center">보통(40)</div><div style="flex:1;text-align:center">정직(60)</div><div style="flex:1;text-align:right">명성(80)</div>
+              </div>
+            </div>
+            <div style="font-size:10px;color:var(--text3);margin-top:4px">
+              ${S.reputation>=80?'✨ 손님 방문 +1명 보너스':S.reputation<40?'⚠️ 손님이 줄어들고 있어요':'적정 범위예요'}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderDrawerRapport(){
+  const entries=Object.entries(S.rapport).sort((a,b)=>b[1]-a[1]);
+  if(entries.length===0){
+    return `<div class="empty" style="padding:20px 0">아직 친밀도가 쌓인 손님이 없어요.<br>거래를 성사시키면 친밀도가 올라가요!</div>`;
+  }
+  return `<div class="rapport-list">
+    ${entries.map(([name,val])=>{
+      const cust=getCustByName(name);
+      if(!cust)return'';
+      const grade=getRapportGrade(name);
+      const hasQuest=S.activeQuests.some(q=>q.custName===name&&q.status==='active');
+      const isVip=val>=75,isReg=val>=50;
+      return `<div class="rapport-row${isVip?' vip':isReg?' regular':''}">
+        <span class="rapport-e">${cust.e}</span>
+        <div class="rapport-info">
+          <div class="rapport-name">
+            ${name}
+            <span style="font-size:10px;color:${grade.color};font-weight:800">${grade.label}</span>
+            ${hasQuest?`<span class="quest-badge">의뢰중</span>`:''}
+          </div>
+          <div style="font-size:10px;color:var(--text3)">${cust.wantTags.join(' · ')}</div>
+          <div class="rapport-bar-bg">
+            <div class="rapport-bar-fill" style="width:${val}%;background:${grade.color}"></div>
+          </div>
+        </div>
+        <div class="rapport-grade" style="color:${grade.color}">${val}/100</div>
+      </div>`;
+    }).join('')}
+    <div style="font-size:10px;color:var(--text3);text-align:center;padding:4px">
+      단골후보 25+ · 단골 50+ · VIP 75+ (거래마다 친밀도 상승)
+    </div>
+  </div>`;
+}
+
+function renderDrawerQuest(){
+  const active=S.activeQuests.filter(q=>q.status==='active');
+  const done=S.activeQuests.filter(q=>q.status==='done');
+  const failed=S.activeQuests.filter(q=>q.status==='failed');
+
+  if(S.activeQuests.length===0){
+    return `<div class="empty" style="padding:20px 0">아직 의뢰가 없어요.<br>단골 손님(친밀도 75+)이 되면 특별 의뢰를 받을 수 있어요!</div>`;
+  }
+
+  const renderQ=(q,type)=>{
+    const pct=Math.round(q.delivered/q.qty*100);
+    const daysLeft=q.deadline-S.day;
+    const urgent=daysLeft<=1&&type==='active';
+    const have=S.shopInv.filter(i=>i.id===q.itemId).length;
+    return `<div class="quest-row${type==='active'?' active':type==='done'?' done':' failed'}">
+      <div class="quest-head">
+        <span style="font-size:20px">${q.custE}</span>
+        <div style="flex:1">
+          <div style="font-size:12px;font-weight:800">${q.custName}의 의뢰</div>
+          <div style="font-size:11px;color:var(--text2)">${q.itemE}${q.itemN} ${q.qty}개 납품</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:12px;font-weight:800;color:var(--gold)">${q.reward.toLocaleString()}G</div>
+          ${type==='active'?`<div style="font-size:10px;color:${urgent?'var(--red)':'var(--text3)'}">D-${daysLeft}일${urgent?' ⚠️':''}</div>`:''}
+          ${type==='done'?`<div style="font-size:10px;color:var(--green)">✅ 완료</div>`:''}
+          ${type==='failed'?`<div style="font-size:10px;color:var(--red)">❌ 실패</div>`:''}
+        </div>
+      </div>
+      ${type==='active'?`
+        <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text3);margin-bottom:4px">
+          <span>진행: ${q.delivered}/${q.qty}개</span>
+          <span>·</span>
+          <span>현재 보유: ${have}개</span>
+        </div>
+        <div class="quest-prog-bar"><div class="quest-prog-fill" style="width:${pct}%"></div></div>
+        ${have>0?`<button class="btn btn-sm btn-sun" style="margin-top:7px" onclick="deliverQuest('${q.id}')">📦 납품하기 (${Math.min(have,q.qty-q.delivered)}개)</button>`:''}
+      `:''}
+    </div>`;
+  };
+
+  return `<div class="quest-list">
+    ${active.map(q=>renderQ(q,'active')).join('')}
+    ${done.map(q=>renderQ(q,'done')).join('')}
+    ${failed.map(q=>renderQ(q,'failed')).join('')}
+    <div style="font-size:10px;color:var(--text3);text-align:center;padding-top:2px">
+      의뢰는 친밀도 75(VIP) 달성 시 자동 생성됩니다
+    </div>
+  </div>`;
+}
+
+function renderTabs(){
+  const sun=isSunday(S.day);
+  const p=S.phase2;
+  const explCnt=S.exploredSlots.length;
+  const maxSlots=S.maxExploreSlots;
+  const todayTrend=getTodayTrend(S.day);
+  const tabs=[
+    {id:'explore', l:`🗺️ 탐험${explCnt>0?` (${explCnt}/${maxSlots})`:''}` },
+    {id:'trend',   l:'📈 트렌드'},
+    {id:'craft',   l:'⚗️ 제조'},
+    {id:'shop',    l:sun?'📅 예약':'🏪 상점'},
+  ];
+  return `<div class="tabs">${tabs.map(x=>{
+    const isA=p===x.id||(S.phase==='shop'&&x.id==='shop'&&!S.showDayReport);
+    const isDone=(x.id==='explore'&&explCnt>=maxSlots&&p!=='explore'&&!S.showDayReport)||
+                 (x.id==='craft'&&S.phase==='shop'&&!S.showDayReport);
+    const locked=(S.phase==='shop'&&!S.showDayReport)&&(x.id!=='shop'&&x.id!=='trend');
+    let cls=isA?'tab-active':isDone?'tab-done':'tab-idle';
+    if(locked)cls+=' tab-locked';
+    return `<div class="tab ${cls}" ${!locked?`onclick="setTab('${x.id}')"`:''}>
+      ${isDone?'✓ ':''}${x.l}</div>`;
+  }).join('')}</div>`;
+}
+
+function renderMain(){
+  if(S.showDayReport)return renderDayReport();
+  if(S.phase==='shop')return renderShop();
+  if(S.phase2==='craft')return renderCraft();
+  if(S.phase2==='trend')return renderTrend();
+  if(isSunday(S.day)&&S.phase2==='shop')return renderSundayReservation();
+  return renderExplore();
+}
+
+// ===== 트렌드 렌더 =====
+function renderTrend(){
+  const today=getTodayTrend(S.day);
+  const weekly=getWeeklyTrend(S.day);
+  const weekNum=Math.floor((S.day-1)/7)+1;
+  const weekRefreshIn=7-(S.day-1)%7;
+
+  const tagColor={'전투':'#EF5350','마법':'#7E57C2','회복':'#66BB6A','음식':'#FFA726',
+    '음료':'#29B6F6','일상':'#8D6E63','선물':'#EC407A','농업':'#9CCC65',
+    '희귀':'#FF7043','전설':'#AB47BC'};
+  const tagBg={'전투':'#FFEBEE','마법':'#EDE7F6','회복':'#E8F5E9','음식':'#FFF3E0',
+    '음료':'#E1F5FE','일상':'#EFEBE9','선물':'#FCE4EC','농업':'#F1F8E9',
+    '희귀':'#FBE9E7','전설':'#F3E5F5'};
+
+  const tagBadge=(t,size='12px')=>`<span style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:${size};font-weight:800;background:${tagBg[t]||'var(--bg2)'};color:${tagColor[t]||'var(--text)'};border:1px solid ${tagColor[t]||'var(--border)'}">${t}</span>`;
+
+  const hotRec=getTrendBonus(today.hot);
+  const weekRec=getTrendBonus(weekly);
+
+  // 내일 트렌드 힌트
+  const tomorrowTrend=getTodayTrend(S.day+1);
+
+  return `<div class="panel">
+    <div style="font-size:13px;font-weight:800;margin-bottom:12px;font-family:'Nanum Myeongjo',serif">📈 시장 트렌드</div>
+
+    <!-- 오늘 트렌드 -->
+    <div style="background:var(--gold-light);border:1.5px solid var(--border2);border-radius:var(--radius);padding:12px;margin-bottom:10px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="font-size:11px;font-weight:800;color:var(--gold2)">🔥 오늘의 HOT 태그</div>
+        <div style="font-size:10px;color:var(--text3)">${S.day}일째</div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        ${today.hot.map(t=>`<span>${tagBadge(t,'13px')} <span style="font-size:10px;color:var(--gold2);font-weight:700">수요↑↑</span></span>`).join('')}
+      </div>
+      ${today.cold.length?`<div style="font-size:10px;color:var(--text3);display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+        📉 오늘 수요 낮음:
+        ${today.cold.map(t=>`<span style="opacity:.7">${tagBadge(t,'10px')}</span>`).join('')}
+      </div>`:''}
+      ${hotRec.length?`
+        <div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border2)">
+          <div style="font-size:10px;font-weight:800;color:var(--text3);margin-bottom:5px">💡 오늘 잘 팔릴 아이템</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px">
+            ${hotRec.map(r=>`<span style="background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700">${r.e}${r.n} <span style="color:var(--gold2)">${r.p}G</span></span>`).join('')}
+          </div>
+        </div>
+      `:''}
+    </div>
+
+    <!-- 주간 트렌드 -->
+    <div style="background:var(--purple-light);border:1.5px solid var(--purple);border-radius:var(--radius);padding:12px;margin-bottom:10px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="font-size:11px;font-weight:800;color:var(--purple)">📊 ${weekNum}주차 주간 트렌드</div>
+        <div style="font-size:10px;color:var(--text3)">${weekRefreshIn}일 후 갱신</div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        ${weekly.map(t=>`<span>${tagBadge(t,'12px')} <span style="font-size:10px;color:var(--purple);font-weight:700">이번 주 인기</span></span>`).join('')}
+      </div>
+      ${weekRec.length?`
+        <div style="font-size:10px;font-weight:800;color:var(--text3);margin-bottom:5px">💎 주간 추천 제조</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          ${weekRec.map(r=>`<span style="background:var(--bg);border:1px solid #C5CAE9;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700">${r.e}${r.n} <span style="color:var(--purple)">${r.p}G</span></span>`).join('')}
+        </div>
+      `:''}
+    </div>
+
+    <!-- 내일 예고 -->
+    <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:10px;">
+      <div style="font-size:11px;font-weight:800;color:var(--text2);margin-bottom:7px">🔮 내일 예상 트렌드</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">
+        <span style="font-size:10px;color:var(--text3)">HOT 예상:</span>
+        ${tomorrowTrend.hot.map(t=>tagBadge(t,'11px')).join('')}
+      </div>
+      <div style="font-size:10px;color:var(--text3);margin-top:5px">
+        💡 오늘 밤 미리 제조해두면 내일 잘 팔려요!
+      </div>
+    </div>
+
+    <!-- 탐험 추천 -->
+    <div style="background:var(--green-light);border:1.5px solid var(--green);border-radius:var(--radius);padding:12px;">
+      <div style="font-size:11px;font-weight:800;color:var(--green);margin-bottom:8px">🗺️ HOT 태그 기반 탐험 추천</div>
+      ${(()=>{
+        const hotTags=today.hot;
+        // HOT 태그 아이템 제조에 필요한 재료 목록
+        const neededIngrs=new Set();
+        allRecipes().filter(r=>r.tags.some(t=>hotTags.includes(t))).forEach(r=>{
+          Object.keys(r.cost||{}).forEach(id=>neededIngrs.add(id));
+        });
+        // 해당 재료가 많이 드롭되는 탐험지 추천
+        const locScores=LOCATIONS.map(loc=>{
+          const score=loc.pool.filter(id=>neededIngrs.has(id)).length;
+          return{loc,score};
+        }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,2);
+        if(!locScores.length)return`<div style="font-size:11px;color:var(--text3)">추천 탐험지 없음</div>`;
+        return locScores.map(({loc,score})=>`
+          <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--border)">
+            <span style="font-size:18px">${loc.e}</span>
+            <div style="flex:1">
+              <div style="font-size:12px;font-weight:800">${loc.n}</div>
+              <div style="font-size:10px;color:var(--text3)">관련 재료 ${score}종 드롭</div>
+            </div>
+            <button class="btn btn-sm btn-green" onclick="setTab('explore')">탐험하기</button>
+          </div>
+        `).join('');
+      })()}
+    </div>
+  </div>`;
+}
+
+// ===== 탐험 렌더 =====
+function renderLocCard(loc,slotIdx,doneLocIds){
+  const isAM=slotIdx<2;
+  const bonus=isAM?loc.bonusAM:loc.bonusPM;
+  const dropIngrs=loc.pool.slice(0,4).map(id=>INGR.find(i=>i.id===id)).filter(Boolean);
+  const rareDrop=bonus.ids.map(id=>INGR.find(i=>i.id===id)).filter(Boolean);
+  const isSpecial=!!loc.special;
+  // 오전/오후 보너스 한 줄 설명
+  const amDesc=`🌤️ 오전: ${loc.bonusAM.ids.map(id=>{const i=INGR.find(x=>x.id===id);return i?i.e+i.n:'?';}).join('/')} +${loc.bonusAM.qty[0]}~${loc.bonusAM.qty[1]}개`;
+  const pmDesc=`🌆 오후: ${loc.bonusPM.ids.map(id=>{const i=INGR.find(x=>x.id===id);return i?i.e+i.n:'?';}).join('/')} +${loc.bonusPM.qty[0]}~${loc.bonusPM.qty[1]}개`;
+  const currentBonus=isAM?amDesc:pmDesc;
+  const otherBonus=isAM?pmDesc:amDesc;
+  return `<div class="loc-card${isSpecial?' special':''}" onclick="doExplore('${loc.id}',${slotIdx})">
+    <span class="loc-bonus-badge">${isAM?'🌤️':'🌆'} ${isSpecial?'특별':'보너스'}</span>
+    <div class="loc-top"><span class="loc-e">${loc.e}</span><span class="loc-name">${loc.n}</span></div>
+    <div class="loc-desc">${loc.desc}</div>
+    <div class="loc-drops" style="margin-bottom:6px">
+      ${dropIngrs.map(i=>`<span class="loc-drop loc-drop-${RKCLS[i.r].replace('tag-','')}">${i.e}${i.n}</span>`).join('')}
+    </div>
+    <div style="font-size:10px;font-weight:700;color:var(--purple);background:var(--purple-light);border-radius:5px;padding:3px 7px;margin-bottom:2px">${currentBonus}</div>
+    <div style="font-size:9px;color:var(--text3);padding:1px 2px">${otherBonus}</div>
+  </div>`;
+}
+
+function renderExplore(){
+  const sun=isSunday(S.day);
+  const maxSlots=S.maxExploreSlots;
+  const slotLabels=['🌤️ 오전 1회차','🌤️ 오전 2회차','🌆 오후 1회차','🌆 오후 2회차'];
+  const slots=sun?[0,1,2,3]:[0,1];
+  const doneSlots=new Set(S.exploredSlots.map(s=>s.slot));
+  const locs=sun?[...LOCATIONS,...SUN_LOCATIONS]:LOCATIONS;
+
+  const resultHtml=S.exploredSlots.map(s=>{
+    const loc=locs.find(l=>l.id===s.locId)||{e:'🗺️',n:''};
+    return `<div class="exp-result">
+      <div class="exp-result-hdr">${slotLabels[s.slot]} · ${loc.e} ${loc.n}</div>
+      <div class="found-row">
+        ${s.found.map(i=>`<span class="found-chip${i.isBonus?' bonus':''}${s.discovery?' special':''}">${i.isBonus?'✨':''}${i.e}${i.n} ×${i.qty}</span>`).join('')}
+        ${s.discovery?`<span class="found-chip special">📜 ${s.discovery.recipe.n} 발견!</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div class="panel" style="padding:14px;">
+    ${sun?`<div class="sunday-banner" style="margin-bottom:12px">
+      <div class="sunday-title">☀️ 일요일 자유 탐험</div>
+      <div style="font-size:11px;color:var(--sun);margin-top:2px">오늘은 최대 4번 탐험 가능! 특별 탐험지에서 희귀 레시피를 발견할 수 있어요.</div>
+    </div>`:''}
+    <div style="text-align:center;margin-bottom:12px">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:6px;font-weight:700">오늘 어디로 탐험할까요? (${S.exploredSlots.length}/${maxSlots}회)</div>
+      <div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+        ${slots.map(si=>{
+          const done=doneSlots.has(si);
+          return `<span style="padding:4px 10px;border-radius:12px;font-size:11px;font-weight:800;background:${done?'var(--green-light)':'var(--bg3)'};color:${done?'var(--green)':'var(--text3)'};border:1.5px solid ${done?'var(--green)':'var(--border)'}">
+            ${done?'✓ ':''}${slotLabels[si]}
+          </span>`;
+        }).join('')}
+      </div>
+    </div>
+    ${resultHtml}
+    ${S.exploredSlots.length<maxSlots?`
+      <div style="font-size:11px;font-weight:800;color:var(--text3);margin-bottom:8px;letter-spacing:.5px">
+        ${slotLabels[S.exploredSlots.length]} 장소 선택
+      </div>
+      <div class="loc-grid">
+        ${locs.map(loc=>renderLocCard(loc,S.exploredSlots.length,doneSlots)).join('')}
+      </div>
+    `:''}
+    ${S.exploredSlots.length>0?`
+      <div class="btn-row">
+        <button class="btn btn-gold" onclick="setTab('craft')">⚗️ 제조하러 가기 →</button>
+      </div>
+    `:''}
+  </div>`;
+}
+
+// ===== 제조 렌더 =====
+function renderCraft(){
+  const cat=S.craftCat||'all';
+  const recipes=allRecipes();
+  const filtered=cat==='all'?recipes:recipes.filter(r=>r.cat===cat);
+  const craftable=recipes.filter(r=>canCraft(r,S.ingInv));
+  const crafted=S.shopInv.length;
+
+  return `<div class="panel">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <div class="sec" style="margin-bottom:0">제조 (진열 ${crafted}개 · 가능 ${craftable.length}종)</div>
+    </div>
+    <div class="cat-tabs">
+      ${CAT_DEFS.filter(c=>c.id==='all'||recipes.some(r=>r.cat===c.id)).map(c=>`
+        <div class="cat-tab${cat===c.id?' active':''}" onclick="S.craftCat='${c.id}';render()">${c.label}${c.id!=='all'?` <span style="opacity:.7">(${(c.id==='all'?recipes:recipes.filter(r=>r.cat===c.id)).filter(r=>canCraft(r,S.ingInv)).length})</span>`:''}</div>
+      `).join('')}
+    </div>
+    <div class="craft-list">
+      ${filtered.length===0?`<div class="empty">해당 카테고리 레시피 없음</div>`:filtered.map(r=>{
+        const ok=canCraft(r,S.ingInv);
+        const maxQ=maxCraftable(r,S.ingInv);
+        const curQty=Math.max(1,Math.min(S.craftQty[r.id]||1,Math.max(1,maxQ)));
+        const isSpecial=!!r.sunOnly;
+        return `<div class="craft-row${ok?' can':''}${isSpecial?' special-recipe':''}">
+          <span class="craft-emoji">${r.e}</span>
+          <div class="craft-info">
+            <div class="craft-name">
+              ${r.n}
+              ${isSpecial?`<span class="chip chip-sun">✨특별</span>`:''}
+            </div>
+            <div class="craft-cost">${(()=>{
+            const rawParts=Object.entries(r.cost||{}).map(([id,q])=>{
+              const ing=byId(INGR,id);if(!ing)return'';
+              const have=S.ingInv[id]||0;
+              const need=q*(ok?curQty:1);
+              const ok2=have>=need;
+              return `<span style="font-size:10px;font-weight:700;color:${ok2?'var(--text3)':'var(--red)'}">${ing.e}${ing.n}×${need}${ok2?'':` (${have}개)`}</span>`;
+            });
+            const craftedParts=Object.entries(r.craftedCost||{}).map(([cid,q])=>{
+              const ri=byId(allRecipes(),cid);if(!ri)return'';
+              const have=S.shopInv.filter(s=>s.id===cid).length;
+              const need=q*(ok?curQty:1);
+              const ok2=have>=need;
+              return `<span class="craft-mat-item${ok2?'':' miss'}">${ri.e}${ri.n} ×${need}${ok2?'':` (${have}개)`}</span>`;
+            });
+            return [...rawParts,...craftedParts].join(' ');
+          })()}</div>
+            <div class="craft-tags">${r.tags.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+          </div>
+          <div class="craft-price">${r.p}G</div>
+          <div class="craft-qty-wrap">
+            ${ok&&maxQ>1?`
+              <input type="range" class="craft-slider" min="1" max="${maxQ}" value="${curQty}"
+                oninput="setCraftQty('${r.id}',this.value)">
+              <div class="craft-qty-row">
+                <button class="btn btn-sm" style="padding:3px 7px" onclick="setCraftQty('${r.id}',Math.max(1,(S.craftQty['${r.id}']||1)-1))">−</button>
+                <span class="craft-qty-num">${curQty}</span>
+                <button class="btn btn-sm" style="padding:3px 7px" onclick="setCraftQty('${r.id}',Math.min(${maxQ},(S.craftQty['${r.id}']||1)+1))">＋</button>
+              </div>
+            `:`<span style="font-size:10px;color:var(--text3)">×${ok?curQty:1}</span>`}
+            <button class="btn btn-sm${ok?' btn-purple':''}" ${ok?'':'disabled'} onclick="doCraft('${r.id}')">
+              ${ok?`⚗️ ×${curQty} 제조`:'재료 부족'}
+            </button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="btn-row">
+      ${S.exploredSlots.length<S.maxExploreSlots?`<button class="btn" onclick="setTab('explore')">← 탐험하기</button>`:''}
+      <button class="btn btn-gold" onclick="openShop()">🏪 상점 열기 (${crafted}개 진열)</button>
+    </div>
+  </div>`;
+}
+
+// ===== 손님 큐 패널 =====
+function renderQueuePanel(){
+  const q=S.custQueue;
+  if(!q||q.length===0)return'';
+  const doneCount=S.doneIdxs.size,waitCount=q.length-doneCount;
+  const rows=q.map((c,i)=>{
+    const isDone=S.doneIdxs.has(i),isCur=i===S.custCurIdx&&S.cust,isPrev=S.previewIdx===i;
+    const wanted=getCustWants(c,S.shopInv);
+    let cls='qrow';
+    if(isDone)cls+=' qrow-done';else if(isCur)cls+=' qrow-current';else if(isPrev)cls+=' qrow-preview';
+    const matchChips=wanted.slice(0,2).map(it=>`<span style="font-size:9px;background:var(--gold-light);border:1px solid var(--border2);border-radius:6px;padding:1px 5px;color:var(--gold2);font-weight:700">${it.e}${it.n}</span>`).join('');
+    const statusTxt=isDone?'✓':isCur?'▶':`${i+1}`;
+    const statusCls=isDone?'status-done':isCur?'status-cur':'status-wait';
+    return `<div class="${cls}" ${(!isDone&&!isCur)?`onclick="setPreview(${i})"`:''}>
+      <span class="qrow-e">${c.e}</span>
+      <div class="qrow-info">
+        <div class="qrow-name">${c.n}</div>
+        <div class="qrow-tags">${c.wantTags.join(' · ')} · ${c.char}</div>
+        ${wanted.length>0?`<div class="qrow-match">${matchChips}${wanted.length>2?`<span style="font-size:9px;color:var(--text3)">+${wanted.length-2}</span>`:''}</div>`:''}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+        <span class="qrow-status ${statusCls}">${statusTxt}</span>
+        ${(!isDone&&!isCur)?`<button class="btn btn-sm btn-purple" style="padding:3px 7px;font-size:10px" onclick="event.stopPropagation();jumpToCust(${i})">↩먼저</button>`:''}
+      </div>
+    </div>`;
+  }).join('');
+
+  let previewHtml='';
+  if(S.previewIdx!==null&&!S.doneIdxs.has(S.previewIdx)&&S.previewIdx!==S.custCurIdx){
+    const pc=S.custQueue[S.previewIdx];
+    const pw=getCustWants(pc,S.shopInv);
+    const bestItems=S.shopInv.map(item=>{
+      const isW=pw.some(w=>w.uid===item.uid);
+      return{...item,isW,estPrice:Math.round(item.p*(isW?pc.budMax:pc.bud))};
+    }).sort((a,b)=>b.estPrice-a.estPrice);
+    previewHtml=`<div class="preview-panel">
+      <div style="font-size:11px;font-weight:800;color:var(--gold2);margin-bottom:6px">🔍 ${pc.e}${pc.n} — 예상 구매가</div>
+      <div class="preview-items">
+        ${bestItems.map(it=>`<div class="preview-item${it.isW?' best':''}">
+          ${it.e} ${it.n} <span style="color:var(--gold2);font-weight:800">~${it.estPrice}G</span>${it.isW?'★':''}
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  return `${previewHtml}
+    <div class="qpanel">
+      <div class="qpanel-hdr" onclick="toggleQueue()">
+        <div class="qpanel-hdr-left">👥 오늘 손님 <span style="background:var(--purple-light);color:var(--purple);border-radius:8px;padding:1px 7px;font-size:10px">${waitCount}명 대기 · ${doneCount}명 완료</span></div>
+        <span style="font-size:11px;color:var(--text3)">${S.queueOpen?'▲':'▼'}</span>
+      </div>
+      ${S.queueOpen?`<div class="qpanel-body"><div class="qlist">${rows}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:6px;text-align:center">클릭→미리보기 · [↩먼저]→순서변경</div>
+      </div>`:''}
+    </div>`;
+}
+
+// ===== 상점 렌더 =====
+function renderShop(){
+  const sun=isSunday(S.day);
+  if(!S.cust&&!S.showDayReport){
+    // 영업 종료 후 → 리포트로
+    return renderDayReport();
+  }
+  const wantedItems=getCustWants(S.cust||{wantTags:[]},S.shopInv);
+  const wantedUids=new Set(wantedItems.map(i=>i.uid));
+  const selItem=S.shopInv.find(i=>i.uid===S.selUid);
+
+  return `
+    ${renderQueuePanel()}
+    <div class="panel">
+      <div class="custcard">
+        <div class="chead">
+          <span class="ce">${S.cust.e}</span>
+          <div style="flex:1">
+            <div class="cn">${S.cust.n}${S.todayReservations.some(r=>r.cust===S.cust)?'<span style="font-size:10px;background:#E3F2FD;color:#1565C0;border-radius:6px;padding:1px 6px;margin-left:5px">📅예약</span>':''}</div>
+            <div class="cnote">${S.cust.note}</div>
+            <div style="margin-top:3px">${S.cust.wantTags.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+          </div>
+          <div style="text-align:right;font-size:11px;color:var(--text3)">${S.doneIdxs.size}/${S.maxCusts}명</div>
+        </div>
+        ${wantedItems.length>0
+          ?`<div class="cbubble">⭐ ${wantedItems.slice(0,3).map(i=>`${i.e}${i.n}`).join(', ')}${wantedItems.length>3?' 외 '+(wantedItems.length-3)+'개':''}</div>`
+          :'<div class="cbubble">특별히 원하는 게 없는 것 같아요.</div>'}
+      </div>
+
+      <div class="sec">상품 선택</div>
+      ${S.shopInv.length===0?`<div class="empty">진열된 상품 없음</div>`:`
+        <div class="igrid">
+          ${S.shopInv.map(item=>{
+            const isWanted=wantedUids.has(item.uid),isSel=S.selUid===item.uid;
+            return `<div class="scard${isSel?' sel':isWanted?' wanted':''}" onclick="selItem(${item.uid})">
+              <span class="ie">${item.e}</span>
+              <span class="in">${item.n}</span>
+              <span class="is">${item.p}G</span>
+              ${isWanted?`<span style="font-size:9px;color:var(--gold);font-weight:700">★원함</span>`:''}
+            </div>`;
+          }).join('')}
+        </div>
+      `}
+
+      ${S.selUid&&selItem?`
+        <div class="bargain-panel">
+          <div style="font-size:12px;font-weight:800;color:var(--purple);margin-bottom:6px">💜 ${selItem.e}${selItem.n} 흥정</div>
+          ${S.custOffer>0?`<div class="offer-badge">💬 손님 예상 지불 한도: ~${S.custOffer}G</div>`:''}
+          <div class="pricerow" style="margin-top:7px">
+            <span style="font-size:12px;font-weight:700">판매가</span>
+            <input id="pin" class="pin" type="number" min="1" value="${S.priceVal}">
+            <span style="font-weight:700">G</span>
+            <button class="btn btn-gold btn-sm" onclick="trySell()">판매!</button>
+            <button class="btn btn-sm" onclick="selItem(${S.selUid})" style="color:var(--text3)">취소</button>
+          </div>
+          <div class="bm-wrap" id="bm-wrap">
+            ${renderBargainMeter(parseInt(S.priceVal)||0, S.custOffer, selItem.p)}
+          </div>
+        </div>
+      `:`<div style="font-size:11px;color:var(--text3);text-align:center;padding:8px">아이템을 클릭해 선택 후 가격을 제시하세요</div>`}
+
+      <div class="end-btn-wrap">
+        <button class="btn btn-sm" onclick="skipCust()">내보내기 →</button>
+        <button class="btn btn-red btn-sm" onclick="endBusiness()">🌙 영업 종료</button>
+      </div>
+    </div>`;
+}
+
+// ===== 일요일 예약 탭 =====
+function renderSundayReservation(){
+  const nextNonSun=[...Array(7)].map((_,i)=>S.day+1+i).find(d=>!isSunday(d))||S.day+1;
+  return `<div class="panel">
+    <div class="sunday-banner" style="margin-bottom:12px">
+      <div class="sunday-title">☀️ 오늘은 일요일</div>
+      <div style="font-size:11px;color:var(--sun);margin-top:3px">상점은 오픈하지 않지만 예약 손님을 받을 수 있어요.<br>예약 손님은 ${nextNonSun}일(다음 평일)에 방문합니다.</div>
+    </div>
+    <div class="sec">예약 손님 접수 — ${nextNonSun}일 방문</div>
+    <div class="craft-list">
+      ${CUSTS.map((c,i)=>`
+        <div class="craft-row" style="align-items:center">
+          <span style="font-size:26px">${c.e}</span>
+          <div class="craft-info">
+            <div class="craft-name">${c.n}</div>
+            <div class="craft-cost">${c.note}</div>
+            <div class="craft-tags">${c.wantTags.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+          </div>
+          <button class="btn btn-sm btn-sun" onclick="takeReservation(${i})">📅 예약</button>
+        </div>
+      `).join('')}
+    </div>
+    ${S.reservations.filter(r=>r.day>=S.day).length>0?`
+      <div style="margin-top:12px">
+        <div class="sec">예약 현황</div>
+        ${S.reservations.filter(r=>r.day>=S.day).map(r=>`
+          <div class="reservation-row">${r.cust.e} ${r.cust.n} <span style="color:var(--blue);font-weight:700">${r.day}일 방문</span> · ${r.cust.wantTags.join(', ')}</div>
+        `).join('')}
+      </div>
+    `:''}
+  </div>`;
+}
+
+// ===== 영업 종료 리포트 =====
+function renderDayReport(){
+  const sales=S.todaySalesLog||[];
+  const totalRevenue=sales.reduce((a,s)=>a+s.price,0);
+  const visited=S.custQueue||[];
+  // 오늘 손님 니즈 집계
+  const needsMap={};
+  visited.forEach(c=>{c.wantTags.forEach(t=>{needsMap[t]=(needsMap[t]||0)+1;});});
+  const sortedNeeds=Object.entries(needsMap).sort((a,b)=>b[1]-a[1]);
+
+  // 내일 힌트
+  const hints=S.tomorrowHints||[];
+  const sun=isSunday(S.day);
+
+  return `<div>
+    <div class="report-panel">
+      <div class="report-title">🌙 오늘의 영업 결과 · ${S.day}일째</div>
+
+      <div class="report-section">
+        <div class="report-sec-title">📊 오늘 판매 요약</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+          <div style="background:var(--gold-light);border:1px solid var(--border2);border-radius:8px;padding:8px 14px;text-align:center">
+            <div style="font-size:10px;color:var(--text3)">오늘 수입</div>
+            <div style="font-size:18px;font-weight:800;color:var(--gold)">${totalRevenue.toLocaleString()}G</div>
+          </div>
+          <div style="background:var(--green-light);border:1px solid var(--green);border-radius:8px;padding:8px 14px;text-align:center">
+            <div style="font-size:10px;color:var(--text3)">방문/판매</div>
+            <div style="font-size:18px;font-weight:800;color:var(--green)">${visited.length}명 / ${sales.length}건</div>
+          </div>
+        </div>
+        ${sales.length>0?sales.map(s=>`
+          <div class="cust-recap-row">
+            <span class="cust-recap-e">${s.cust.e}</span>
+            <span style="flex:1">${s.cust.n}</span>
+            <span>${s.item.e}${s.item.n}</span>
+            <span style="color:var(--gold2);font-weight:800">${s.price}G</span>
+          </div>
+        `).join(''):'<div style="font-size:12px;color:var(--text3)">판매 없음</div>'}
+      </div>
+
+      <div class="report-section">
+        <div class="report-sec-title">🧩 오늘 손님 니즈 분석</div>
+        ${visited.length>0?`
+          <div style="margin-bottom:8px">
+            ${sortedNeeds.map(([tag,cnt])=>`<span class="tag-need">${tag} ×${cnt}</span>`).join('')}
+          </div>
+          <div class="craft-list" style="gap:5px">
+            ${visited.map(c=>`<div class="cust-recap-row">
+              <span class="cust-recap-e">${c.e}</span>
+              <span style="flex:1;font-weight:700">${c.n}</span>
+              <span style="color:var(--text3);font-size:10px">${c.wantTags.join(' · ')}</span>
+              ${S.doneIdxs.has(S.custQueue.indexOf(c))?'<span style="color:var(--green);font-size:10px">✓구매</span>':'<span style="color:var(--text3);font-size:10px">미구매</span>'}
+            </div>`).join('')}
+          </div>
+        `:'<div style="font-size:12px;color:var(--text3)">손님 없음</div>'}
+      </div>
+
+      <div class="report-section">
+        <div class="report-sec-title">🔭 내일 손님 힌트</div>
+        ${hints.length===0?`<div style="font-size:12px;color:var(--text3)">힌트 없음</div>`:''}
+        ${hints.some(h=>h.type==='sunday')?`
+          <div class="hint-row"><span class="hint-icon">☀️</span><span>${hints.find(h=>h.type==='sunday').msg}</span></div>
+        `:''}
+        ${hints.filter(h=>h.type==='reservation').map(h=>`
+          <div class="reservation-row">
+            <span style="font-size:16px">${h.cust.e}</span>
+            <span>${h.cust.n} <b>예약 방문</b> 예정</span>
+            <span style="font-size:10px;color:var(--text3)">${h.cust.wantTags.join(', ')}</span>
+          </div>
+        `).join('')}
+        ${hints.filter(h=>h.type==='cust').length>0?`
+          <div class="hint-row">
+            <span class="hint-icon">💡</span>
+            <div>
+              <div style="font-weight:800;margin-bottom:4px">내일 예상 손님 ${hints.filter(h=>h.type==='cust').length}명</div>
+              <div style="display:flex;flex-wrap:wrap;gap:5px">
+                ${hints.filter(h=>h.type==='cust').map(h=>`
+                  <span style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:3px 8px;font-size:11px">${h.cust.e}${h.cust.n} <span style="color:var(--text3)">(${h.cust.wantTags.join('/')})</span></span>
+                `).join('')}
+              </div>
+              <div style="margin-top:6px;font-size:10px;color:var(--text3)">
+                💎 내일 필요 태그: ${[...new Set(hints.filter(h=>h.type==='cust').flatMap(h=>h.cust.wantTags))].map(t=>`<span class="tag-need">${t}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+        `:''}
+      </div>
+
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding-top:6px">
+        <button class="btn btn-gold btn-lg" onclick="nextDay()">🌅 다음 날로 →</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ===== 흥정 게이지 =====
+function renderBargainMeter(price, maxPay, baseP){
+  if(!price||!maxPay)return`<div style="font-size:11px;color:var(--text3)">금액을 입력하면 분석이 표시됩니다.</div>`;
+  const pct=Math.round(price/maxPay*100);
+  const clampedPct=Math.min(pct,150); // 바 표시용 cap
+  const barW=Math.min(clampedPct,100); // 바 너비 max 100%
+
+  // 구간별 색상·이모지·메시지
+  let barColor,emoji,warnCls,warnMsg;
+  if(pct<=0){
+    barColor='#ccc';emoji='❓';warnCls='bm-low';warnMsg='가격을 입력해 주세요.';
+  } else if(pct<=60){
+    barColor='#42A5F5';emoji='😅';warnCls='bm-low';
+    warnMsg=`많이 싸게 파는 거예요! 기준가(${baseP}G)의 ${Math.round(price/baseP*100)}%입니다.`;
+  } else if(pct<=85){
+    barColor='#66BB6A';emoji='🙂';warnCls='bm-ok';
+    warnMsg='적정 가격이에요. 손님이 흔쾌히 살 것 같아요.';
+  } else if(pct<=100){
+    barColor='#FFA726';emoji='😤';warnCls='bm-ok';
+    warnMsg=`손님 한도의 ${pct}%. 아슬아슬하지만 거래될 거예요!`;
+  } else if(pct<=120){
+    barColor='#EF5350';emoji='😠';warnCls='bm-high';
+    warnMsg=`⚠️ 한도 초과 ${pct}%! 손님이 거절할 거예요.`;
+  } else {
+    barColor='#B71C1C';emoji='🤬';warnCls='bm-over';
+    warnMsg=`🚨 완전 바가지! 한도의 ${pct}%로 손님이 화낼 수 있어요.`;
+  }
+
+  // 게이지 내 마커 위치 (100% 위치)
+  const markerLeft=Math.min(100,Math.round(100/Math.min(clampedPct+20,150)*100));
+
+  return `
+    <div class="bm-row">
+      <span class="bm-emoji">${emoji}</span>
+      <div class="bm-label">내 가격: <b>${price.toLocaleString()}G</b> / 손님 한도: ~${maxPay.toLocaleString()}G</div>
+      <span class="bm-pct" style="color:${pct>100?'var(--red)':pct>85?'var(--sun)':'var(--green)'}">${pct}%</span>
+    </div>
+    <div class="bm-bar-bg">
+      <div class="bm-bar-fill" style="width:${barW}%;background:${barColor}"></div>
+      <div class="bm-mark" style="left:${Math.min(95,Math.round(maxPay/(maxPay*1.5)*100))}%"></div>
+    </div>
+    <div class="bm-zones">
+      <div class="bm-zone" style="width:60%">💙 저렴</div>
+      <div class="bm-zone" style="width:25%">💚 적정</div>
+      <div class="bm-zone" style="width:15%">🔴 초과</div>
+    </div>
+    <div class="bm-warn ${warnCls}">${warnMsg}</div>
+  `;
+}
+
+function updateBargainMeter(){
+  const wrap=document.getElementById('bm-wrap');
+  if(!wrap)return;
+  const price=parseInt(S.priceVal)||0;
+  const item=S.shopInv.find(i=>i.uid===S.selUid);
+  if(!item)return;
+  wrap.innerHTML=renderBargainMeter(price,S.custOffer,item.p);
+}
+
+function renderIngInv(){
+  const items=INGR.filter(i=>(S.ingInv[i.id]||0)>0);
+  return `<div>
+    <div class="panel" style="margin-bottom:8px">
+      <div class="sec">재료 창고</div>
+      ${items.length===0?`<div class="empty">재료 없음</div>`:`
+        <div class="igrid">
+          ${items.map(i=>`<div class="icard">
+            <span class="ie">${i.e}</span>
+            <span class="in">${i.n}</span>
+            <span class="is ${RKCLS[i.r]}" style="border-radius:8px;padding:0 4px;display:inline-block">${RLBL[i.r]}</span>
+            <span class="is"><b>×${S.ingInv[i.id]}</b></span>
+          </div>`).join('')}
+        </div>
+      `}
+    </div>
+    ${S.shopInv.length>0?`<div class="panel">
+      <div class="sec">진열 상품 (${S.shopInv.length})</div>
+      <div class="igrid">
+        ${S.shopInv.map(i=>`<div class="icard"><span class="ie">${i.e}</span><span class="in">${i.n}</span><span class="is">${i.p}G</span></div>`).join('')}
+      </div>
+    </div>`:''}
+  </div>`;
+}
+
+function renderLog(){
+  return `<div class="log">
+    <div class="sec">로그</div>
+    ${S.msgs.map((m,idx)=>`<div class="logitem" style="opacity:${Math.max(0.25,1-idx*.12)}">${m}</div>`).join('')}
+  </div>`;
+}
+
+function renderOver(){
+  if(S.won)return `<div class="panel over">
+    <div class="over-emoji">🎉</div>
+    <div class="over-title" style="color:var(--gold)">목표 달성!</div>
+    <div class="over-sub">${S.day}일 만에 ${S.goal.toLocaleString()}G 달성!<br>최종: <b>${S.gold.toLocaleString()}G</b></div>
+    <button class="btn btn-gold btn-lg" onclick="unlockedSpecial=new Set();S=newState();render()">🔄 다시 플레이</button>
+  </div>`;
+  return `<div class="panel over">
+    <div class="over-emoji">😔</div>
+    <div class="over-title">기간 종료</div>
+    <div class="over-sub">${S.maxDays}일이 지났지만 목표 미달성.<br>최종: <b>${S.gold.toLocaleString()}G</b> / ${S.goal.toLocaleString()}G</div>
+    <button class="btn btn-gold btn-lg" onclick="unlockedSpecial=new Set();S=newState();render()">🔄 다시 도전</button>
+  </div>`;
+}
+
+function render(){
+  const el=document.getElementById('G');
+  if(!el)return;
+  if(S.gameOver){el.innerHTML=renderOver();return;}
+  const sun=isSunday(S.day);
+  // 일요일 상점탭 = 예약 탭
+  const mainHtml=S.showDayReport?renderDayReport():
+                 S.phase==='shop'?renderShop():
+                 S.phase2==='craft'?renderCraft():
+                 (sun&&S.phase2==='shop')?renderSundayReservation():
+                 renderExplore();
+  el.innerHTML=`
+    ${renderHdr()}
+    ${renderTabs()}
+    ${mainHtml}
+    <div class="bot">${renderIngInv()}${renderLog()}</div>
+  `;
+  const pi=document.getElementById('pin');
+  if(pi){
+    pi.value=S.priceVal;
+    pi.oninput=e=>{S.priceVal=e.target.value;updateBargainMeter();};
+    pi.onkeydown=e=>{if(e.key==='Enter')trySell();};
+    pi.focus();pi.select();
+  }
+}
+
+render();
+</script>
+</body>
+</html>
