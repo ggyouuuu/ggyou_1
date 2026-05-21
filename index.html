@@ -308,8 +308,11 @@ const INGR=[
   {id:'crystal',  e:'💎',n:'수정',        r:2,dropMin:1,dropMax:2},
   {id:'stardust', e:'✨',n:'별가루',      r:2,dropMin:1,dropMax:1},
   {id:'moonstone',e:'🌙',n:'달빛석',      r:2,dropMin:1,dropMax:1},
+  // 시간대 전용 특수 재료 (일반 픽에서 제외, 특수 시간대에만 드랍)
+  {id:'dawndew',  e:'🌫️',n:'새벽이슬',   r:2,dropMin:1,dropMax:2}, // 새벽 전용
+  {id:'twilight', e:'🌇',n:'황혼석',      r:2,dropMin:1,dropMax:2}, // 저녁 전용
 ];
-const IW=[50,50,40,38,42,38,30,40,38,18,15,12,8,6,5];
+const IW=[50,50,40,38,42,38,30,40,38,18,15,12,8,6,5,0,0]; // dawndew/twilight는 0=일반픽 제외
 const IWT=IW.reduce((a,b)=>a+b,0);
 const RLBL=['일반','희귀','전설'];
 const RKCLS=['tag-c','tag-u','tag-r'];
@@ -357,6 +360,12 @@ const RECIPES=[
   {id:'moon2',  e:'🌙',n:'달빛 부적',    cat:'magic',  cost:{moonstone:1,stardust:1},   p:185, tags:['마법','전설'],  unlockLv:4},
   {id:'shadow3',e:'🌑',n:'어둠의 결정',  cat:'magic',  cost:{shadow:2,moonstone:1},     p:200, tags:['마법','전설'],  unlockLv:4},
   {id:'super',  e:'⚗️',n:'슈퍼 포션',    cat:'potion', cost:{herb:1,crystal:1,water:1}, p:160, tags:['전투','회복'],  unlockLv:4},
+
+  // ── 시간대 전용 재료 레시피 (새벽이슬/황혼석)
+  {id:'dawndew_p',e:'🌫️',n:'새벽이슬 포션', cat:'potion',cost:{dawndew:1,herb:1},        p:185, tags:['회복','희귀'],  unlockLv:1},
+  {id:'dawndew_c',e:'💠', n:'새벽의 결정',   cat:'magic', cost:{dawndew:1,crystal:1},     p:210, tags:['마법','희귀'],  unlockLv:2},
+  {id:'twilight_g',e:'🌇',n:'황혼의 보석',   cat:'magic', cost:{twilight:1,crystal:1},    p:225, tags:['마법','전설'],  unlockLv:1},
+  {id:'twilight_b',e:'🌑',n:'황혼 폭탄',     cat:'battle',cost:{twilight:1,flame:1},      p:195, tags:['전투','희귀'],  unlockLv:2},
 ];
 
 const SPECIAL_RECIPES=[
@@ -486,6 +495,9 @@ const CUST_ARCHETYPES=[
   },
 ];
 
+// 일요일 최대 예약 손님 수
+const MAX_SUN_RESERVATIONS=3;
+
 // 손님 인스턴스 생성 — 아키타입에서 이름 뽑기
 // usedNames: 오늘 이미 뽑힌 이름 Set (중복 방지)
 function makeCust(archetype, usedNames){
@@ -552,29 +564,39 @@ const LOCATIONS=[
 
 // 평일 슬롯 정의 (2개)
 const WEEKDAY_SLOTS=[
-  {idx:0, label:'🌤️ 오전', badge:'오전', color:'#E65100', bg:'#FFF3E0', bonusKey:'bonusAM'},
-  {idx:1, label:'🌆 오후', badge:'오후', color:'#5B4FCF', bg:'#EDE8FE', bonusKey:'bonusPM'},
+  {idx:0, label:'🌤️ 오전', badge:'오전', color:'#E65100', bg:'#FFF3E0', bonusKey:'bonusAM',
+   desc:'오전의 신선한 공기 속에서 재료를 채집해요.'},
+  {idx:1, label:'🌆 오후', badge:'오후', color:'#5B4FCF', bg:'#EDE8FE', bonusKey:'bonusPM',
+   desc:'오후엔 희귀 재료가 더 잘 나와요.'},
 ];
 
-// 일요일 슬롯 정의 (4개) — 각 시간대마다 다른 보너스 키
+// 추가 탐험(상점 포기) 전용 저녁 슬롯
+const BONUS_NIGHT_SLOT={
+  idx:2, label:'🌇 저녁', badge:'저녁', color:'#6A1B9A', bg:'#F3E5F5', bonusKey:'bonusPM',
+  desc:'저녁의 어스름 속 희귀 재료와 황혼석이 깨어나요.',
+  isSpecialTime:true,
+};
+
+// 일요일 슬롯 정의 (4개) — 새벽/오전/오후/저녁
 const SUNDAY_SLOTS=[
   {idx:0, label:'🌙 새벽', badge:'새벽', color:'#283593', bg:'#E8EAF6', bonusKey:'bonusDawn',
-   desc:'고요한 새벽, 희귀 재료 출현 확률이 높아요.'},
-  {idx:1, label:'🌅 아침', badge:'아침', color:'#E65100', bg:'#FFF3E0', bonusKey:'bonusMorn',
+   desc:'고요한 새벽, 희귀 재료와 새벽이슬이 맺혀요.', isSpecialTime:true},
+  {idx:1, label:'🌤️ 오전', badge:'오전', color:'#E65100', bg:'#FFF3E0', bonusKey:'bonusMorn',
    desc:'아침 햇살 아래 신선한 재료가 풍부해요.'},
-  {idx:2, label:'🌞 오후', badge:'오후', color:'#F9A825', bg:'#FFFDE7', bonusKey:'bonusAftn',
+  {idx:2, label:'🌆 오후', badge:'오후', color:'#F9A825', bg:'#FFFDE7', bonusKey:'bonusAftn',
    desc:'오후의 따뜻한 빛 속에서 마법 재료가 반짝여요.'},
   {idx:3, label:'🌇 저녁', badge:'저녁', color:'#6A1B9A', bg:'#F3E5F5', bonusKey:'bonusEve',
-   desc:'석양이 지면 전설 재료가 깨어나요.'},
+   desc:'석양이 지면 황혼석과 전설 재료가 깨어나요.', isSpecialTime:true},
 ];
 
 // 슬롯 인덱스 → 보너스 키 매핑 헬퍼
 function getSlotBonus(loc, slotIdx, isSun){
-  if(!isSun) return slotIdx===0 ? loc.bonusAM : loc.bonusPM;
+  if(!isSun) return slotIdx===0 ? loc.bonusAM : loc.bonusPM; // idx 0→AM, idx 1,2→PM
   const keys=['bonusDawn','bonusMorn','bonusAftn','bonusEve'];
-  return loc[keys[slotIdx]] || loc.bonusAM; // fallback
+  return loc[keys[slotIdx]] || loc.bonusAM;
 }
 function getSlotInfo(slotIdx, isSun){
+  if(!isSun && slotIdx===2) return BONUS_NIGHT_SLOT;
   return isSun ? SUNDAY_SLOTS[slotIdx] : WEEKDAY_SLOTS[slotIdx];
 }
 
@@ -683,6 +705,9 @@ function newState(){
     sunDiscoveries:[],
     drawerOpen:false,
     drawerTab:'shop',
+    sunResCount:0,       // 이번 일요일 예약 횟수
+    bonusExplore:false,  // 평일 추가 탐험 사용 (상점 포기)
+    wholesaleOffer:null, // 도매 제안 { items, priceMap, total }
     gameOver:false, won:false,
   };
 }
@@ -802,7 +827,22 @@ function checkQuestDeadlines(){
 
 // ===== 탐험 =====
 function pickWeighted(pool){
-  const entries=pool.map(id=>{const idx=INGR.findIndex(i=>i.id===id);return{id,ing:INGR[idx],w:idx>=0?IW[idx]:10};}).filter(e=>e.ing);
+  const entries=pool.map(id=>{const idx=INGR.findIndex(i=>i.id===id);return{id,ing:INGR[idx],w:idx>=0?IW[idx]:10};}).filter(e=>e.ing&&e.w>0);
+  const total=entries.reduce((a,e)=>a+e.w,0);
+  let r=Math.random()*total,acc=0;
+  for(const e of entries){acc+=e.w;if(r<acc)return e.ing;}
+  return entries[entries.length-1].ing;
+}
+
+// 새벽/저녁 전용: 희귀 아이템 가중치 3배
+function pickWeightedBoosted(pool){
+  const entries=pool.map(id=>{
+    const idx=INGR.findIndex(i=>i.id===id);
+    const ing=INGR[idx];
+    if(!ing||IW[idx]===0)return null;
+    const w=IW[idx]*(ing.r===2?3:ing.r===1?1.8:1);
+    return{id,ing,w};
+  }).filter(Boolean);
   const total=entries.reduce((a,e)=>a+e.w,0);
   let r=Math.random()*total,acc=0;
   for(const e of entries){acc+=e.w;if(r<acc)return e.ing;}
@@ -811,7 +851,7 @@ function pickWeighted(pool){
 
 function doExplore(locId,slotIdx){
   const sun=isSunday(S.day);
-  const maxSlots=sun?4:2;
+  const maxSlots=sun?4:(S.bonusExplore?3:2);
   if(S.exploredSlots.length>=maxSlots){log('⚠️ 오늘 탐험 횟수를 모두 사용했습니다!');render();return;}
   if(S.exploredSlots.some(s=>s.slot===slotIdx)){log('⚠️ 이미 탐험한 시간대입니다!');render();return;}
 
@@ -819,17 +859,28 @@ function doExplore(locId,slotIdx){
   const loc=locs.find(l=>l.id===locId);
   if(!loc)return;
 
+  // 새벽/저녁 판별
+  const isDawn=sun&&slotIdx===0;
+  const isEve=(sun&&slotIdx===3)||(!sun&&slotIdx===2);
+  const isSpecialTime=isDawn||isEve;
+
   const found=[],foundMap={};
   const slotInfo=getSlotInfo(slotIdx,sun);
   const bonus=getSlotBonus(loc,slotIdx,sun);
-  const numTypes=3+Math.floor(Math.random()*3);
+
+  // 특수 시간대: 드랍 종류 +1~2개, 부스트 픽
+  const numTypes=isSpecialTime?(4+Math.floor(Math.random()*3)):(3+Math.floor(Math.random()*3));
+  const picker=isSpecialTime?pickWeightedBoosted:pickWeighted;
+
   for(let i=0;i<numTypes;i++){
-    const ing=pickWeighted(loc.pool);
+    const ing=picker(loc.pool);
     const qty=ing.dropMin+Math.floor(Math.random()*(ing.dropMax-ing.dropMin+1));
     S.ingInv[ing.id]=(S.ingInv[ing.id]||0)+qty;
     if(foundMap[ing.id])foundMap[ing.id].qty+=qty;
     else{foundMap[ing.id]={...ing,qty};found.push(foundMap[ing.id]);}
   }
+
+  // 시간대 보너스 아이템
   const bonusId=bonus.ids[Math.floor(Math.random()*bonus.ids.length)];
   const bonusIng=INGR.find(i=>i.id===bonusId);
   if(bonusIng){
@@ -840,7 +891,29 @@ function doExplore(locId,slotIdx){
     else{foundMap[bonusIng.id]={...bonusIng,qty:bqty,isBonus:true};found.push(foundMap[bonusIng.id]);}
   }
 
-  // 일요일 특별 장소: 레시피 발견 or 특별 아이템 찾기
+  // 새벽 전용: 새벽이슬 드랍 (확률 70%)
+  if(isDawn&&Math.random()<0.70){
+    const ddi=INGR.find(i=>i.id==='dawndew');
+    if(ddi){
+      const qty=1+Math.floor(Math.random()*2);
+      S.ingInv['dawndew']=(S.ingInv['dawndew']||0)+qty;
+      if(foundMap['dawndew'])foundMap['dawndew'].qty+=qty;
+      else{foundMap['dawndew']={...ddi,qty,isSpecialDrop:true};found.push(foundMap['dawndew']);}
+    }
+  }
+
+  // 저녁 전용: 황혼석 드랍 (확률 70%)
+  if(isEve&&Math.random()<0.70){
+    const twi=INGR.find(i=>i.id==='twilight');
+    if(twi){
+      const qty=1+Math.floor(Math.random()*2);
+      S.ingInv['twilight']=(S.ingInv['twilight']||0)+qty;
+      if(foundMap['twilight'])foundMap['twilight'].qty+=qty;
+      else{foundMap['twilight']={...twi,qty,isSpecialDrop:true};found.push(foundMap['twilight']);}
+    }
+  }
+
+  // 일요일 특별 장소: 레시피 발견
   let discovery=null;
   if(loc.special&&Math.random()<0.55){
     const notYet=SPECIAL_RECIPES.filter(r=>!unlockedSpecial.has(r.id));
@@ -854,7 +927,8 @@ function doExplore(locId,slotIdx){
   }
 
   S.exploredSlots.push({slot:slotIdx,locId,found,discovery});
-  log(`${slotInfo.label} ${loc.e}${loc.n} 완료! `+found.map(i=>`${i.e}${i.n}×${i.qty}`).join(', '));
+  const specialMsg=isSpecialTime?` ✨특수시간 드랍 보너스!`:'';
+  log(`${slotInfo.label} ${loc.e}${loc.n} 완료!${specialMsg} `+found.map(i=>`${i.e}${i.n}×${i.qty}`).join(', '));
   render();
 }
 
@@ -952,6 +1026,7 @@ function getTrendBonus(tags){
 
 function openShop(){
   const sun=isSunday(S.day);
+  if(!sun&&S.bonusExplore){log('⚠️ 오늘은 추가 탐험을 선택해서 상점을 열 수 없어요.');render();return;}
   if(sun){
     // 일요일: 예약 손님만 허용
     if(S.todayReservations.length===0){log('📅 일요일이라 일반 영업은 없어요. 예약 손님도 없네요.');render();return;}
@@ -985,8 +1060,11 @@ function spawnCust(){
     render();return;
   }
   S.custCurIdx=nextIdx;S.cust=S.custQueue[nextIdx];S.custsDone=S.doneIdxs.size;
+  S.wholesaleOffer=generateWholesaleOffer(S.cust); // 도매 손님이면 자동 제안 생성
   const wanted=getCustWants(S.cust,S.shopInv);
-  const hint=wanted.length>0?`"${wanted[Math.floor(Math.random()*wanted.length)].n} 있나요?"`:'\"뭔가 좋은 거 없나요?\"';
+  const hint=S.wholesaleOffer
+    ?`"${S.wholesaleOffer.items.length}개 묶음으로 사고 싶어요. 싸게 해주실 수 있나요?"`
+    :wanted.length>0?`"${wanted[Math.floor(Math.random()*wanted.length)].n} 있나요?"`:'\"뭔가 좋은 거 없나요?\"';
   log(`${S.cust.e} ${S.cust.n}이(가) 들어왔어요. ${hint}`);
   render();
 }
@@ -995,10 +1073,120 @@ function jumpToCust(idx){
   if(S.doneIdxs.has(idx)||idx===S.custCurIdx)return;
   log(`${S.custQueue[idx].e}${S.custQueue[idx].n}을(를) 먼저 응대합니다.`);
   S.selUid=null;S.priceVal='';S.custOffer=0;S.previewIdx=null;
-  S.custCurIdx=idx;S.cust=S.custQueue[idx];S.custsDone=S.doneIdxs.size;render();
+  S.custCurIdx=idx;S.cust=S.custQueue[idx];S.custsDone=S.doneIdxs.size;
+  S.wholesaleOffer=generateWholesaleOffer(S.cust);
+  render();
 }
 function toggleQueue(){S.queueOpen=!S.queueOpen;render();}
 function setPreview(idx){S.previewIdx=(S.previewIdx===idx)?null:idx;render();}
+
+// 오늘 대기 손님 중 가장 많이 쓸 손님 인덱스
+function getBigSpender(){
+  const active=S.custQueue.map((c,i)=>({c,i})).filter(({i})=>!S.doneIdxs.has(i));
+  if(!active.length)return -1;
+  let bestIdx=-1,bestVal=0;
+  active.forEach(({c,i})=>{
+    const total=S.shopInv.reduce((sum,item)=>{
+      const r=byId(allRecipes(),item.id);
+      const isW=r&&r.tags&&r.tags.some(t=>c.wantTags.includes(t));
+      return sum+Math.round(item.p*(isW?c.budMax:c.bud));
+    },0);
+    if(total>bestVal){bestVal=total;bestIdx=i;}
+  });
+  return bestIdx;
+}
+
+// 재고 아이템을 id 기준으로 묶어 반환 { id, e, n, p, count, uids }
+function getStackedInv(){
+  const map={};
+  S.shopInv.forEach(item=>{
+    if(!map[item.id])map[item.id]={...item,count:0,uids:[]};
+    map[item.id].count++;
+    map[item.id].uids.push(item.uid);
+  });
+  return Object.values(map);
+}
+
+// 도매 카트 수량 조정
+function setWholesaleQty(itemId,delta){
+  if(!S.wholesaleOffer)return;
+  const max=S.shopInv.filter(i=>i.id===itemId).length;
+  const cur=S.wholesaleOffer.cart[itemId]||0;
+  const next=Math.max(0,Math.min(max,cur+delta));
+  if(next===0)delete S.wholesaleOffer.cart[itemId];
+  else S.wholesaleOffer.cart[itemId]=next;
+  render();
+}
+
+// 도매 합계 계산
+function getWholesaleTotal(){
+  if(!S.wholesaleOffer)return 0;
+  const {rate,cart}=S.wholesaleOffer;
+  return Object.entries(cart).reduce((sum,[id,qty])=>{
+    const item=S.shopInv.find(i=>i.id===id);
+    return item?sum+Math.round(item.p*rate)*qty:sum;
+  },0);
+}
+
+// 도매 제안 생성 (bud < 1.0 손님)
+function generateWholesaleOffer(cust){
+  if(!cust||cust.bud>=1.0||S.shopInv.length<2)return null;
+  const wanted=getCustWants(cust,S.shopInv);
+  const wantedIds=[...new Set(wanted.map(i=>i.id))];
+  const allIds=[...new Set(S.shopInv.map(i=>i.id))];
+  const ordered=[...wantedIds,...allIds.filter(id=>!wantedIds.includes(id))];
+  const cart={};
+  ordered.slice(0,3).forEach(id=>{
+    const qty=Math.min(S.shopInv.filter(i=>i.id===id).length,2);
+    if(qty>0)cart[id]=qty;
+  });
+  if(Object.keys(cart).length<2)return null;
+  return{rate:cust.bud,cart};
+}
+
+// 도매 수락
+function acceptWholesale(){
+  const offer=S.wholesaleOffer;
+  if(!offer)return;
+  const {rate,cart}=offer;
+  const totalItems=Object.values(cart).reduce((a,b)=>a+b,0);
+  if(totalItems===0){log('⚠️ 판매할 아이템을 1개 이상 선택하세요!');render();return;}
+  let total=0;
+  const soldItems=[];
+  Object.entries(cart).forEach(([id,qty])=>{
+    const baseItem=S.shopInv.find(i=>i.id===id);
+    if(!baseItem)return;
+    const priceEach=Math.round(baseItem.p*rate);
+    let rem=qty;
+    S.shopInv=S.shopInv.filter(item=>{
+      if(item.id===id&&rem>0){rem--;total+=priceEach;soldItems.push({cust:S.cust,item:{...item},price:priceEach,wholesale:true});return false;}
+      return true;
+    });
+  });
+  S.todaySalesLog.push(...soldItems);
+  S.gold+=total;S.totalRevenue+=total;S.todayRevenue+=total;S.weeklyRevenue+=total;
+  S.wholesaleOffer=null;
+  changeRapport(S.cust.n,8+soldItems.length);changeRep(2);checkLevelUp();
+  const lines=BARGAIN_LINES[S.cust.char]||BARGAIN_LINES['친절'];
+  log(`${S.cust.e} 도매 성사! ${lines.accept[Math.floor(Math.random()*lines.accept.length)]} ${soldItems.length}개 총 ${total.toLocaleString()}G`);
+  if(S.shopLevel>=5){S.won=true;S.gameOver=true;render();return;}
+  S.doneIdxs.add(S.custCurIdx);spawnCust();
+}
+
+// 도매 거절 → 개별 판매로 전환
+function rejectWholesale(){
+  S.wholesaleOffer=null;
+  log(`${S.cust.e} 도매 제안 거절. 개별 판매로 전환해요.`);
+  render();
+}
+
+// 기본가 즉시 판매
+function sellAtBase(){
+  const item=S.shopInv.find(i=>i.uid===S.selUid);
+  if(!item)return;
+  S.priceVal=String(item.p);
+  trySell();
+}
 
 function selItem(u){
   if(S.selUid===u){S.selUid=null;S.priceVal='';S.custOffer=0;}
@@ -1087,10 +1275,33 @@ function endBusiness(){
 
 // 일요일 예약 접수
 function takeReservation(custIdx){
+  if(S.sunResCount>=MAX_SUN_RESERVATIONS){
+    log(`⚠️ 오늘 예약은 최대 ${MAX_SUN_RESERVATIONS}명까지만 받을 수 있어요!`);
+    render();return;
+  }
   const c=CUSTS[custIdx];
   const nextNonSun=[...Array(7)].map((_,i)=>S.day+1+i).find(d=>!isSunday(d))||S.day+1;
+  // 같은 날 동일 아키타입 중복 방지
+  const alreadyBooked=S.reservations.some(r=>r.cust.e===c.e&&r.day===nextNonSun);
+  if(alreadyBooked){log(`⚠️ ${c.e}${c.n}은 이미 예약됐어요!`);render();return;}
   S.reservations.push({cust:c,day:nextNonSun,wantTags:c.wantTags});
-  log(`📅 ${c.e}${c.n} 예약 접수! ${nextNonSun}일째 방문 예정.`);
+  S.sunResCount++;
+  log(`📅 ${c.e}${c.n} 예약 접수! (${S.sunResCount}/${MAX_SUN_RESERVATIONS}) ${nextNonSun}일째 방문 예정.`);
+  render();
+}
+
+// 상점 건너뛰고 다음날로 (평일/일요일 공통)
+function skipShopNextDay(){
+  generateTomorrowHints();
+  S.custQueue=[];S.todaySalesLog=[];
+  S.showDayReport=true;
+  render();
+}
+
+// 평일 추가 탐험 활성화 (상점 포기)
+function activateBonusExplore(){
+  S.bonusExplore=true;
+  log('🗺️ 추가 탐험 활성화! 오늘은 상점을 열 수 없어요.');
   render();
 }
 
@@ -1103,6 +1314,7 @@ function nextDay(){
   S.todayRevenue=0;
   S.phase='daytime'; S.phase2='explore';
   S.exploredSlots=[];S.maxExploreSlots=isSunday(S.day)?4:2;
+  S.bonusExplore=false;S.sunResCount=0;
   S.cust=null;S.custsDone=0;S.custQueue=[];
   S.doneIdxs=new Set();S.custCurIdx=null;S.previewIdx=null;
   S.selUid=null;S.priceVal='';S.custOffer=0;
@@ -1387,7 +1599,7 @@ function renderTabs(){
   const sun=isSunday(S.day);
   const p=S.phase2;
   const explCnt=S.exploredSlots.length;
-  const maxSlots=sun?4:2;
+  const maxSlots=sun?(4):(S.bonusExplore?3:2);
   const tabs=[
     {id:'explore', l:`🗺️ 탐험${explCnt>0?` (${explCnt}/${maxSlots})`:''}` },
     {id:'craft',   l:'⚗️ 제조'},
@@ -1476,38 +1688,47 @@ function renderLocCard(loc, slotIdx, isSun){
   const slotInfo=getSlotInfo(slotIdx,isSun);
   const bonus=getSlotBonus(loc,slotIdx,isSun);
   const isSpecial=!!loc.special;
+  const isSpecialTime=!!slotInfo.isSpecialTime;
+  const isDawn=isSun&&slotIdx===0;
+  const isEve=(isSun&&slotIdx===3)||(!isSun&&slotIdx===2);
   const dropIngrs=loc.pool.slice(0,4).map(id=>INGR.find(i=>i.id===id)).filter(Boolean);
   const bonusIngrs=bonus.ids.map(id=>INGR.find(i=>i.id===id)).filter(Boolean);
 
-  // 현재 시간대 보너스 한 줄
   const bonusDesc=`${slotInfo.label}: ${bonusIngrs.map(i=>i.e+i.n).join('/')} +${bonus.qty[0]}~${bonus.qty[1]}개`;
 
-  // 다른 시간대 힌트 (한 줄)
-  const otherSlots=isSun
-    ? SUNDAY_SLOTS.filter(s=>s.idx!==slotIdx)
-    : WEEKDAY_SLOTS.filter(s=>s.idx!==slotIdx);
-  const otherBonus=otherSlots.map(s=>{
+  // 다른 시간대 힌트
+  const availSlots=isSun?SUNDAY_SLOTS:(!isSun&&S.bonusExplore?[...WEEKDAY_SLOTS,BONUS_NIGHT_SLOT]:WEEKDAY_SLOTS);
+  const otherBonus=availSlots.filter(s=>s.idx!==slotIdx).map(s=>{
     const ob=getSlotBonus(loc,s.idx,isSun);
     const oi=ob.ids.slice(0,2).map(id=>{const i=INGR.find(x=>x.id===id);return i?i.e:'';}).join('');
-    return `${s.label} ${oi}`;
+    return `${s.badge} ${oi}`;
   }).join(' · ');
 
+  // 특수 시간대 전용 드랍 표시
+  const exclusiveDrop=isDawn
+    ?`<div style="font-size:9px;font-weight:800;color:#283593;background:#E8EAF6;border-radius:5px;padding:2px 6px;margin-top:3px;display:inline-block">🌫️ 새벽이슬 드랍 (70%)</div>`
+    :isEve
+    ?`<div style="font-size:9px;font-weight:800;color:#6A1B9A;background:#F3E5F5;border-radius:5px;padding:2px 6px;margin-top:3px;display:inline-block">🌇 황혼석 드랍 (70%)</div>`
+    :'';
+
   return `<div class="loc-card${isSpecial?' special':''}" onclick="doExplore('${loc.id}',${slotIdx})">
-    <span class="loc-bonus-badge" style="background:${slotInfo.bg};color:${slotInfo.color};border:1px solid ${slotInfo.color}">${slotInfo.badge}${isSpecial?' ✨':''}</span>
+    <span class="loc-bonus-badge" style="background:${slotInfo.bg};color:${slotInfo.color};border:1px solid ${slotInfo.color}">${slotInfo.badge}${isSpecial?' ✨':''}${isSpecialTime?' ⭐':''}</span>
     <div class="loc-top"><span class="loc-e">${loc.e}</span><span class="loc-name">${loc.n}</span></div>
     <div class="loc-desc">${loc.desc}</div>
     <div class="loc-drops" style="margin-bottom:5px">
       ${dropIngrs.map(i=>`<span class="loc-drop loc-drop-${RKCLS[i.r].replace('tag-','')}">${i.e}${i.n}</span>`).join('')}
     </div>
-    <div style="font-size:10px;font-weight:700;color:${slotInfo.color};background:${slotInfo.bg};border-radius:5px;padding:3px 7px;margin-bottom:2px">${bonusDesc}</div>
-    <div style="font-size:9px;color:var(--text3);padding:1px 2px">${otherBonus}</div>
+    <div style="font-size:10px;font-weight:700;color:${slotInfo.color};background:${slotInfo.bg};border-radius:5px;padding:3px 7px;margin-bottom:2px">${bonusDesc}${isSpecialTime?' · 희귀↑↑':''}</div>
+    ${exclusiveDrop}
+    <div style="font-size:9px;color:var(--text3);padding:1px 2px;margin-top:2px">${otherBonus}</div>
   </div>`;
 }
 
 function renderExplore(){
   const sun=isSunday(S.day);
-  const slots=sun?SUNDAY_SLOTS:WEEKDAY_SLOTS;
-  const maxSlots=sun?4:2;
+  const baseSlots=sun?SUNDAY_SLOTS:WEEKDAY_SLOTS;
+  const slots=(!sun&&S.bonusExplore)?[...WEEKDAY_SLOTS,BONUS_NIGHT_SLOT]:baseSlots;
+  const maxSlots=sun?4:(S.bonusExplore?3:2);
   const doneSlots=new Set(S.exploredSlots.map(s=>s.slot));
   const locs=sun?[...LOCATIONS,...SUN_LOCATIONS]:LOCATIONS;
   const curSlotIdx=S.exploredSlots.length; // 다음 탐험할 슬롯
@@ -1521,7 +1742,7 @@ function renderExplore(){
         <span style="color:${si.color};font-weight:800">${si.label}</span> · ${loc.e} ${loc.n}
       </div>
       <div class="found-row">
-        ${s.found.map(i=>`<span class="found-chip${i.isBonus?' bonus':''}">${i.isBonus?'✨':''}${i.e}${i.n} ×${i.qty}</span>`).join('')}
+        ${s.found.map(i=>`<span class="found-chip${i.isBonus?' bonus':i.isSpecialDrop?' special':''}">${i.isBonus?'⭐':i.isSpecialDrop?'✨':''}${i.e}${i.n} ×${i.qty}</span>`).join('')}
         ${s.discovery?`<span class="found-chip special">📜 ${s.discovery.recipe.n} 발견!</span>`:''}
       </div>
     </div>`;
@@ -1562,7 +1783,20 @@ function renderExplore(){
 
     ${curSlotIdx>0?`
       <div class="btn-row">
-        <button class="btn btn-gold" onclick="setTab('craft')">⚗️ 제조하러 가기 →</button>
+        ${sun?`
+          ${curSlotIdx>=maxSlots?`
+            <button class="btn" onclick="skipShopNextDay()">🌙 오늘 마무리 · 다음 날로 →</button>
+          `:''}
+          <button class="btn btn-gold" onclick="setTab('craft')">⚗️ 제조하러 가기 →</button>
+        `:`
+          ${curSlotIdx>=2&&!S.bonusExplore?`
+            <button class="btn" style="border-color:var(--sun);color:var(--sun)" onclick="activateBonusExplore()">🗺️ 한 번 더 탐험 (상점 포기)</button>
+          `:''}
+          ${S.bonusExplore&&curSlotIdx>=maxSlots?`
+            <button class="btn" onclick="skipShopNextDay()">🌙 다음 날로 →</button>
+          `:''}
+          <button class="btn btn-gold" onclick="setTab('craft')">⚗️ 제조하러 가기 →</button>
+        `}
       </div>
     `:''}
   </div>`;
@@ -1652,6 +1886,9 @@ function renderCraft(){
           </div>
           <div class="craft-price">${r.p}G</div>
           <div class="craft-qty-wrap">
+            <span style="font-size:9px;color:${ok?'var(--green)':'var(--text3)'};font-weight:700">
+              최대 ${maxQ}개
+            </span>
             ${ok&&maxQ>1?`
               <input type="range" class="craft-slider" min="1" max="${maxQ}" value="${curQty}"
                 oninput="setCraftQty('${r.id}',this.value)">
@@ -1670,7 +1907,8 @@ function renderCraft(){
     </div>
     <div class="btn-row">
       ${S.exploredSlots.length<(isSunday(S.day)?4:2)?`<button class="btn" onclick="setTab('explore')">← 탐험하기</button>`:''}
-      <button class="btn btn-gold" onclick="openShop()">🏪 상점 열기 (${crafted}개 진열)</button>
+      ${!S.bonusExplore?`<button class="btn" onclick="skipShopNextDay()">🌙 영업 건너뛰고 다음 날로</button>`:''}
+      ${!S.bonusExplore?`<button class="btn btn-gold" onclick="openShop()">🏪 상점 열기 (${crafted}개 진열)</button>`:`<button class="btn" onclick="skipShopNextDay()">🌙 다음 날로 →</button>`}
     </div>
   </div>`;
 }
@@ -1680,41 +1918,52 @@ function renderQueuePanel(){
   const q=S.custQueue;
   if(!q||q.length===0)return'';
   const doneCount=S.doneIdxs.size,waitCount=q.length-doneCount;
+  const bigSpenderIdx=getBigSpender();
+
   const rows=q.map((c,i)=>{
     const isDone=S.doneIdxs.has(i),isCur=i===S.custCurIdx&&S.cust,isPrev=S.previewIdx===i;
     const wanted=getCustWants(c,S.shopInv);
+    const isBig=i===bigSpenderIdx&&!isDone;
+    const isWholesale=c.bud<1.0;
     let cls='qrow';
     if(isDone)cls+=' qrow-done';else if(isCur)cls+=' qrow-current';else if(isPrev)cls+=' qrow-preview';
-    const matchChips=wanted.slice(0,2).map(it=>`<span style="font-size:9px;background:var(--gold-light);border:1px solid var(--border2);border-radius:6px;padding:1px 5px;color:var(--gold2);font-weight:700">${it.e}${it.n}</span>`).join('');
-    const statusTxt=isDone?'✓':isCur?'▶':`${i+1}`;
-    const statusCls=isDone?'status-done':isCur?'status-cur':'status-wait';
     return `<div class="${cls}" ${(!isDone&&!isCur)?`onclick="setPreview(${i})"`:''}>
       <span class="qrow-e">${c.e}</span>
       <div class="qrow-info">
-        <div class="qrow-name">${c.n}</div>
+        <div class="qrow-name">
+          ${c.n}
+          ${isBig?`<span style="font-size:9px;font-weight:800;background:#FFF3CC;color:#7A4500;border:1px solid #E8C840;border-radius:8px;padding:1px 6px">👑 큰손</span>`:''}
+          ${isWholesale&&!isDone?`<span style="font-size:9px;font-weight:800;background:var(--blue-light);color:var(--blue);border:1px solid #90CAF9;border-radius:8px;padding:1px 6px">🛒 도매</span>`:''}
+        </div>
         <div class="qrow-tags">${c.wantTags.join(' · ')} · ${c.char}</div>
-        ${wanted.length>0?`<div class="qrow-match">${matchChips}${wanted.length>2?`<span style="font-size:9px;color:var(--text3)">+${wanted.length-2}</span>`:''}</div>`:''}
+        ${wanted.length>0&&!isDone?`<div class="qrow-match">${wanted.slice(0,2).map(it=>`<span style="font-size:9px;background:var(--gold-light);border:1px solid var(--border2);border-radius:6px;padding:1px 5px;color:var(--gold2);font-weight:700">${it.e}${it.n}</span>`).join('')}${wanted.length>2?`<span style="font-size:9px;color:var(--text3)">+${wanted.length-2}</span>`:''}</div>`:''}
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-        <span class="qrow-status ${statusCls}">${statusTxt}</span>
+        <span class="qrow-status ${isDone?'status-done':isCur?'status-cur':'status-wait'}">${isDone?'✓':isCur?'▶':`${i+1}`}</span>
         ${(!isDone&&!isCur)?`<button class="btn btn-sm btn-purple" style="padding:3px 7px;font-size:10px" onclick="event.stopPropagation();jumpToCust(${i})">↩먼저</button>`:''}
       </div>
     </div>`;
   }).join('');
 
+  // 미리보기: 중복 없이 예상가 상위 아이템만
   let previewHtml='';
   if(S.previewIdx!==null&&!S.doneIdxs.has(S.previewIdx)&&S.previewIdx!==S.custCurIdx){
     const pc=S.custQueue[S.previewIdx];
-    const pw=getCustWants(pc,S.shopInv);
-    const bestItems=S.shopInv.map(item=>{
-      const isW=pw.some(w=>w.uid===item.uid);
-      return{...item,isW,estPrice:Math.round(item.p*(isW?pc.budMax:pc.bud))};
-    }).sort((a,b)=>b.estPrice-a.estPrice);
+    const isBigPrev=S.previewIdx===bigSpenderIdx;
+    const items=S.shopInv.map(item=>{
+      const r=byId(allRecipes(),item.id);
+      const isW=r&&r.tags&&r.tags.some(t=>pc.wantTags.includes(t));
+      return{...item,isW,est:Math.round(item.p*(isW?pc.budMax:pc.bud))};
+    }).sort((a,b)=>b.est-a.est).slice(0,4);
     previewHtml=`<div class="preview-panel">
-      <div style="font-size:11px;font-weight:800;color:var(--gold2);margin-bottom:6px">🔍 ${pc.e}${pc.n} — 예상 구매가</div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+        <span style="font-size:16px">${pc.e}</span>
+        <span style="font-size:11px;font-weight:800;color:var(--gold2)">${pc.n} 예상 구매가</span>
+        ${isBigPrev?`<span style="font-size:9px;font-weight:800;background:#FFF3CC;color:#7A4500;border:1px solid #E8C840;border-radius:8px;padding:1px 6px">👑 큰손</span>`:''}
+      </div>
       <div class="preview-items">
-        ${bestItems.map(it=>`<div class="preview-item${it.isW?' best':''}">
-          ${it.e} ${it.n} <span style="color:var(--gold2);font-weight:800">~${it.estPrice}G</span>${it.isW?'★':''}
+        ${items.map(it=>`<div class="preview-item${it.isW?' best':''}">
+          ${it.e}${it.n} <b style="color:var(--gold2)">~${it.est}G</b>${it.isW?' ★':''}
         </div>`).join('')}
       </div>
     </div>`;
@@ -1723,11 +1972,13 @@ function renderQueuePanel(){
   return `${previewHtml}
     <div class="qpanel">
       <div class="qpanel-hdr" onclick="toggleQueue()">
-        <div class="qpanel-hdr-left">👥 오늘 손님 <span style="background:var(--purple-light);color:var(--purple);border-radius:8px;padding:1px 7px;font-size:10px">${waitCount}명 대기 · ${doneCount}명 완료</span></div>
+        <div class="qpanel-hdr-left">👥 오늘 손님 <span style="background:var(--purple-light);color:var(--purple);border-radius:8px;padding:1px 7px;font-size:10px">${waitCount}명 대기 · ${doneCount}명 완료</span>
+        ${bigSpenderIdx>=0?`<span style="font-size:9px;font-weight:800;background:#FFF3CC;color:#7A4500;border:1px solid #E8C840;border-radius:8px;padding:1px 6px;margin-left:4px">👑 ${S.custQueue[bigSpenderIdx].n}</span>`:''}
+        </div>
         <span style="font-size:11px;color:var(--text3)">${S.queueOpen?'▲':'▼'}</span>
       </div>
       ${S.queueOpen?`<div class="qpanel-body"><div class="qlist">${rows}</div>
-        <div style="font-size:10px;color:var(--text3);margin-top:6px;text-align:center">클릭→미리보기 · [↩먼저]→순서변경</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:6px;text-align:center">클릭→예상가 확인 · [↩먼저]→순서변경</div>
       </div>`:''}
     </div>`;
 }
@@ -1761,22 +2012,71 @@ function renderShop(){
           :'<div class="cbubble">특별히 원하는 게 없는 것 같아요.</div>'}
       </div>
 
-      <div class="sec">상품 선택</div>
+      <div class="sec" style="margin-bottom:8px">상품 선택</div>
       ${S.shopInv.length===0?`<div class="empty">진열된 상품 없음</div>`:`
         <div class="igrid">
-          ${S.shopInv.map(item=>{
-            const isWanted=wantedUids.has(item.uid),isSel=S.selUid===item.uid;
-            return `<div class="scard${isSel?' sel':isWanted?' wanted':''}" onclick="selItem(${item.uid})">
-              <span class="ie">${item.e}</span>
-              <span class="in">${item.n}</span>
-              <span class="is">${item.p}G</span>
-              ${isWanted?`<span style="font-size:9px;color:var(--gold);font-weight:700">★원함</span>`:''}
+          ${getStackedInv().map(stack=>{
+            const isSel=stack.uids.includes(S.selUid);
+            const isWanted=wantedUids.has(stack.uids[0])||stack.uids.some(u=>wantedUids.has(u));
+            const inCart=S.wholesaleOffer&&(S.wholesaleOffer.cart[stack.id]||0)>0;
+            return `<div class="scard${isSel?' sel':inCart?' wanted':isWanted?' wanted':''}"
+              onclick="${S.wholesaleOffer?'':` selItem(${stack.uids[0]})`}">
+              <span class="ie">${stack.e}</span>
+              <span class="in">${stack.n}</span>
+              <span class="is">${stack.p}G</span>
+              ${stack.count>1?`<span style="font-size:11px;font-weight:800;color:var(--purple)">×${stack.count}</span>`:''}
+              ${inCart?`<span style="font-size:9px;color:var(--blue);font-weight:700">🛒×${S.wholesaleOffer.cart[stack.id]}</span>`
+                :isWanted?`<span style="font-size:9px;color:var(--gold);font-weight:700">★원함</span>`:''}
             </div>`;
           }).join('')}
         </div>
       `}
 
-      ${S.selUid&&selItem?`
+      ${S.wholesaleOffer?`
+        <div style="background:#E3F2FD;border:2px solid var(--blue);border-radius:var(--radius);padding:12px;margin-top:10px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div>
+              <span style="font-size:12px;font-weight:800;color:var(--blue)">🛒 도매 협상</span>
+              <span style="font-size:10px;color:var(--text3);margin-left:6px">할인율 ${Math.round((1-S.wholesaleOffer.rate)*100)}% · 수량 직접 조정</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+            ${getStackedInv().map(stack=>{
+              const qty=S.wholesaleOffer.cart[stack.id]||0;
+              const max=stack.count;
+              const priceEach=Math.round(stack.p*S.wholesaleOffer.rate);
+              return `<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;background:${qty>0?'#fff':'var(--bg2)'};border:1px solid ${qty>0?'var(--blue)':'var(--border)'};border-radius:var(--radius-sm)">
+                <span style="font-size:16px">${stack.e}</span>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:11px;font-weight:700">${stack.n}</div>
+                  <div style="font-size:10px;color:var(--text3)">
+                    <span style="text-decoration:line-through">${stack.p}G</span>
+                    <span style="color:var(--blue);font-weight:800;margin-left:4px">→ ${priceEach}G/개</span>
+                    ${qty>0?`<span style="color:var(--green);font-weight:800;margin-left:6px">= ${(priceEach*qty).toLocaleString()}G</span>`:''}
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+                  <button class="btn btn-sm" style="padding:2px 8px;font-size:13px" onclick="setWholesaleQty('${stack.id}',-1)" ${qty<=0?'disabled':''}>−</button>
+                  <span style="min-width:28px;text-align:center;font-size:12px;font-weight:800;color:${qty>0?'var(--blue)':'var(--text3)'}">${qty}/${max}</span>
+                  <button class="btn btn-sm" style="padding:2px 8px;font-size:13px" onclick="setWholesaleQty('${stack.id}',1)" ${qty>=max?'disabled':''}>＋</button>
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1.5px solid #90CAF9">
+            <div>
+              <span style="font-size:11px;color:var(--text3)">합계 ${Object.values(S.wholesaleOffer.cart).reduce((a,b)=>a+b,0)}개 · </span>
+              <span style="font-size:15px;font-weight:800;color:var(--blue)">${getWholesaleTotal().toLocaleString()}G</span>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="btn btn-sm" onclick="rejectWholesale()" style="color:var(--text3)">개별 판매로</button>
+              <button class="btn btn-sm btn-gold" onclick="acceptWholesale()" ${Object.values(S.wholesaleOffer.cart).reduce((a,b)=>a+b,0)===0?'disabled':''}>✅ 도매 확정</button>
+            </div>
+          </div>
+        </div>
+      `:''}
+
+      ${S.selUid&&selItem&&!S.wholesaleOffer?`
         <div class="bargain-panel">
           <div style="font-size:12px;font-weight:800;color:var(--purple);margin-bottom:6px">💜 ${selItem.e}${selItem.n} 흥정</div>
           ${S.custOffer>0?`<div class="offer-badge">💬 손님 예상 지불 한도: ~${S.custOffer}G</div>`:''}
@@ -1785,13 +2085,14 @@ function renderShop(){
             <input id="pin" class="pin" type="number" min="1" value="${S.priceVal}">
             <span style="font-weight:700">G</span>
             <button class="btn btn-gold btn-sm" onclick="trySell()">판매!</button>
+            <button class="btn btn-sm btn-green" onclick="sellAtBase()" title="기본가(${selItem.p}G)로 즉시 판매">💰 ${selItem.p}G</button>
             <button class="btn btn-sm" onclick="selItem(${S.selUid})" style="color:var(--text3)">취소</button>
           </div>
           <div class="bm-wrap" id="bm-wrap">
             ${renderBargainMeter(parseInt(S.priceVal)||0, S.custOffer, selItem.p)}
           </div>
         </div>
-      `:`<div style="font-size:11px;color:var(--text3);text-align:center;padding:8px">아이템을 클릭해 선택 후 가격을 제시하세요</div>`}
+      `:`${!S.wholesaleOffer?`<div style="font-size:11px;color:var(--text3);text-align:center;padding:8px">아이템을 클릭해 선택 후 가격을 제시하세요</div>`:''}`}
 
       <div class="end-btn-wrap">
         <button class="btn btn-sm" onclick="skipCust()">내보내기 →</button>
@@ -1803,33 +2104,46 @@ function renderShop(){
 // ===== 일요일 예약 탭 =====
 function renderSundayReservation(){
   const nextNonSun=[...Array(7)].map((_,i)=>S.day+1+i).find(d=>!isSunday(d))||S.day+1;
+  const resLeft=MAX_SUN_RESERVATIONS-S.sunResCount;
   return `<div class="panel">
     <div class="sunday-banner" style="margin-bottom:12px">
       <div class="sunday-title">☀️ 오늘은 일요일</div>
       <div style="font-size:11px;color:var(--sun);margin-top:3px">상점은 오픈하지 않지만 예약 손님을 받을 수 있어요.<br>예약 손님은 ${nextNonSun}일(다음 평일)에 방문합니다.</div>
     </div>
-    <div class="sec">예약 손님 접수 — ${nextNonSun}일 방문</div>
+    <div class="sec">예약 손님 접수 — ${nextNonSun}일 방문
+      <span style="float:right;font-size:10px;color:${resLeft>0?'var(--text3)':'var(--red)'}">남은 예약 ${resLeft}/${MAX_SUN_RESERVATIONS}</span>
+    </div>
     <div class="craft-list">
-      ${CUSTS.map((c,i)=>`
-        <div class="craft-row" style="align-items:center">
+      ${CUSTS.map((c,i)=>{
+        const alreadyBooked=S.reservations.some(r=>r.cust.e===c.e&&r.day===nextNonSun);
+        const full=S.sunResCount>=MAX_SUN_RESERVATIONS;
+        return `
+        <div class="craft-row" style="align-items:center;${alreadyBooked?'opacity:.5':''}">
           <span style="font-size:26px">${c.e}</span>
           <div class="craft-info">
-            <div class="craft-name">${c.n}</div>
+            <div class="craft-name">${c.n}${alreadyBooked?` <span style="font-size:10px;color:var(--green)">✓예약됨</span>`:''}</div>
             <div class="craft-cost">${c.note}</div>
             <div class="craft-tags">${c.wantTags.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
           </div>
-          <button class="btn btn-sm btn-sun" onclick="takeReservation(${i})">📅 예약</button>
-        </div>
-      `).join('')}
+          <button class="btn btn-sm${alreadyBooked||full?'':' btn-sun'}"
+            onclick="takeReservation(${i})"
+            ${alreadyBooked||full?'disabled':''}>
+            ${alreadyBooked?'✓완료':full?'마감':'📅 예약'}
+          </button>
+        </div>`;
+      }).join('')}
     </div>
     ${S.reservations.filter(r=>r.day>=S.day).length>0?`
       <div style="margin-top:12px">
-        <div class="sec">예약 현황</div>
+        <div class="sec">예약 현황 (${S.sunResCount}/${MAX_SUN_RESERVATIONS})</div>
         ${S.reservations.filter(r=>r.day>=S.day).map(r=>`
           <div class="reservation-row">${r.cust.e} ${r.cust.n} <span style="color:var(--blue);font-weight:700">${r.day}일 방문</span> · ${r.cust.wantTags.join(', ')}</div>
         `).join('')}
       </div>
     `:''}
+    <div class="btn-row" style="margin-top:14px">
+      <button class="btn btn-gold btn-lg" onclick="skipShopNextDay()">🌅 내일로 넘어가기 →</button>
+    </div>
   </div>`;
 }
 
@@ -1838,19 +2152,24 @@ function renderDayReport(){
   const sales=S.todaySalesLog||[];
   const totalRevenue=sales.reduce((a,s)=>a+s.price,0);
   const visited=S.custQueue||[];
-  // 오늘 손님 니즈 집계
-  const needsMap={};
-  visited.forEach(c=>{c.wantTags.forEach(t=>{needsMap[t]=(needsMap[t]||0)+1;});});
-  const sortedNeeds=Object.entries(needsMap).sort((a,b)=>b[1]-a[1]);
-
-  // 내일 힌트
   const hints=S.tomorrowHints||[];
   const sun=isSunday(S.day);
+  const skipped=visited.length===0&&sales.length===0;
+  const reportTitle=sun?`☀️ 일요일 종료 · ${S.day}일째`:
+                    S.bonusExplore?`🗺️ 탐험의 날 종료 · ${S.day}일째`:
+                    `🌙 오늘의 영업 결과 · ${S.day}일째`;
 
   return `<div>
     <div class="report-panel">
-      <div class="report-title">🌙 오늘의 영업 결과 · ${S.day}일째</div>
+      <div class="report-title">${reportTitle}</div>
+      ${(sun||S.bonusExplore)?`
+        <div style="background:var(--sun-light);border:1px solid #FFAB40;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:var(--sun)">
+          ${sun?`☀️ 일요일은 상점 영업이 없어요. 예약 손님 <b>${S.sunResCount}명</b>이 다음 평일에 방문합니다.`:
+                `🗺️ 추가 탐험으로 오늘 상점을 열지 않았어요. 재료가 더 풍부해졌어요!`}
+        </div>
+      `:``}
 
+      ${(!sun&&!S.bonusExplore)?`
       <div class="report-section">
         <div class="report-sec-title">📊 오늘 판매 요약</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
@@ -1897,58 +2216,38 @@ function renderDayReport(){
           <div class="cust-recap-row">
             <span class="cust-recap-e">${s.cust.e}</span>
             <span style="flex:1">${s.cust.n}</span>
-            <span>${s.item.e}${s.item.n}</span>
+            <span>${s.item.e}${s.item.n}${s.wholesale?' 🛒':''}</span>
             <span style="color:var(--gold2);font-weight:800">${s.price}G</span>
           </div>
         `).join(''):'<div style="font-size:12px;color:var(--text3)">판매 없음</div>'}
       </div>
+      `:''}<!-- end !sun&&!bonusExplore -->
 
       <div class="report-section">
-        <div class="report-sec-title">🧩 오늘 손님 니즈 분석</div>
-        ${visited.length>0?`
-          <div style="margin-bottom:8px">
-            ${sortedNeeds.map(([tag,cnt])=>`<span class="tag-need">${tag} ×${cnt}</span>`).join('')}
-          </div>
-          <div class="craft-list" style="gap:5px">
-            ${visited.map(c=>`<div class="cust-recap-row">
-              <span class="cust-recap-e">${c.e}</span>
-              <span style="flex:1;font-weight:700">${c.n}</span>
-              <span style="color:var(--text3);font-size:10px">${c.wantTags.join(' · ')}</span>
-              ${S.doneIdxs.has(S.custQueue.indexOf(c))?'<span style="color:var(--green);font-size:10px">✓구매</span>':'<span style="color:var(--text3);font-size:10px">미구매</span>'}
-            </div>`).join('')}
-          </div>
-        `:'<div style="font-size:12px;color:var(--text3)">손님 없음</div>'}
-      </div>
-
-      <div class="report-section">
-        <div class="report-sec-title">🔭 내일 손님 힌트</div>
-        ${hints.length===0?`<div style="font-size:12px;color:var(--text3)">힌트 없음</div>`:''}
-        ${hints.some(h=>h.type==='sunday')?`
-          <div class="hint-row"><span class="hint-icon">☀️</span><span>${hints.find(h=>h.type==='sunday').msg}</span></div>
-        `:''}
-        ${hints.filter(h=>h.type==='reservation').map(h=>`
-          <div class="reservation-row">
-            <span style="font-size:16px">${h.cust.e}</span>
-            <span>${h.cust.n} <b>예약 방문</b> 예정</span>
-            <span style="font-size:10px;color:var(--text3)">${h.cust.wantTags.join(', ')}</span>
-          </div>
-        `).join('')}
-        ${hints.filter(h=>h.type==='cust').length>0?`
-          <div class="hint-row">
-            <span class="hint-icon">💡</span>
-            <div>
-              <div style="font-weight:800;margin-bottom:4px">내일 예상 손님 ${hints.filter(h=>h.type==='cust').length}명</div>
-              <div style="display:flex;flex-wrap:wrap;gap:5px">
-                ${hints.filter(h=>h.type==='cust').map(h=>`
-                  <span style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:3px 8px;font-size:11px">${h.cust.e}${h.cust.n} <span style="color:var(--text3)">(${h.cust.wantTags.join('/')})</span></span>
-                `).join('')}
-              </div>
-              <div style="margin-top:6px;font-size:10px;color:var(--text3)">
-                💎 내일 필요 태그: ${[...new Set(hints.filter(h=>h.type==='cust').flatMap(h=>h.cust.wantTags))].map(t=>`<span class="tag-need">${t}</span>`).join('')}
-              </div>
+        <div class="report-sec-title">🔭 내일 준비</div>
+        ${(()=>{
+          const hints=S.tomorrowHints||[];
+          const sunHint=hints.find(h=>h.type==='sunday');
+          const resCusts=hints.filter(h=>h.type==='reservation');
+          const nextCusts=hints.filter(h=>h.type==='cust');
+          const allTags=[...new Set([...resCusts,...nextCusts].flatMap(h=>h.cust.wantTags))];
+          if(sunHint) return `<div class="hint-row"><span class="hint-icon">☀️</span><span style="font-size:11px">${sunHint.msg}</span></div>`;
+          if(!nextCusts.length&&!resCusts.length) return `<div style="font-size:12px;color:var(--text3)">힌트 없음</div>`;
+          return `
+            <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px">
+              ${resCusts.map(h=>`<span style="display:inline-flex;align-items:center;gap:3px;background:var(--blue-light);border:1px solid #90CAF9;border-radius:12px;padding:3px 9px;font-size:11px;font-weight:700">
+                ${h.cust.e} ${h.cust.n} <span style="font-size:9px;color:var(--blue)">예약</span>
+              </span>`).join('')}
+              ${nextCusts.map(h=>`<span style="display:inline-flex;align-items:center;gap:3px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:3px 9px;font-size:11px">
+                ${h.cust.e} ${h.cust.n}
+              </span>`).join('')}
             </div>
-          </div>
-        `:''}
+            ${allTags.length?`<div style="padding:7px 10px;background:var(--gold-light);border:1px solid var(--border2);border-radius:var(--radius-sm)">
+              <span style="font-size:10px;font-weight:800;color:var(--gold2)">💡 추천 제조 태그 </span>
+              ${allTags.map(t=>`<span class="tag-need">${t}</span>`).join('')}
+            </div>`:''}
+          `;
+        })()}
       </div>
 
       <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding-top:6px">
