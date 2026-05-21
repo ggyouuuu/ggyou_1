@@ -328,89 +328,86 @@ const CAT_DEFS=[
 ];
 
 const RECIPES=[
-  // 포션/회복
-  {id:'hp',     e:'🧪',n:'체력 포션',    cat:'potion', cost:{herb:1,water:1},       p:55,  tags:['전투','회복']},
-  {id:'herb2',  e:'🌾',n:'회복 약초다발',cat:'potion', cost:{herb:2},               p:48,  tags:['회복']},
-  {id:'honeyp', e:'🍯',n:'꿀 시럽',      cat:'potion', cost:{honey:1,water:1},      p:52,  tags:['음식','회복']},
-  {id:'anti',   e:'🍵',n:'해독제',        cat:'potion', cost:{mushroom:1,herb:1},    p:72,  tags:['회복','전투']},
-  {id:'mp',     e:'💜',n:'마나 포션',    cat:'potion', cost:{crystal:1,stardust:1}, p:110, tags:['마법','전투']},
-  {id:'super',  e:'⚗️',n:'슈퍼 포션',    cat:'potion', cost:{herb:1,crystal:1,water:1},p:160,tags:['전투','회복']},
-  // 음식/음료
-  {id:'tea',    e:'☕',n:'뿌리차',        cat:'food',   cost:{root:1,water:1},       p:50,  tags:['일상','음료']},
-  {id:'jam',    e:'🫙',n:'열매잼',        cat:'food',   cost:{berry:2},              p:45,  tags:['음식']},
-  {id:'leaft',  e:'🍵',n:'잎사귀 차',    cat:'food',   cost:{leaf:2},               p:44,  tags:['음료']},
-  {id:'honey2', e:'🍫',n:'마법 캔디',    cat:'food',   cost:{honey:1,stardust:1},   p:90,  tags:['마법']},
-  // 마법
-  {id:'shd2',   e:'🌑',n:'그림자 인형',  cat:'magic',  cost:{shadow:1,root:1},      p:85,  tags:['마법','희귀']},
-  {id:'luck',   e:'🍀',n:'행운의 부적',  cat:'magic',  cost:{flower:1,stardust:1},  p:105, tags:['마법','희귀']},
-  {id:'mcrys',  e:'🔮',n:'마법 결정',    cat:'magic',  cost:{crystal:2},            p:165, tags:['마법','희귀']},
-  {id:'moon2',  e:'🌙',n:'달빛 부적',    cat:'magic',  cost:{moonstone:1,stardust:1},p:185,tags:['마법','전설']},
-  {id:'shadow3',e:'🌑',n:'어둠의 결정',  cat:'magic',  cost:{shadow:2,moonstone:1}, p:200, tags:['마법','전설']},
-  // 전투
-  {id:'wind2',  e:'💨',n:'바람의 약',    cat:'battle', cost:{wind:1,leaf:1},        p:80,  tags:['전투','마법']},
-  {id:'mush2',  e:'🍄',n:'버섯 폭탄',   cat:'battle', cost:{mushroom:2,flame:1},   p:95,  tags:['전투']},
-  {id:'fire',   e:'💣',n:'화염 폭탄',    cat:'battle', cost:{flame:1,crystal:1},    p:125, tags:['전투']},
-  {id:'ice',    e:'❄️',n:'냉기 폭탄',    cat:'battle', cost:{water:2,crystal:1},    p:138, tags:['전투']},
-  // 선물/일상
-  {id:'flowp',  e:'💐',n:'꽃다발',       cat:'gift',   cost:{flower:2},             p:55,  tags:['선물']},
-  {id:'bloom',  e:'🌺',n:'만개의 향수',  cat:'gift',   cost:{flower:1,honey:1},     p:78,  tags:['선물','일상']},
-  // 농업
-  {id:'seed2',  e:'🌱',n:'씨앗 묶음',    cat:'farm',   cost:{seed:2},               p:40,  tags:['농업']},
+  // ── Lv1 해금 (기초, 재료 1~2개, 저가)
+  {id:'hp',     e:'🧪',n:'체력 포션',    cat:'potion', cost:{herb:1,water:1},          p:55,  tags:['전투','회복'],  unlockLv:1},
+  {id:'herb2',  e:'🌾',n:'회복 약초다발',cat:'potion', cost:{herb:2},                  p:48,  tags:['회복'],         unlockLv:1},
+  {id:'tea',    e:'☕',n:'뿌리차',        cat:'food',   cost:{root:1,water:1},           p:50,  tags:['일상','음료'],  unlockLv:1},
+  {id:'jam',    e:'🫙',n:'열매잼',        cat:'food',   cost:{berry:2},                 p:45,  tags:['음식'],         unlockLv:1},
+  {id:'leaft',  e:'🍵',n:'잎사귀 차',    cat:'food',   cost:{leaf:2},                  p:44,  tags:['음료'],         unlockLv:1},
+  {id:'flowp',  e:'💐',n:'꽃다발',       cat:'gift',   cost:{flower:2},                p:55,  tags:['선물'],         unlockLv:1},
+  {id:'seed2',  e:'🌱',n:'씨앗 묶음',    cat:'farm',   cost:{seed:2},                  p:40,  tags:['농업'],         unlockLv:1},
+
+  // ── Lv2 해금 (중급, 재료 2개, 중가)
+  {id:'honeyp', e:'🍯',n:'꿀 시럽',      cat:'potion', cost:{honey:1,water:1},          p:52,  tags:['음식','회복'],  unlockLv:2},
+  {id:'anti',   e:'🍵',n:'해독제',        cat:'potion', cost:{mushroom:1,herb:1},        p:72,  tags:['회복','전투'],  unlockLv:2},
+  {id:'honey2', e:'🍫',n:'마법 캔디',    cat:'food',   cost:{honey:1,stardust:1},       p:90,  tags:['마법'],         unlockLv:2},
+  {id:'bloom',  e:'🌺',n:'만개의 향수',  cat:'gift',   cost:{flower:1,honey:1},         p:78,  tags:['선물','일상'],  unlockLv:2},
+  {id:'wind2',  e:'💨',n:'바람의 약',    cat:'battle', cost:{wind:1,leaf:1},            p:80,  tags:['전투','마법'],  unlockLv:2},
+  {id:'mush2',  e:'🍄',n:'버섯 폭탄',   cat:'battle', cost:{mushroom:2,flame:1},       p:95,  tags:['전투'],         unlockLv:2},
+
+  // ── Lv3 해금 (고급, 희귀 재료 사용)
+  {id:'shd2',   e:'🌑',n:'그림자 인형',  cat:'magic',  cost:{shadow:1,root:1},          p:85,  tags:['마법','희귀'],  unlockLv:3},
+  {id:'luck',   e:'🍀',n:'행운의 부적',  cat:'magic',  cost:{flower:1,stardust:1},      p:105, tags:['마법','희귀'],  unlockLv:3},
+  {id:'fire',   e:'💣',n:'화염 폭탄',    cat:'battle', cost:{flame:1,crystal:1},        p:125, tags:['전투'],         unlockLv:3},
+  {id:'ice',    e:'❄️',n:'냉기 폭탄',    cat:'battle', cost:{water:2,crystal:1},        p:138, tags:['전투'],         unlockLv:3},
+  {id:'mp',     e:'💜',n:'마나 포션',    cat:'potion', cost:{crystal:1,stardust:1},     p:110, tags:['마법','전투'],  unlockLv:3},
+
+  // ── Lv4 해금 (명품, 전설 재료 사용)
+  {id:'mcrys',  e:'🔮',n:'마법 결정',    cat:'magic',  cost:{crystal:2},                p:165, tags:['마법','희귀'],  unlockLv:4},
+  {id:'moon2',  e:'🌙',n:'달빛 부적',    cat:'magic',  cost:{moonstone:1,stardust:1},   p:185, tags:['마법','전설'],  unlockLv:4},
+  {id:'shadow3',e:'🌑',n:'어둠의 결정',  cat:'magic',  cost:{shadow:2,moonstone:1},     p:200, tags:['마법','전설'],  unlockLv:4},
+  {id:'super',  e:'⚗️',n:'슈퍼 포션',    cat:'potion', cost:{herb:1,crystal:1,water:1}, p:160, tags:['전투','회복'],  unlockLv:4},
 ];
 
-// 일요일 특별 레시피 (발견 후 RECIPES에 추가됨)
 const SPECIAL_RECIPES=[
-  {id:'spe_elixir', e:'🌟',n:'황금 엘릭서',cat:'special',cost:{stardust:2,moonstone:1,honey:1},p:320,tags:['마법','전설','전투'],sunOnly:true},
-  {id:'spe_dream',  e:'🌈',n:'꿈의 약',    cat:'special',cost:{moonstone:1,flower:2,crystal:1},p:280,tags:['마법','선물'],sunOnly:true},
-  {id:'spe_dark',   e:'🖤',n:'심연의 포션',cat:'special',cost:{shadow:3,moonstone:1},          p:250,tags:['마법','전설'],sunOnly:true},
-  {id:'spe_sun',    e:'☀️',n:'태양의 결정',  cat:'special',cost:{flame:2,crystal:1,stardust:1}, p:300,tags:['전투','희귀'],sunOnly:true},
-  {id:'spe_forest', e:'🌳',n:'숲의 정수',   cat:'special',cost:{herb:3,flower:2,leaf:2},        p:220,tags:['회복','선물'],sunOnly:true},
+  {id:'spe_elixir', e:'🌟',n:'황금 엘릭서', cat:'special',cost:{stardust:2,moonstone:1,honey:1},p:320,tags:['마법','전설','전투'],sunOnly:true,unlockLv:1},
+  {id:'spe_dream',  e:'🌈',n:'꿈의 약',     cat:'special',cost:{moonstone:1,flower:2,crystal:1},p:280,tags:['마법','선물'],       sunOnly:true,unlockLv:1},
+  {id:'spe_dark',   e:'🖤',n:'심연의 포션', cat:'special',cost:{shadow:3,moonstone:1},          p:250,tags:['마법','전설'],       sunOnly:true,unlockLv:1},
+  {id:'spe_sun',    e:'☀️',n:'태양의 결정',  cat:'special',cost:{flame:2,crystal:1,stardust:1}, p:300,tags:['전투','희귀'],       sunOnly:true,unlockLv:1},
+  {id:'spe_forest', e:'🌳',n:'숲의 정수',   cat:'special',cost:{herb:3,flower:2,leaf:2},        p:220,tags:['회복','선물'],       sunOnly:true,unlockLv:1},
 ];
 
-// 합성 레시피 — 완성품을 재료로 사용하는 고급 레시피
-// craftedCost: {레시피id: 수량} 형태로 shopInv에서 차감
 const COMPOUND_RECIPES=[
-  // 포션 계열
-  {id:'c_hp2',      e:'🔴',n:'강화 체력 포션',     cat:'compound',
+  // Lv2 합성
+  {id:'c_hp2',      e:'🔴',n:'강화 체력 포션',      cat:'compound',unlockLv:2,
    cost:{crystal:1},              craftedCost:{hp:2},
    p:165, tags:['전투','회복'],   note:'체력 포션 2개를 농축한 강력한 포션'},
-  {id:'c_fullhp',   e:'❤️', n:'완전 회복 포션',    cat:'compound',
-   cost:{moonstone:1},            craftedCost:{hp:1,anti:1,honeyp:1},
-   p:360, tags:['전투','회복','전설'], note:'세 가지 회복 아이템을 합친 궁극의 포션'},
-  {id:'c_mphp',     e:'💎',n:'쌍수 포션',          cat:'compound',
-   cost:{stardust:1},             craftedCost:{hp:1,mp:1},
-   p:320, tags:['마법','전투','회복'], note:'체력과 마나를 동시에 회복'},
-  // 마법 계열
-  {id:'c_cursed',   e:'🖤',n:'저주의 마법진',      cat:'compound',
-   cost:{shadow:1},               craftedCost:{shd2:1,mcrys:1},
-   p:430, tags:['마법','전설','희귀'], note:'그림자 인형과 마법 결정을 봉인한 금단의 도구'},
-  {id:'c_oracle',   e:'🔮',n:'예언의 수정구',      cat:'compound',
-   cost:{moonstone:1,stardust:1}, craftedCost:{mcrys:1,luck:1},
-   p:540, tags:['마법','전설','선물'], note:'마법 결정과 행운의 부적이 공명한 신비로운 구슬'},
-  {id:'c_moonamu',  e:'🌕',n:'보름달 부적',        cat:'compound',
-   cost:{},                       craftedCost:{moon2:1,luck:1},
-   p:390, tags:['마법','전설','선물'], note:'달빛 부적과 행운의 부적을 하나로 합친 수호물'},
-  // 전투 계열
-  {id:'c_inferno',  e:'🌋',n:'인페르노 폭탄',      cat:'compound',
-   cost:{flame:1},                craftedCost:{fire:2,mush2:1},
-   p:460, tags:['전투'],          note:'화염 폭탄 두 개와 버섯 폭탄을 합친 파괴적인 무기'},
-  {id:'c_blizzard', e:'🌨️',n:'블리자드 폭탄',     cat:'compound',
-   cost:{crystal:1},              craftedCost:{ice:2,wind2:1},
-   p:440, tags:['전투','마법'],   note:'냉기 폭탄과 바람의 약이 결합한 얼음 폭풍'},
-  {id:'c_stormkit', e:'⚡',n:'폭풍 전사 키트',     cat:'compound',
-   cost:{stardust:1},             craftedCost:{fire:1,ice:1,wind2:1},
-   p:560, tags:['전투','마법','희귀'], note:'불·얼음·바람을 하나로 모은 극한 전투 장비'},
-  // 선물 계열
-  {id:'c_luxbouq',  e:'🌸',n:'사치스러운 꽃바구니',cat:'compound',
+  {id:'c_luxbouq',  e:'🌸',n:'사치스러운 꽃바구니', cat:'compound',unlockLv:2,
    cost:{honey:1},                craftedCost:{flowp:2,bloom:1},
    p:295, tags:['선물','일상'],   note:'꽃다발과 향수로 만든 고급 선물 세트'},
-  {id:'c_sweetbox', e:'🎁', n:'달콤한 선물 세트',  cat:'compound',
+  {id:'c_sweetbox', e:'🎁',n:'달콤한 선물 세트',    cat:'compound',unlockLv:2,
    cost:{},                       craftedCost:{honeyp:1,jam:1,honey2:1},
    p:255, tags:['선물','음식','일상'], note:'꿀 시럽·열매잼·마법 캔디 3종 세트'},
-  // 농업
-  {id:'c_growkit',  e:'🌻',n:'마법 씨앗 키트',     cat:'compound',
+  {id:'c_growkit',  e:'🌻',n:'마법 씨앗 키트',      cat:'compound',unlockLv:2,
    cost:{stardust:1},             craftedCost:{seed2:2,herb2:1},
    p:215, tags:['농업','회복'],   note:'씨앗 묶음과 약초다발로 만든 풍요의 키트'},
+  // Lv3 합성
+  {id:'c_inferno',  e:'🌋',n:'인페르노 폭탄',        cat:'compound',unlockLv:3,
+   cost:{flame:1},                craftedCost:{fire:2,mush2:1},
+   p:460, tags:['전투'],          note:'화염 폭탄 두 개와 버섯 폭탄을 합친 파괴적인 무기'},
+  {id:'c_blizzard', e:'🌨️',n:'블리자드 폭탄',       cat:'compound',unlockLv:3,
+   cost:{crystal:1},              craftedCost:{ice:2,wind2:1},
+   p:440, tags:['전투','마법'],   note:'냉기 폭탄과 바람의 약이 결합한 얼음 폭풍'},
+  {id:'c_mphp',     e:'💎',n:'쌍수 포션',            cat:'compound',unlockLv:3,
+   cost:{stardust:1},             craftedCost:{hp:1,mp:1},
+   p:320, tags:['마법','전투','회복'], note:'체력과 마나를 동시에 회복'},
+  // Lv4 합성
+  {id:'c_cursed',   e:'🖤',n:'저주의 마법진',        cat:'compound',unlockLv:4,
+   cost:{shadow:1},               craftedCost:{shd2:1,mcrys:1},
+   p:430, tags:['마법','전설','희귀'], note:'그림자 인형과 마법 결정을 봉인한 금단의 도구'},
+  {id:'c_stormkit', e:'⚡',n:'폭풍 전사 키트',       cat:'compound',unlockLv:4,
+   cost:{stardust:1},             craftedCost:{fire:1,ice:1,wind2:1},
+   p:560, tags:['전투','마법','희귀'], note:'불·얼음·바람을 하나로 모은 극한 전투 장비'},
+  // Lv5 합성
+  {id:'c_oracle',   e:'🔮',n:'예언의 수정구',        cat:'compound',unlockLv:5,
+   cost:{moonstone:1,stardust:1}, craftedCost:{mcrys:1,luck:1},
+   p:540, tags:['마법','전설','선물'], note:'마법 결정과 행운의 부적이 공명한 신비로운 구슬'},
+  {id:'c_moonamu',  e:'🌕',n:'보름달 부적',          cat:'compound',unlockLv:5,
+   cost:{},                       craftedCost:{moon2:1,luck:1},
+   p:390, tags:['마법','전설','선물'], note:'달빛 부적과 행운의 부적을 하나로 합친 수호물'},
+  {id:'c_fullhp',   e:'❤️',n:'완전 회복 포션',       cat:'compound',unlockLv:5,
+   cost:{moonstone:1},            craftedCost:{hp:1,anti:1,honeyp:1},
+   p:360, tags:['전투','회복','전설'], note:'세 가지 회복 아이템을 합친 궁극의 포션'},
 ];
 
 // 손님 아키타입: 유형마다 이름 풀 5개, 하루에 중복 없이 뽑힘
@@ -553,11 +550,57 @@ const LOCATIONS=[
   {id:'magicwood',e:'🌌',n:'마법의 숲', desc:'별빛과 달빛이 가득한 신비로운 숲.',pool:['stardust','moonstone','flower','crystal','wind'],bonusAM:{ids:['flower','wind','leaf'],qty:[1,3]},bonusPM:{ids:['stardust','moonstone','crystal'],qty:[1,1]}},
 ];
 
-// 일요일 전용 탐험지
+// 평일 슬롯 정의 (2개)
+const WEEKDAY_SLOTS=[
+  {idx:0, label:'🌤️ 오전', badge:'오전', color:'#E65100', bg:'#FFF3E0', bonusKey:'bonusAM'},
+  {idx:1, label:'🌆 오후', badge:'오후', color:'#5B4FCF', bg:'#EDE8FE', bonusKey:'bonusPM'},
+];
+
+// 일요일 슬롯 정의 (4개) — 각 시간대마다 다른 보너스 키
+const SUNDAY_SLOTS=[
+  {idx:0, label:'🌙 새벽', badge:'새벽', color:'#283593', bg:'#E8EAF6', bonusKey:'bonusDawn',
+   desc:'고요한 새벽, 희귀 재료 출현 확률이 높아요.'},
+  {idx:1, label:'🌅 아침', badge:'아침', color:'#E65100', bg:'#FFF3E0', bonusKey:'bonusMorn',
+   desc:'아침 햇살 아래 신선한 재료가 풍부해요.'},
+  {idx:2, label:'🌞 오후', badge:'오후', color:'#F9A825', bg:'#FFFDE7', bonusKey:'bonusAftn',
+   desc:'오후의 따뜻한 빛 속에서 마법 재료가 반짝여요.'},
+  {idx:3, label:'🌇 저녁', badge:'저녁', color:'#6A1B9A', bg:'#F3E5F5', bonusKey:'bonusEve',
+   desc:'석양이 지면 전설 재료가 깨어나요.'},
+];
+
+// 슬롯 인덱스 → 보너스 키 매핑 헬퍼
+function getSlotBonus(loc, slotIdx, isSun){
+  if(!isSun) return slotIdx===0 ? loc.bonusAM : loc.bonusPM;
+  const keys=['bonusDawn','bonusMorn','bonusAftn','bonusEve'];
+  return loc[keys[slotIdx]] || loc.bonusAM; // fallback
+}
+function getSlotInfo(slotIdx, isSun){
+  return isSun ? SUNDAY_SLOTS[slotIdx] : WEEKDAY_SLOTS[slotIdx];
+}
+
+// 일요일 전용 탐험지 — 4시간대 보너스 추가
 const SUN_LOCATIONS=[
-  {id:'sun_shrine', e:'⛩️',n:'고대 신전',  desc:'일요일에만 열리는 성스러운 공간. 특별한 레시피 발견 가능.',pool:['stardust','moonstone','crystal','flower'],bonusAM:{ids:['stardust','moonstone'],qty:[1,2]},bonusPM:{ids:['moonstone','crystal'],qty:[1,2]},special:true},
-  {id:'sun_volcano',e:'🌋',n:'불의 산',     desc:'활화산. 희귀 재료가 가득하지만 위험해요.',               pool:['flame','crystal','shadow','wind'],         bonusAM:{ids:['flame','crystal'],qty:[1,2]},bonusPM:{ids:['crystal','stardust'],qty:[1,1]},special:true},
-  {id:'sun_sky',    e:'🌤️',n:'하늘 정원',   desc:'구름 위의 정원. 전설 재료를 얻을 수 있어요.',            pool:['stardust','moonstone','flower','honey'],   bonusAM:{ids:['stardust','flower'],qty:[1,3]},bonusPM:{ids:['moonstone','stardust'],qty:[1,2]},special:true},
+  {id:'sun_shrine', e:'⛩️',n:'고대 신전', desc:'일요일에만 열리는 성스러운 공간. 특별한 레시피 발견 가능.',
+   pool:['stardust','moonstone','crystal','flower'],
+   bonusDawn:{ids:['moonstone','stardust'],  qty:[1,2]},
+   bonusMorn:{ids:['crystal','flower'],       qty:[1,2]},
+   bonusAftn:{ids:['stardust','moonstone'],   qty:[1,1]},
+   bonusEve: {ids:['moonstone','stardust'],   qty:[1,2]},
+   special:true},
+  {id:'sun_volcano',e:'🌋',n:'불의 산', desc:'활화산. 희귀 재료가 가득하지만 위험해요.',
+   pool:['flame','crystal','shadow','wind'],
+   bonusDawn:{ids:['shadow','crystal'],  qty:[1,2]},
+   bonusMorn:{ids:['flame','crystal'],   qty:[1,2]},
+   bonusAftn:{ids:['flame','wind'],      qty:[1,2]},
+   bonusEve: {ids:['crystal','stardust'],qty:[1,1]},
+   special:true},
+  {id:'sun_sky',    e:'🌤️',n:'하늘 정원', desc:'구름 위의 정원. 전설 재료를 얻을 수 있어요.',
+   pool:['stardust','moonstone','flower','honey'],
+   bonusDawn:{ids:['moonstone','stardust'],qty:[1,2]},
+   bonusMorn:{ids:['flower','honey'],      qty:[2,3]},
+   bonusAftn:{ids:['stardust','flower'],   qty:[1,2]},
+   bonusEve: {ids:['moonstone','stardust'],qty:[1,2]},
+   special:true},
 ];
 
 // ===== 상태 =====
@@ -614,33 +657,46 @@ function getDayOfWeek(day){const d=['월','화','수','목','금','토','일'];r
 
 function newState(){
   return {
-    gold:50,day:1,maxDays:30,goal:3000,
-    totalRevenue:0,         // 누적 매출 (상점 레벨용)
-    shopLevel:1,            // 상점 레벨 1~5
-    reputation:50,          // 가격 평판 0~100
-    rapport:{},             // {손님이름: 0~100}
-    activeQuests:[],        // [{id,cust,item,qty,need,deadline,reward,status:'active'|'done'|'failed'}]
-    phase:'daytime',phase2:'explore',
-    ingInv:{},shopInv:[],
+    gold:50, day:1, maxDays:30,
+    totalRevenue:0,       // 누적 매출 (상점 레벨용)
+    todayRevenue:0,       // 오늘 매출
+    weeklyRevenue:0,      // 이번 주 매출
+    shopLevel:1,
+    reputation:50,
+    rapport:{},
+    activeQuests:[],
+    phase:'daytime', phase2:'explore',
+    ingInv:{}, shopInv:[],
     exploredSlots:[],
     maxExploreSlots:2,
     msgs:['🌅 새로운 날이 밝았습니다! 오늘도 화이팅!'],
-    cust:null,custsDone:0,maxCusts:0,
-    custQueue:[],doneIdxs:new Set(),custCurIdx:null,
+    cust:null, custsDone:0, maxCusts:0,
+    custQueue:[], doneIdxs:new Set(), custCurIdx:null,
     reservations:[],
     todayReservations:[],
-    selUid:null,priceVal:'',custOffer:0,
-    queueOpen:true,previewIdx:null,
-    craftCat:'all',craftQty:{},
+    selUid:null, priceVal:'', custOffer:0,
+    queueOpen:true, previewIdx:null,
+    craftCat:'all', craftQty:{},
     todaySalesLog:[],
     tomorrowHints:[],
     showDayReport:false,
     sunDiscoveries:[],
-    drawerOpen:false,       // 상태 드로어 펼침
-    drawerTab:'shop',       // 'shop'|'rapport'|'quest'
-    gameOver:false,won:false,
+    drawerOpen:false,
+    drawerTab:'shop',
+    gameOver:false, won:false,
   };
 }
+
+// 일별 권장 매출 (날짜·레벨 기반으로 자연스럽게 증가)
+function getDailyGoal(day, lv){
+  const base=[0,150,250,400,600,900]; // 레벨별 기본
+  return Math.round((base[lv]||150) * (1 + (day-1)*0.03));
+}
+
+// 주간 목표 (주차별)
+const WEEKLY_GOALS=[0, 800, 1800, 3200, 5000, 7500, 10000];
+function getWeeklyGoal(week){return WEEKLY_GOALS[Math.min(week, WEEKLY_GOALS.length-1)]||800;}
+function getCurrentWeek(day){return Math.floor((day-1)/7)+1;}
 let S=newState();
 function log(m){S.msgs=[m,...S.msgs].slice(0,10);}
 
@@ -722,6 +778,8 @@ function deliverQuest(qid){
     q.status='done';
     S.gold+=q.reward;
     S.totalRevenue+=q.reward;
+    S.todayRevenue+=q.reward;
+    S.weeklyRevenue+=q.reward;
     changeRapport(q.custName,15);
     changeRep(3);
     log(`✅ ${q.custE}${q.custName} 의뢰 완료! +${q.reward}G 보상!`);
@@ -762,7 +820,8 @@ function doExplore(locId,slotIdx){
   if(!loc)return;
 
   const found=[],foundMap={};
-  const isAM=slotIdx<2;
+  const slotInfo=getSlotInfo(slotIdx,sun);
+  const bonus=getSlotBonus(loc,slotIdx,sun);
   const numTypes=3+Math.floor(Math.random()*3);
   for(let i=0;i<numTypes;i++){
     const ing=pickWeighted(loc.pool);
@@ -771,7 +830,6 @@ function doExplore(locId,slotIdx){
     if(foundMap[ing.id])foundMap[ing.id].qty+=qty;
     else{foundMap[ing.id]={...ing,qty};found.push(foundMap[ing.id]);}
   }
-  const bonus=isAM?loc.bonusAM:loc.bonusPM;
   const bonusId=bonus.ids[Math.floor(Math.random()*bonus.ids.length)];
   const bonusIng=INGR.find(i=>i.id===bonusId);
   if(bonusIng){
@@ -795,9 +853,8 @@ function doExplore(locId,slotIdx){
     }
   }
 
-  const slotLabels=['🌤️ 오전1','🌤️ 오전2','🌆 오후1','🌆 오후2'];
   S.exploredSlots.push({slot:slotIdx,locId,found,discovery});
-  log(`${slotLabels[slotIdx]||'탐험'} ${loc.e}${loc.n} 완료! `+found.map(i=>`${i.e}${i.n}×${i.qty}`).join(', '));
+  log(`${slotInfo.label} ${loc.e}${loc.n} 완료! `+found.map(i=>`${i.e}${i.n}×${i.qty}`).join(', '));
   render();
 }
 
@@ -974,6 +1031,8 @@ function trySell(){
   if(price<=maxPay){
     S.gold+=price;
     S.totalRevenue+=price;
+    S.todayRevenue+=price;
+    S.weeklyRevenue+=price;
     S.todaySalesLog.push({cust:S.cust,item:{...item},price});
     S.shopInv=S.shopInv.filter(i=>i.uid!==S.selUid);
     S.selUid=null;S.priceVal='';S.custOffer=0;
@@ -988,7 +1047,7 @@ function trySell(){
     checkLevelUp();
     const emoji=ratio>0.95?'🤑':ratio>0.8?'✅':'😄';
     log(`${S.cust.e} "${rxn}" ${emoji} ${price}G! (친밀도+${rapportDelta})`);
-    if(S.gold>=S.goal){S.won=true;S.gameOver=true;render();return;}
+    if(S.shopLevel>=5){S.won=true;S.gameOver=true;render();return;}
     S.doneIdxs.add(S.custCurIdx);
     setTimeout(spawnCust,100);
   } else {
@@ -1013,6 +1072,13 @@ function endBusiness(){
   S.cust=null;
   for(let i=0;i<S.custQueue.length;i++)S.doneIdxs.add(i);
   S.custsDone=S.doneIdxs.size;
+  // 일별 목표 달성 체크
+  const dailyGoal=getDailyGoal(S.day,S.shopLevel);
+  if(S.todayRevenue>=dailyGoal){
+    const bonus=Math.round(dailyGoal*0.05);
+    S.gold+=bonus;
+    log(`🎯 오늘 목표 달성! 보너스 +${bonus}G`);
+  }
   generateTomorrowHints();
   S.showDayReport=true;
   log(`🌙 영업 종료. (남은 손님 ${remaining}명)`);
@@ -1032,7 +1098,10 @@ function nextDay(){
   if(S.day>=S.maxDays){S.gameOver=true;render();return;}
   S.day++;
   checkQuestDeadlines();
-  S.phase='daytime';S.phase2='explore';
+  // 주가 바뀌면 주간 매출 초기화
+  if((S.day-1)%7===0) S.weeklyRevenue=0;
+  S.todayRevenue=0;
+  S.phase='daytime'; S.phase2='explore';
   S.exploredSlots=[];S.maxExploreSlots=isSunday(S.day)?4:2;
   S.cust=null;S.custsDone=0;S.custQueue=[];
   S.doneIdxs=new Set();S.custCurIdx=null;S.previewIdx=null;
@@ -1060,7 +1129,6 @@ function toggleDrawer(tab){
 
 // ===== 렌더링 =====
 function renderHdr(){
-  const pct=Math.min(100,Math.round(S.gold/S.goal*100));
   const dow=getDayOfWeek(S.day);
   const sun=isSunday(S.day);
   const lvInfo=getShopLevel();
@@ -1068,31 +1136,70 @@ function renderHdr(){
   const nextLv=SHOP_LEVELS[lvInfo.lv]||null;
   const lvPct=nextLv?Math.min(100,Math.round((S.totalRevenue-lvInfo.minRev)/(nextLv.minRev-lvInfo.minRev)*100)):100;
 
-  // 단골 수 계산
+  // 일별 소목표
+  const dailyGoal=getDailyGoal(S.day, S.shopLevel);
+  const dailyPct=Math.min(100,Math.round(S.todayRevenue/dailyGoal*100));
+  const dailyDone=S.todayRevenue>=dailyGoal;
+
+  // 주간 목표
+  const week=getCurrentWeek(S.day);
+  const weeklyGoal=getWeeklyGoal(week);
+  const weeklyPct=Math.min(100,Math.round(S.weeklyRevenue/weeklyGoal*100));
+  const weeklyDone=S.weeklyRevenue>=weeklyGoal;
+
   const regularCount=Object.entries(S.rapport).filter(([,v])=>v>=50).length;
   const vipCount=Object.entries(S.rapport).filter(([,v])=>v>=75).length;
-  // 활성 퀘스트
   const activeQ=S.activeQuests.filter(q=>q.status==='active');
   const urgentQ=activeQ.filter(q=>q.deadline-S.day<=1);
 
   return `
   <div class="hdr">
-    <div class="gold-disp">💰 ${S.gold.toLocaleString()}G</div>
-    <div class="prog-wrap">
-      <div class="prog-lbl">목표 ${S.goal.toLocaleString()}G · 남음 ${Math.max(0,S.goal-S.gold).toLocaleString()}G (${pct}%)</div>
-      <div class="prog"><div class="prog-f" style="width:${pct}%"></div></div>
+    <div style="min-width:0;flex:1">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <span style="font-size:16px">${lvInfo.e}</span>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">
+            <span style="font-size:12px;font-weight:800;color:var(--text)">${lvInfo.name}</span>
+            <span style="font-size:10px;color:var(--text3)">${nextLv?`Lv${lvInfo.lv+1}까지 ${(nextLv.minRev-S.totalRevenue).toLocaleString()}G`:'👑 MAX'}</span>
+          </div>
+          <div class="prog" style="height:8px">
+            <div class="prog-f" style="width:${lvPct}%"></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <div style="flex:1;background:${dailyDone?'var(--green-light)':'var(--bg3)'};border-radius:6px;padding:4px 8px;border:1px solid ${dailyDone?'var(--green)':'var(--border)'}">
+          <div style="font-size:9px;color:var(--text3);margin-bottom:2px">오늘 목표 ${dailyDone?'✅':''}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:4px">
+            <div style="flex:1;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden">
+              <div style="width:${dailyPct}%;height:100%;background:${dailyDone?'var(--green)':'var(--gold)'};border-radius:2px"></div>
+            </div>
+            <span style="font-size:10px;font-weight:800;color:${dailyDone?'var(--green)':'var(--text2)'};white-space:nowrap">${S.todayRevenue.toLocaleString()}/${dailyGoal.toLocaleString()}G</span>
+          </div>
+        </div>
+        <div style="flex:1;background:${weeklyDone?'var(--purple-light)':'var(--bg3)'};border-radius:6px;padding:4px 8px;border:1px solid ${weeklyDone?'var(--purple)':'var(--border)'}">
+          <div style="font-size:9px;color:var(--text3);margin-bottom:2px">${week}주차 목표 ${weeklyDone?'✅':''}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:4px">
+            <div style="flex:1;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden">
+              <div style="width:${weeklyPct}%;height:100%;background:${weeklyDone?'var(--purple)':'var(--blue)'};border-radius:2px"></div>
+            </div>
+            <span style="font-size:10px;font-weight:800;color:${weeklyDone?'var(--purple)':'var(--text2)'};white-space:nowrap">${S.weeklyRevenue.toLocaleString()}/${weeklyGoal.toLocaleString()}G</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="dayl">
-      <div class="${sun?'day-sun':''}">📅 ${S.day} / ${S.maxDays}일</div>
-      <div class="${sun?'day-sun':''}">( ${dow}요일${sun?' ☀️':''} )</div>
+    <div style="text-align:right;flex-shrink:0;margin-left:8px">
+      <div class="gold-disp">💰 ${S.gold.toLocaleString()}G</div>
+      <div class="dayl ${sun?'day-sun':''}">📅 ${S.day}/${S.maxDays}일</div>
+      <div class="dayl ${sun?'day-sun':''}">( ${dow}요일${sun?' ☀️':''} )</div>
     </div>
   </div>
   <div class="sbar">
     <div class="sbar-cell" onclick="toggleDrawer('shop')" title="상점 상태">
       <span class="sbar-icon">${lvInfo.e}</span>
       <div style="min-width:0">
-        <div class="sbar-val">${lvInfo.name}</div>
-        <div class="sbar-sub">Lv${lvInfo.lv} · ${nextLv?`다음 ${(nextLv.minRev-S.totalRevenue).toLocaleString()}G`:'MAX'}</div>
+        <div class="sbar-val">Lv${lvInfo.lv} ${lvInfo.name}</div>
+        <div class="sbar-sub">누적 ${S.totalRevenue.toLocaleString()}G</div>
         <div class="sbar-mini-bar" style="background:var(--bg3);border-radius:2px;height:3px;margin-top:2px">
           <div style="width:${lvPct}%;height:100%;background:var(--gold);border-radius:2px"></div>
         </div>
@@ -1124,21 +1231,22 @@ function renderHdr(){
     </div>
   </div>
   ${S.drawerOpen?renderStatusDrawer():''}
-  `;
-}
+  `;}
+
 
 function renderStatusDrawer(){
   const tab=S.drawerTab;
   return `<div class="sdrawer" style="margin-top:0;margin-bottom:10px">
     <div class="sdrawer-inner">
       <div class="sdrawer-tabs">
-        <div class="sdrawer-tab${tab==='shop'?' on':''}" onclick="toggleDrawer('shop')">🏪 상점</div>
+        <div class="sdrawer-tab${tab==='shop'?' on':''}"    onclick="toggleDrawer('shop')">🏪 상점</div>
         <div class="sdrawer-tab${tab==='rapport'?' on':''}" onclick="toggleDrawer('rapport')">👥 단골</div>
-        <div class="sdrawer-tab${tab==='quest'?' on':''}" onclick="toggleDrawer('quest')">📜 의뢰</div>
+        <div class="sdrawer-tab${tab==='quest'?' on':''}"   onclick="toggleDrawer('quest')">📜 의뢰</div>
+        <div class="sdrawer-tab${tab==='trend'?' on':''}"   onclick="toggleDrawer('trend')">📈 트렌드</div>
         <div style="flex:1"></div>
-        <div class="sdrawer-tab" onclick="S.drawerOpen=false;render()" style="color:var(--text3)">✕ 닫기</div>
+        <div class="sdrawer-tab" onclick="S.drawerOpen=false;render()" style="color:var(--text3)">✕</div>
       </div>
-      ${tab==='shop'?renderDrawerShop():tab==='rapport'?renderDrawerRapport():renderDrawerQuest()}
+      ${tab==='shop'?renderDrawerShop():tab==='rapport'?renderDrawerRapport():tab==='trend'?renderTrend():renderDrawerQuest()}
     </div>
   </div>`;
 }
@@ -1279,11 +1387,9 @@ function renderTabs(){
   const sun=isSunday(S.day);
   const p=S.phase2;
   const explCnt=S.exploredSlots.length;
-  const maxSlots=S.maxExploreSlots;
-  const todayTrend=getTodayTrend(S.day);
+  const maxSlots=sun?4:2;
   const tabs=[
     {id:'explore', l:`🗺️ 탐험${explCnt>0?` (${explCnt}/${maxSlots})`:''}` },
-    {id:'trend',   l:'📈 트렌드'},
     {id:'craft',   l:'⚗️ 제조'},
     {id:'shop',    l:sun?'📅 예약':'🏪 상점'},
   ];
@@ -1291,7 +1397,7 @@ function renderTabs(){
     const isA=p===x.id||(S.phase==='shop'&&x.id==='shop'&&!S.showDayReport);
     const isDone=(x.id==='explore'&&explCnt>=maxSlots&&p!=='explore'&&!S.showDayReport)||
                  (x.id==='craft'&&S.phase==='shop'&&!S.showDayReport);
-    const locked=(S.phase==='shop'&&!S.showDayReport)&&(x.id!=='shop'&&x.id!=='trend');
+    const locked=(S.phase==='shop'&&!S.showDayReport)&&x.id!=='shop';
     let cls=isA?'tab-active':isDone?'tab-done':'tab-idle';
     if(locked)cls+=' tab-locked';
     return `<div class="tab ${cls}" ${!locked?`onclick="setTab('${x.id}')"`:''}>
@@ -1303,157 +1409,119 @@ function renderMain(){
   if(S.showDayReport)return renderDayReport();
   if(S.phase==='shop')return renderShop();
   if(S.phase2==='craft')return renderCraft();
-  if(S.phase2==='trend')return renderTrend();
   if(isSunday(S.day)&&S.phase2==='shop')return renderSundayReservation();
   return renderExplore();
 }
 
-// ===== 트렌드 렌더 =====
+// ===== 트렌드 렌더 (컴팩트 한 줄 뷰) =====
 function renderTrend(){
   const today=getTodayTrend(S.day);
   const weekly=getWeeklyTrend(S.day);
   const weekNum=Math.floor((S.day-1)/7)+1;
   const weekRefreshIn=7-(S.day-1)%7;
+  const tomorrow=getTodayTrend(S.day+1);
 
-  const tagColor={'전투':'#EF5350','마법':'#7E57C2','회복':'#66BB6A','음식':'#FFA726',
+  const TAG_COLOR={
+    '전투':'#EF5350','마법':'#7E57C2','회복':'#66BB6A','음식':'#FFA726',
     '음료':'#29B6F6','일상':'#8D6E63','선물':'#EC407A','농업':'#9CCC65',
-    '희귀':'#FF7043','전설':'#AB47BC'};
-  const tagBg={'전투':'#FFEBEE','마법':'#EDE7F6','회복':'#E8F5E9','음식':'#FFF3E0',
+    '희귀':'#FF7043','전설':'#AB47BC'
+  };
+  const TAG_BG={
+    '전투':'#FFEBEE','마법':'#EDE7F6','회복':'#E8F5E9','음식':'#FFF3E0',
     '음료':'#E1F5FE','일상':'#EFEBE9','선물':'#FCE4EC','농업':'#F1F8E9',
-    '희귀':'#FBE9E7','전설':'#F3E5F5'};
+    '희귀':'#FBE9E7','전설':'#F3E5F5'
+  };
+  const tb=(t,sm=false)=>`<span style="padding:${sm?'1px 5px':'2px 6px'};border-radius:6px;font-size:${sm?'9px':'10px'};font-weight:800;background:${TAG_BG[t]||'var(--bg2)'};color:${TAG_COLOR[t]||'var(--text)'};border:1px solid ${TAG_COLOR[t]||'var(--border)'}">${t}</span>`;
 
-  const tagBadge=(t,size='12px')=>`<span style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:${size};font-weight:800;background:${tagBg[t]||'var(--bg2)'};color:${tagColor[t]||'var(--text)'};border:1px solid ${tagColor[t]||'var(--border)'}">${t}</span>`;
+  const hotRec=getTrendBonus(today.hot).slice(0,3);
 
-  const hotRec=getTrendBonus(today.hot);
-  const weekRec=getTrendBonus(weekly);
+  return `<div style="display:flex;flex-direction:column;gap:6px">
 
-  // 내일 트렌드 힌트
-  const tomorrowTrend=getTodayTrend(S.day+1);
-
-  return `<div class="panel">
-    <div style="font-size:13px;font-weight:800;margin-bottom:12px;font-family:'Nanum Myeongjo',serif">📈 시장 트렌드</div>
-
-    <!-- 오늘 트렌드 -->
-    <div style="background:var(--gold-light);border:1.5px solid var(--border2);border-radius:var(--radius);padding:12px;margin-bottom:10px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div style="font-size:11px;font-weight:800;color:var(--gold2)">🔥 오늘의 HOT 태그</div>
-        <div style="font-size:10px;color:var(--text3)">${S.day}일째</div>
+    <!-- 한 줄 컴팩트 트렌드 -->
+    <div style="display:flex;align-items:center;gap:0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;font-size:11px">
+      <!-- 오늘 HOT -->
+      <div style="display:flex;align-items:center;gap:4px;padding:6px 9px;flex:1;min-width:0;border-right:1px solid var(--border)">
+        <span style="font-size:12px;flex-shrink:0">🔥</span>
+        <span style="font-size:9px;font-weight:800;color:var(--gold2);white-space:nowrap">오늘</span>
+        <div style="display:flex;gap:2px;flex-wrap:wrap">${today.hot.map(t=>tb(t)).join('')}</div>
+        ${today.cold.length?`<span style="font-size:9px;color:var(--text3);white-space:nowrap;margin-left:2px">↓${today.cold.map(t=>t).join('·')}</span>`:''}
       </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
-        ${today.hot.map(t=>`<span>${tagBadge(t,'13px')} <span style="font-size:10px;color:var(--gold2);font-weight:700">수요↑↑</span></span>`).join('')}
+      <!-- 주간 -->
+      <div style="display:flex;align-items:center;gap:4px;padding:6px 9px;flex:1;min-width:0;border-right:1px solid var(--border)">
+        <span style="font-size:12px;flex-shrink:0">📊</span>
+        <span style="font-size:9px;font-weight:800;color:var(--purple);white-space:nowrap">${weekNum}주</span>
+        <div style="display:flex;gap:2px;flex-wrap:wrap">${weekly.map(t=>tb(t)).join('')}</div>
+        <span style="font-size:9px;color:var(--text3);white-space:nowrap;flex-shrink:0">${weekRefreshIn}일</span>
       </div>
-      ${today.cold.length?`<div style="font-size:10px;color:var(--text3);display:flex;gap:5px;align-items:center;flex-wrap:wrap">
-        📉 오늘 수요 낮음:
-        ${today.cold.map(t=>`<span style="opacity:.7">${tagBadge(t,'10px')}</span>`).join('')}
-      </div>`:''}
-      ${hotRec.length?`
-        <div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border2)">
-          <div style="font-size:10px;font-weight:800;color:var(--text3);margin-bottom:5px">💡 오늘 잘 팔릴 아이템</div>
-          <div style="display:flex;flex-wrap:wrap;gap:5px">
-            ${hotRec.map(r=>`<span style="background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700">${r.e}${r.n} <span style="color:var(--gold2)">${r.p}G</span></span>`).join('')}
-          </div>
-        </div>
-      `:''}
-    </div>
-
-    <!-- 주간 트렌드 -->
-    <div style="background:var(--purple-light);border:1.5px solid var(--purple);border-radius:var(--radius);padding:12px;margin-bottom:10px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div style="font-size:11px;font-weight:800;color:var(--purple)">📊 ${weekNum}주차 주간 트렌드</div>
-        <div style="font-size:10px;color:var(--text3)">${weekRefreshIn}일 후 갱신</div>
-      </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
-        ${weekly.map(t=>`<span>${tagBadge(t,'12px')} <span style="font-size:10px;color:var(--purple);font-weight:700">이번 주 인기</span></span>`).join('')}
-      </div>
-      ${weekRec.length?`
-        <div style="font-size:10px;font-weight:800;color:var(--text3);margin-bottom:5px">💎 주간 추천 제조</div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px">
-          ${weekRec.map(r=>`<span style="background:var(--bg);border:1px solid #C5CAE9;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700">${r.e}${r.n} <span style="color:var(--purple)">${r.p}G</span></span>`).join('')}
-        </div>
-      `:''}
-    </div>
-
-    <!-- 내일 예고 -->
-    <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:10px;">
-      <div style="font-size:11px;font-weight:800;color:var(--text2);margin-bottom:7px">🔮 내일 예상 트렌드</div>
-      <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">
-        <span style="font-size:10px;color:var(--text3)">HOT 예상:</span>
-        ${tomorrowTrend.hot.map(t=>tagBadge(t,'11px')).join('')}
-      </div>
-      <div style="font-size:10px;color:var(--text3);margin-top:5px">
-        💡 오늘 밤 미리 제조해두면 내일 잘 팔려요!
+      <!-- 내일 예상 -->
+      <div style="display:flex;align-items:center;gap:4px;padding:6px 9px;flex:1;min-width:0">
+        <span style="font-size:12px;flex-shrink:0">🔮</span>
+        <span style="font-size:9px;font-weight:800;color:var(--text3);white-space:nowrap">내일</span>
+        <div style="display:flex;gap:2px;flex-wrap:wrap">${tomorrow.hot.map(t=>tb(t,true)).join('')}</div>
       </div>
     </div>
 
-    <!-- 탐험 추천 -->
-    <div style="background:var(--green-light);border:1.5px solid var(--green);border-radius:var(--radius);padding:12px;">
-      <div style="font-size:11px;font-weight:800;color:var(--green);margin-bottom:8px">🗺️ HOT 태그 기반 탐험 추천</div>
-      ${(()=>{
-        const hotTags=today.hot;
-        // HOT 태그 아이템 제조에 필요한 재료 목록
-        const neededIngrs=new Set();
-        allRecipes().filter(r=>r.tags.some(t=>hotTags.includes(t))).forEach(r=>{
-          Object.keys(r.cost||{}).forEach(id=>neededIngrs.add(id));
-        });
-        // 해당 재료가 많이 드롭되는 탐험지 추천
-        const locScores=LOCATIONS.map(loc=>{
-          const score=loc.pool.filter(id=>neededIngrs.has(id)).length;
-          return{loc,score};
-        }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,2);
-        if(!locScores.length)return`<div style="font-size:11px;color:var(--text3)">추천 탐험지 없음</div>`;
-        return locScores.map(({loc,score})=>`
-          <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--border)">
-            <span style="font-size:18px">${loc.e}</span>
-            <div style="flex:1">
-              <div style="font-size:12px;font-weight:800">${loc.n}</div>
-              <div style="font-size:10px;color:var(--text3)">관련 재료 ${score}종 드롭</div>
-            </div>
-            <button class="btn btn-sm btn-green" onclick="setTab('explore')">탐험하기</button>
-          </div>
-        `).join('');
-      })()}
-    </div>
-  </div>`;
-}
+    <!-- 추천 아이템 한 줄 -->
+    ${hotRec.length?`<div style="display:flex;align-items:center;gap:6px;padding:5px 9px;background:var(--gold-light);border:1px solid var(--border2);border-radius:var(--radius-sm)">
+      <span style="font-size:11px;flex-shrink:0">💡</span>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;flex:1;min-width:0">
+        ${hotRec.map(r=>`<span style="font-size:10px;font-weight:700">${r.e}${r.n} <span style="color:var(--gold2)">${r.p}G</span></span>`).join('<span style="color:var(--border2)">·</span>')}
+      </div>
+    </div>`:''}
+
+  </div>`;}
 
 // ===== 탐험 렌더 =====
-function renderLocCard(loc,slotIdx,doneLocIds){
-  const isAM=slotIdx<2;
-  const bonus=isAM?loc.bonusAM:loc.bonusPM;
-  const dropIngrs=loc.pool.slice(0,4).map(id=>INGR.find(i=>i.id===id)).filter(Boolean);
-  const rareDrop=bonus.ids.map(id=>INGR.find(i=>i.id===id)).filter(Boolean);
+function renderLocCard(loc, slotIdx, isSun){
+  const slotInfo=getSlotInfo(slotIdx,isSun);
+  const bonus=getSlotBonus(loc,slotIdx,isSun);
   const isSpecial=!!loc.special;
-  // 오전/오후 보너스 한 줄 설명
-  const amDesc=`🌤️ 오전: ${loc.bonusAM.ids.map(id=>{const i=INGR.find(x=>x.id===id);return i?i.e+i.n:'?';}).join('/')} +${loc.bonusAM.qty[0]}~${loc.bonusAM.qty[1]}개`;
-  const pmDesc=`🌆 오후: ${loc.bonusPM.ids.map(id=>{const i=INGR.find(x=>x.id===id);return i?i.e+i.n:'?';}).join('/')} +${loc.bonusPM.qty[0]}~${loc.bonusPM.qty[1]}개`;
-  const currentBonus=isAM?amDesc:pmDesc;
-  const otherBonus=isAM?pmDesc:amDesc;
+  const dropIngrs=loc.pool.slice(0,4).map(id=>INGR.find(i=>i.id===id)).filter(Boolean);
+  const bonusIngrs=bonus.ids.map(id=>INGR.find(i=>i.id===id)).filter(Boolean);
+
+  // 현재 시간대 보너스 한 줄
+  const bonusDesc=`${slotInfo.label}: ${bonusIngrs.map(i=>i.e+i.n).join('/')} +${bonus.qty[0]}~${bonus.qty[1]}개`;
+
+  // 다른 시간대 힌트 (한 줄)
+  const otherSlots=isSun
+    ? SUNDAY_SLOTS.filter(s=>s.idx!==slotIdx)
+    : WEEKDAY_SLOTS.filter(s=>s.idx!==slotIdx);
+  const otherBonus=otherSlots.map(s=>{
+    const ob=getSlotBonus(loc,s.idx,isSun);
+    const oi=ob.ids.slice(0,2).map(id=>{const i=INGR.find(x=>x.id===id);return i?i.e:'';}).join('');
+    return `${s.label} ${oi}`;
+  }).join(' · ');
+
   return `<div class="loc-card${isSpecial?' special':''}" onclick="doExplore('${loc.id}',${slotIdx})">
-    <span class="loc-bonus-badge">${isAM?'🌤️':'🌆'} ${isSpecial?'특별':'보너스'}</span>
+    <span class="loc-bonus-badge" style="background:${slotInfo.bg};color:${slotInfo.color};border:1px solid ${slotInfo.color}">${slotInfo.badge}${isSpecial?' ✨':''}</span>
     <div class="loc-top"><span class="loc-e">${loc.e}</span><span class="loc-name">${loc.n}</span></div>
     <div class="loc-desc">${loc.desc}</div>
-    <div class="loc-drops" style="margin-bottom:6px">
+    <div class="loc-drops" style="margin-bottom:5px">
       ${dropIngrs.map(i=>`<span class="loc-drop loc-drop-${RKCLS[i.r].replace('tag-','')}">${i.e}${i.n}</span>`).join('')}
     </div>
-    <div style="font-size:10px;font-weight:700;color:var(--purple);background:var(--purple-light);border-radius:5px;padding:3px 7px;margin-bottom:2px">${currentBonus}</div>
+    <div style="font-size:10px;font-weight:700;color:${slotInfo.color};background:${slotInfo.bg};border-radius:5px;padding:3px 7px;margin-bottom:2px">${bonusDesc}</div>
     <div style="font-size:9px;color:var(--text3);padding:1px 2px">${otherBonus}</div>
   </div>`;
 }
 
 function renderExplore(){
   const sun=isSunday(S.day);
-  const maxSlots=S.maxExploreSlots;
-  const slotLabels=['🌤️ 오전 1회차','🌤️ 오전 2회차','🌆 오후 1회차','🌆 오후 2회차'];
-  const slots=sun?[0,1,2,3]:[0,1];
+  const slots=sun?SUNDAY_SLOTS:WEEKDAY_SLOTS;
+  const maxSlots=sun?4:2;
   const doneSlots=new Set(S.exploredSlots.map(s=>s.slot));
   const locs=sun?[...LOCATIONS,...SUN_LOCATIONS]:LOCATIONS;
+  const curSlotIdx=S.exploredSlots.length; // 다음 탐험할 슬롯
+  const curSlot=slots[curSlotIdx];
 
   const resultHtml=S.exploredSlots.map(s=>{
+    const si=getSlotInfo(s.slot,sun);
     const loc=locs.find(l=>l.id===s.locId)||{e:'🗺️',n:''};
     return `<div class="exp-result">
-      <div class="exp-result-hdr">${slotLabels[s.slot]} · ${loc.e} ${loc.n}</div>
+      <div class="exp-result-hdr">
+        <span style="color:${si.color};font-weight:800">${si.label}</span> · ${loc.e} ${loc.n}
+      </div>
       <div class="found-row">
-        ${s.found.map(i=>`<span class="found-chip${i.isBonus?' bonus':''}${s.discovery?' special':''}">${i.isBonus?'✨':''}${i.e}${i.n} ×${i.qty}</span>`).join('')}
+        ${s.found.map(i=>`<span class="found-chip${i.isBonus?' bonus':''}">${i.isBonus?'✨':''}${i.e}${i.n} ×${i.qty}</span>`).join('')}
         ${s.discovery?`<span class="found-chip special">📜 ${s.discovery.recipe.n} 발견!</span>`:''}
       </div>
     </div>`;
@@ -1462,29 +1530,37 @@ function renderExplore(){
   return `<div class="panel" style="padding:14px;">
     ${sun?`<div class="sunday-banner" style="margin-bottom:12px">
       <div class="sunday-title">☀️ 일요일 자유 탐험</div>
-      <div style="font-size:11px;color:var(--sun);margin-top:2px">오늘은 최대 4번 탐험 가능! 특별 탐험지에서 희귀 레시피를 발견할 수 있어요.</div>
+      <div style="font-size:11px;color:var(--sun);margin-top:2px">새벽·아침·오후·저녁 4번 탐험 가능! 특별 탐험지에서 희귀 레시피를 발견할 수 있어요.</div>
     </div>`:''}
-    <div style="text-align:center;margin-bottom:12px">
-      <div style="font-size:12px;color:var(--text3);margin-bottom:6px;font-weight:700">오늘 어디로 탐험할까요? (${S.exploredSlots.length}/${maxSlots}회)</div>
-      <div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
-        ${slots.map(si=>{
-          const done=doneSlots.has(si);
-          return `<span style="padding:4px 10px;border-radius:12px;font-size:11px;font-weight:800;background:${done?'var(--green-light)':'var(--bg3)'};color:${done?'var(--green)':'var(--text3)'};border:1.5px solid ${done?'var(--green)':'var(--border)'}">
-            ${done?'✓ ':''}${slotLabels[si]}
-          </span>`;
-        }).join('')}
-      </div>
+
+    <!-- 시간대 진행 표시 -->
+    <div style="display:flex;gap:6px;margin-bottom:12px;justify-content:center;flex-wrap:wrap">
+      ${slots.map(s=>{
+        const done=doneSlots.has(s.idx);
+        const isCur=s.idx===curSlotIdx&&curSlotIdx<maxSlots;
+        return `<div style="display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:12px;font-size:11px;font-weight:800;
+          background:${done?s.bg:isCur?s.bg:'var(--bg3)'};
+          color:${done?s.color:isCur?s.color:'var(--text3)'};
+          border:1.5px solid ${done?s.color:isCur?s.color:'var(--border)'};
+          opacity:${done||isCur?1:0.5}">
+          ${done?'✓ ':''}${s.label}${isCur?' ◀':''}
+        </div>`;
+      }).join('')}
     </div>
+
     ${resultHtml}
-    ${S.exploredSlots.length<maxSlots?`
-      <div style="font-size:11px;font-weight:800;color:var(--text3);margin-bottom:8px;letter-spacing:.5px">
-        ${slotLabels[S.exploredSlots.length]} 장소 선택
+
+    ${curSlotIdx<maxSlots?`
+      <div style="font-size:12px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:6px">
+        <span style="background:${curSlot.bg};color:${curSlot.color};border:1.5px solid ${curSlot.color};border-radius:10px;padding:3px 10px;font-size:11px">${curSlot.label}</span>
+        <span style="color:var(--text3);font-size:11px">${curSlot.desc}</span>
       </div>
       <div class="loc-grid">
-        ${locs.map(loc=>renderLocCard(loc,S.exploredSlots.length,doneSlots)).join('')}
+        ${locs.map(loc=>renderLocCard(loc,curSlotIdx,sun)).join('')}
       </div>
     `:''}
-    ${S.exploredSlots.length>0?`
+
+    ${curSlotIdx>0?`
       <div class="btn-row">
         <button class="btn btn-gold" onclick="setTab('craft')">⚗️ 제조하러 가기 →</button>
       </div>
@@ -1495,50 +1571,83 @@ function renderExplore(){
 // ===== 제조 렌더 =====
 function renderCraft(){
   const cat=S.craftCat||'all';
+  const curLv=S.shopLevel||1;
   const recipes=allRecipes();
-  const filtered=cat==='all'?recipes:recipes.filter(r=>r.cat===cat);
-  const craftable=recipes.filter(r=>canCraft(r,S.ingInv));
+  // 현재 레벨 이하만 표시 (잠긴 것도 표시하되 구분)
+  const filtered=(cat==='all'?recipes:recipes.filter(r=>r.cat===cat))
+    .sort((a,b)=>(a.unlockLv||1)-(b.unlockLv||1));
+  const craftable=recipes.filter(r=>canCraft(r,S.ingInv)&&(r.unlockLv||1)<=curLv);
   const crafted=S.shopInv.length;
 
+  // 다음 레벨에서 해금될 레시피 수
+  const nextLvUnlock=recipes.filter(r=>(r.unlockLv||1)===curLv+1).length;
+
+  const lvColors=['','#2D6A2D','#1565C0','#7B1FA2','#E65100','#B8860B'];
+  const lvLabels=['','Lv1','Lv2','Lv3','Lv4','Lv5'];
+
   return `<div class="panel">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-      <div class="sec" style="margin-bottom:0">제조 (진열 ${crafted}개 · 가능 ${craftable.length}종)</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <div class="sec" style="margin-bottom:0">제조 (진열 ${crafted}개 · 제조가능 ${craftable.length}종)</div>
+      ${nextLvUnlock>0?`<div style="font-size:10px;color:var(--text3)">🔒 다음 레벨 해금 ${nextLvUnlock}종</div>`:''}
     </div>
     <div class="cat-tabs">
       ${CAT_DEFS.filter(c=>c.id==='all'||recipes.some(r=>r.cat===c.id)).map(c=>`
-        <div class="cat-tab${cat===c.id?' active':''}" onclick="S.craftCat='${c.id}';render()">${c.label}${c.id!=='all'?` <span style="opacity:.7">(${(c.id==='all'?recipes:recipes.filter(r=>r.cat===c.id)).filter(r=>canCraft(r,S.ingInv)).length})</span>`:''}</div>
+        <div class="cat-tab${cat===c.id?' active':''}" onclick="S.craftCat='${c.id}';render()">
+          ${c.label}${c.id!=='all'?` <span style="opacity:.7">(${(c.id==='all'?recipes:recipes.filter(r=>r.cat===c.id)).filter(r=>canCraft(r,S.ingInv)&&(r.unlockLv||1)<=curLv).length})</span>`:''}
+        </div>
       `).join('')}
     </div>
     <div class="craft-list">
       ${filtered.length===0?`<div class="empty">해당 카테고리 레시피 없음</div>`:filtered.map(r=>{
-        const ok=canCraft(r,S.ingInv);
-        const maxQ=maxCraftable(r,S.ingInv);
+        const rLv=r.unlockLv||1;
+        const locked=rLv>curLv;
+        const ok=!locked&&canCraft(r,S.ingInv);
+        const maxQ=locked?0:maxCraftable(r,S.ingInv);
         const curQty=Math.max(1,Math.min(S.craftQty[r.id]||1,Math.max(1,maxQ)));
         const isSpecial=!!r.sunOnly;
+
+        if(locked){
+          return `<div class="craft-row" style="opacity:.45;filter:grayscale(.6)">
+            <span class="craft-emoji" style="filter:grayscale(1)">${r.e}</span>
+            <div class="craft-info">
+              <div class="craft-name" style="color:var(--text3)">
+                🔒 ${r.n}
+                <span style="font-size:9px;padding:1px 6px;border-radius:8px;background:${lvColors[rLv]}22;color:${lvColors[rLv]};border:1px solid ${lvColors[rLv]};font-weight:800">${lvLabels[rLv]} 해금</span>
+              </div>
+              <div style="font-size:10px;color:var(--text3);margin-top:2px">${SHOP_LEVELS[rLv-1]?.name||''}에서 해금됩니다</div>
+            </div>
+            <div class="craft-price" style="color:var(--text3)">${r.p}G</div>
+            <div class="craft-qty-wrap">
+              <span style="font-size:10px;color:var(--text3)">잠김</span>
+            </div>
+          </div>`;
+        }
+
         return `<div class="craft-row${ok?' can':''}${isSpecial?' special-recipe':''}">
           <span class="craft-emoji">${r.e}</span>
           <div class="craft-info">
             <div class="craft-name">
               ${r.n}
               ${isSpecial?`<span class="chip chip-sun">✨특별</span>`:''}
+              ${rLv>1?`<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:${lvColors[rLv]}22;color:${lvColors[rLv]};border:1px solid ${lvColors[rLv]};font-weight:800">${lvLabels[rLv]}</span>`:''}
             </div>
             <div class="craft-cost">${(()=>{
-            const rawParts=Object.entries(r.cost||{}).map(([id,q])=>{
-              const ing=byId(INGR,id);if(!ing)return'';
-              const have=S.ingInv[id]||0;
-              const need=q*(ok?curQty:1);
-              const ok2=have>=need;
-              return `<span style="font-size:10px;font-weight:700;color:${ok2?'var(--text3)':'var(--red)'}">${ing.e}${ing.n}×${need}${ok2?'':` (${have}개)`}</span>`;
-            });
-            const craftedParts=Object.entries(r.craftedCost||{}).map(([cid,q])=>{
-              const ri=byId(allRecipes(),cid);if(!ri)return'';
-              const have=S.shopInv.filter(s=>s.id===cid).length;
-              const need=q*(ok?curQty:1);
-              const ok2=have>=need;
-              return `<span class="craft-mat-item${ok2?'':' miss'}">${ri.e}${ri.n} ×${need}${ok2?'':` (${have}개)`}</span>`;
-            });
-            return [...rawParts,...craftedParts].join(' ');
-          })()}</div>
+              const rawParts=Object.entries(r.cost||{}).map(([id,q])=>{
+                const ing=byId(INGR,id);if(!ing)return'';
+                const have=S.ingInv[id]||0;
+                const need=q*(ok?curQty:1);
+                const ok2=have>=need;
+                return `<span style="font-size:10px;font-weight:700;color:${ok2?'var(--text3)':'var(--red)'}">${ing.e}${ing.n}×${need}${ok2?'':` (${have}개)`}</span>`;
+              });
+              const craftedParts=Object.entries(r.craftedCost||{}).map(([cid,q])=>{
+                const ri=byId(allRecipes(),cid);if(!ri)return'';
+                const have=S.shopInv.filter(s=>s.id===cid).length;
+                const need=q*(ok?curQty:1);
+                const ok2=have>=need;
+                return `<span class="craft-mat-item${ok2?'':' miss'}">${ri.e}${ri.n} ×${need}${ok2?'':` (${have}개)`}</span>`;
+              });
+              return [...rawParts,...craftedParts].join(' ');
+            })()}</div>
             <div class="craft-tags">${r.tags.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
           </div>
           <div class="craft-price">${r.p}G</div>
@@ -1560,7 +1669,7 @@ function renderCraft(){
       }).join('')}
     </div>
     <div class="btn-row">
-      ${S.exploredSlots.length<S.maxExploreSlots?`<button class="btn" onclick="setTab('explore')">← 탐험하기</button>`:''}
+      ${S.exploredSlots.length<(isSunday(S.day)?4:2)?`<button class="btn" onclick="setTab('explore')">← 탐험하기</button>`:''}
       <button class="btn btn-gold" onclick="openShop()">🏪 상점 열기 (${crafted}개 진열)</button>
     </div>
   </div>`;
@@ -1744,16 +1853,46 @@ function renderDayReport(){
 
       <div class="report-section">
         <div class="report-sec-title">📊 오늘 판매 요약</div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px">
-          <div style="background:var(--gold-light);border:1px solid var(--border2);border-radius:8px;padding:8px 14px;text-align:center">
-            <div style="font-size:10px;color:var(--text3)">오늘 수입</div>
-            <div style="font-size:18px;font-weight:800;color:var(--gold)">${totalRevenue.toLocaleString()}G</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+          <div style="background:var(--gold-light);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;text-align:center;flex:1;min-width:80px">
+            <div style="font-size:9px;color:var(--text3)">오늘 수입</div>
+            <div style="font-size:17px;font-weight:800;color:var(--gold)">${totalRevenue.toLocaleString()}G</div>
           </div>
-          <div style="background:var(--green-light);border:1px solid var(--green);border-radius:8px;padding:8px 14px;text-align:center">
-            <div style="font-size:10px;color:var(--text3)">방문/판매</div>
-            <div style="font-size:18px;font-weight:800;color:var(--green)">${visited.length}명 / ${sales.length}건</div>
+          <div style="background:var(--green-light);border:1px solid var(--green);border-radius:8px;padding:8px 12px;text-align:center;flex:1;min-width:80px">
+            <div style="font-size:9px;color:var(--text3)">방문/판매</div>
+            <div style="font-size:17px;font-weight:800;color:var(--green)">${visited.length}명 / ${sales.length}건</div>
           </div>
         </div>
+        ${(()=>{
+          const dg=getDailyGoal(S.day,S.shopLevel);
+          const dgPct=Math.min(100,Math.round(S.todayRevenue/dg*100));
+          const dgDone=S.todayRevenue>=dg;
+          const week=getCurrentWeek(S.day);
+          const wg=getWeeklyGoal(week);
+          const wgPct=Math.min(100,Math.round(S.weeklyRevenue/wg*100));
+          const wgDone=S.weeklyRevenue>=wg;
+          return `<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:6px">
+            <div style="background:${dgDone?'var(--green-light)':'var(--bg2)'};border:1px solid ${dgDone?'var(--green)':'var(--border)'};border-radius:8px;padding:7px 10px">
+              <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:800;margin-bottom:4px">
+                <span>${dgDone?'✅':'🎯'} 오늘 목표 ${dgDone?'달성!':'진행중'}</span>
+                <span style="color:${dgDone?'var(--green)':'var(--text2)'}">${S.todayRevenue.toLocaleString()} / ${dg.toLocaleString()}G</span>
+              </div>
+              <div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden">
+                <div style="width:${dgPct}%;height:100%;background:${dgDone?'var(--green)':'var(--gold)'};border-radius:3px"></div>
+              </div>
+              ${dgDone?`<div style="font-size:10px;color:var(--green);margin-top:3px">🎁 보너스 +${Math.round(dg*0.05)}G 획득!</div>`:''}
+            </div>
+            <div style="background:${wgDone?'var(--purple-light)':'var(--bg2)'};border:1px solid ${wgDone?'var(--purple)':'var(--border)'};border-radius:8px;padding:7px 10px">
+              <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:800;margin-bottom:4px">
+                <span>${wgDone?'✅':'📊'} ${week}주차 목표 ${wgDone?'달성!':'진행중'}</span>
+                <span style="color:${wgDone?'var(--purple)':'var(--text2)'}">${S.weeklyRevenue.toLocaleString()} / ${wg.toLocaleString()}G</span>
+              </div>
+              <div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden">
+                <div style="width:${wgPct}%;height:100%;background:${wgDone?'var(--purple)':'var(--blue)'};border-radius:3px"></div>
+              </div>
+            </div>
+          </div>`;
+        })()}
         ${sales.length>0?sales.map(s=>`
           <div class="cust-recap-row">
             <span class="cust-recap-e">${s.cust.e}</span>
@@ -1911,26 +2050,89 @@ function renderLog(){
 }
 
 function renderOver(){
-  if(S.won)return `<div class="panel over">
-    <div class="over-emoji">🎉</div>
-    <div class="over-title" style="color:var(--gold)">목표 달성!</div>
-    <div class="over-sub">${S.day}일 만에 ${S.goal.toLocaleString()}G 달성!<br>최종: <b>${S.gold.toLocaleString()}G</b></div>
-    <button class="btn btn-gold btn-lg" onclick="unlockedSpecial=new Set();S=newState();render()">🔄 다시 플레이</button>
-  </div>`;
+  const lv=S.shopLevel;
+  const ENDINGS=[
+    {lv:1,emoji:'😔',title:'아직 갈 길이 멀어요',color:'var(--text3)',
+     msg:'상점이 문을 닫았어요. 하지만 포기하지 마세요!'},
+    {lv:2,emoji:'🙂',title:'동네에서 알아주는 상점',color:'var(--blue)',
+     msg:'마을 사람들이 당신의 상점을 기억하기 시작했어요.'},
+    {lv:3,emoji:'⭐',title:'인기 있는 상점주',color:'var(--gold)',
+     msg:'많은 손님들이 단골이 되었고, 상점이 번창하고 있어요!'},
+    {lv:4,emoji:'💎',title:'명품 상점의 주인',color:'var(--purple)',
+     msg:'이 지역 최고의 상점으로 소문이 났어요. 대단해요!'},
+    {lv:5,emoji:'👑',title:'전설의 상점주!',color:'var(--gold)',
+     msg:'당신의 상점은 이제 전설이 되었습니다. 완벽한 결말이에요!'},
+  ];
+  const ending=ENDINGS[Math.min(lv-1, ENDINGS.length-1)];
+  const isMaxEnd=lv>=5;
+
   return `<div class="panel over">
-    <div class="over-emoji">😔</div>
-    <div class="over-title">기간 종료</div>
-    <div class="over-sub">${S.maxDays}일이 지났지만 목표 미달성.<br>최종: <b>${S.gold.toLocaleString()}G</b> / ${S.goal.toLocaleString()}G</div>
-    <button class="btn btn-gold btn-lg" onclick="unlockedSpecial=new Set();S=newState();render()">🔄 다시 도전</button>
+    <div class="over-emoji">${ending.emoji}</div>
+    <div class="over-title" style="color:${ending.color}">${ending.title}</div>
+    <div class="over-sub">
+      ${ending.msg}<br><br>
+      <b>${S.maxDays}일간의 기록</b><br>
+      💰 보유 금액: ${S.gold.toLocaleString()}G<br>
+      📈 누적 매출: ${S.totalRevenue.toLocaleString()}G<br>
+      ${lv>=2?`👥 단골 손님: ${Object.entries(S.rapport).filter(([,v])=>v>=50).length}명<br>`:''}
+      ${isMaxEnd?'<br>🎊 모든 레벨을 달성했습니다!':''}
+      ${!isMaxEnd?`<br>💡 다음엔 <b>${SHOP_LEVELS[lv]?.name||''}</b>까지 도전해보세요!`:''}
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+      ${!isMaxEnd?`<button class="btn btn-gold btn-lg" onclick="restartGame()">🔄 다시 도전</button>`:''}
+      <button class="btn ${isMaxEnd?'btn-gold btn-lg':'btn'}" onclick="restartGame()">
+        ${isMaxEnd?'🔄 새 게임':'↩ 처음부터'}
+      </button>
+    </div>
   </div>`;
+}
+
+// ===== 저장/불러오기 =====
+const SAVE_KEY='kkyu_shop_save';
+
+function saveGame(){
+  try{
+    const data={
+      S:{...S,
+        doneIdxs:[...S.doneIdxs],   // Set → Array
+      },
+      unlockedSpecial:[...unlockedSpecial],
+    };
+    localStorage.setItem(SAVE_KEY,JSON.stringify(data));
+  }catch(e){console.warn('저장 실패:',e);}
+}
+
+function loadGame(){
+  try{
+    const raw=localStorage.getItem(SAVE_KEY);
+    if(!raw)return false;
+    const data=JSON.parse(raw);
+    S={...newState(),...data.S,
+      doneIdxs:new Set(data.S.doneIdxs||[]),
+    };
+    unlockedSpecial=new Set(data.unlockedSpecial||[]);
+    return true;
+  }catch(e){
+    console.warn('불러오기 실패:',e);
+    localStorage.removeItem(SAVE_KEY);
+    return false;
+  }
+}
+
+function resetGame(){
+  if(!confirm('저장 데이터를 삭제하고 처음부터 시작할까요?'))return;
+  localStorage.removeItem(SAVE_KEY);
+  unlockedSpecial=new Set();
+  S=newState();
+  render();
 }
 
 function render(){
   const el=document.getElementById('G');
   if(!el)return;
+  saveGame(); // 매 렌더마다 자동저장
   if(S.gameOver){el.innerHTML=renderOver();return;}
   const sun=isSunday(S.day);
-  // 일요일 상점탭 = 예약 탭
   const mainHtml=S.showDayReport?renderDayReport():
                  S.phase==='shop'?renderShop():
                  S.phase2==='craft'?renderCraft():
@@ -1941,6 +2143,9 @@ function render(){
     ${renderTabs()}
     ${mainHtml}
     <div class="bot">${renderIngInv()}${renderLog()}</div>
+    <div style="text-align:center;padding:8px 0 4px">
+      <button class="btn btn-sm" style="font-size:10px;color:var(--text3);opacity:.6" onclick="resetGame()">🗑️ 처음부터</button>
+    </div>
   `;
   const pi=document.getElementById('pin');
   if(pi){
@@ -1951,6 +2156,16 @@ function render(){
   }
 }
 
+// 게임 오버/재시작 시 저장 초기화
+function restartGame(){
+  localStorage.removeItem(SAVE_KEY);
+  unlockedSpecial=new Set();
+  S=newState();
+  render();
+}
+
+// 시작: 저장된 데이터 있으면 불러오기, 없으면 새 게임
+const loaded=loadGame();
 render();
 </script>
 </body>
