@@ -377,44 +377,54 @@ const SPECIAL_RECIPES=[
 ];
 
 const COMPOUND_RECIPES=[
+  // Lv1 합성 — 저가 아이템 다수 묶음 (밸런스 핵심)
+  {id:'c_herbpack', e:'🌿',n:'고급 약초 꾸러미',      cat:'compound',unlockLv:1,
+   cost:{},                       craftedCost:{herb2:3},
+   p:195, tags:['회복','선물'],   note:'약초다발 3개로 만든 특제 꾸러미 — 저가 재료의 가치를 높여요'},
+  {id:'c_jamset',   e:'🫙',n:'잼 선물 바구니',         cat:'compound',unlockLv:1,
+   cost:{},                       craftedCost:{jam:3},
+   p:175, tags:['음식','선물'],   note:'열매잼 3개를 담은 선물 바구니'},
+  {id:'c_teabox',   e:'🫖',n:'차 선물 상자',           cat:'compound',unlockLv:2,
+   cost:{honey:1},                craftedCost:{tea:2,leaft:1},
+   p:230, tags:['음료','선물'],   note:'뿌리차와 잎사귀 차를 담은 선물 상자'},
   // Lv2 합성
-  {id:'c_hp2',      e:'🔴',n:'강화 체력 포션',      cat:'compound',unlockLv:2,
+  {id:'c_hp2',      e:'🔴',n:'강화 체력 포션',         cat:'compound',unlockLv:2,
    cost:{crystal:1},              craftedCost:{hp:2},
-   p:165, tags:['전투','회복'],   note:'체력 포션 2개를 농축한 강력한 포션'},
-  {id:'c_luxbouq',  e:'🌸',n:'사치스러운 꽃바구니', cat:'compound',unlockLv:2,
+   p:210, tags:['전투','회복'],   note:'체력 포션 2개를 농축한 강력한 포션'},
+  {id:'c_luxbouq',  e:'🌸',n:'사치스러운 꽃바구니',    cat:'compound',unlockLv:2,
    cost:{honey:1},                craftedCost:{flowp:2,bloom:1},
-   p:295, tags:['선물','일상'],   note:'꽃다발과 향수로 만든 고급 선물 세트'},
-  {id:'c_sweetbox', e:'🎁',n:'달콤한 선물 세트',    cat:'compound',unlockLv:2,
+   p:360, tags:['선물','일상'],   note:'꽃다발과 향수로 만든 고급 선물 세트'},
+  {id:'c_sweetbox', e:'🎁',n:'달콤한 선물 세트',        cat:'compound',unlockLv:2,
    cost:{},                       craftedCost:{honeyp:1,jam:1,honey2:1},
    p:255, tags:['선물','음식','일상'], note:'꿀 시럽·열매잼·마법 캔디 3종 세트'},
-  {id:'c_growkit',  e:'🌻',n:'마법 씨앗 키트',      cat:'compound',unlockLv:2,
+  {id:'c_growkit',  e:'🌻',n:'마법 씨앗 키트',         cat:'compound',unlockLv:2,
    cost:{stardust:1},             craftedCost:{seed2:2,herb2:1},
    p:215, tags:['농업','회복'],   note:'씨앗 묶음과 약초다발로 만든 풍요의 키트'},
   // Lv3 합성
-  {id:'c_inferno',  e:'🌋',n:'인페르노 폭탄',        cat:'compound',unlockLv:3,
+  {id:'c_inferno',  e:'🌋',n:'인페르노 폭탄',          cat:'compound',unlockLv:3,
    cost:{flame:1},                craftedCost:{fire:2,mush2:1},
    p:460, tags:['전투'],          note:'화염 폭탄 두 개와 버섯 폭탄을 합친 파괴적인 무기'},
-  {id:'c_blizzard', e:'🌨️',n:'블리자드 폭탄',       cat:'compound',unlockLv:3,
+  {id:'c_blizzard', e:'🌨️',n:'블리자드 폭탄',          cat:'compound',unlockLv:3,
    cost:{crystal:1},              craftedCost:{ice:2,wind2:1},
-   p:440, tags:['전투','마법'],   note:'냉기 폭탄과 바람의 약이 결합한 얼음 폭풍'},
-  {id:'c_mphp',     e:'💎',n:'쌍수 포션',            cat:'compound',unlockLv:3,
+   p:490, tags:['전투','마법'],   note:'냉기 폭탄과 바람의 약이 결합한 얼음 폭풍'},
+  {id:'c_mphp',     e:'💎',n:'쌍수 포션',              cat:'compound',unlockLv:3,
    cost:{stardust:1},             craftedCost:{hp:1,mp:1},
    p:320, tags:['마법','전투','회복'], note:'체력과 마나를 동시에 회복'},
   // Lv4 합성
-  {id:'c_cursed',   e:'🖤',n:'저주의 마법진',        cat:'compound',unlockLv:4,
+  {id:'c_cursed',   e:'🖤',n:'저주의 마법진',          cat:'compound',unlockLv:4,
    cost:{shadow:1},               craftedCost:{shd2:1,mcrys:1},
    p:430, tags:['마법','전설','희귀'], note:'그림자 인형과 마법 결정을 봉인한 금단의 도구'},
-  {id:'c_stormkit', e:'⚡',n:'폭풍 전사 키트',       cat:'compound',unlockLv:4,
+  {id:'c_stormkit', e:'⚡',n:'폭풍 전사 키트',         cat:'compound',unlockLv:4,
    cost:{stardust:1},             craftedCost:{fire:1,ice:1,wind2:1},
    p:560, tags:['전투','마법','희귀'], note:'불·얼음·바람을 하나로 모은 극한 전투 장비'},
   // Lv5 합성
-  {id:'c_oracle',   e:'🔮',n:'예언의 수정구',        cat:'compound',unlockLv:5,
+  {id:'c_oracle',   e:'🔮',n:'예언의 수정구',          cat:'compound',unlockLv:5,
    cost:{moonstone:1,stardust:1}, craftedCost:{mcrys:1,luck:1},
    p:540, tags:['마법','전설','선물'], note:'마법 결정과 행운의 부적이 공명한 신비로운 구슬'},
-  {id:'c_moonamu',  e:'🌕',n:'보름달 부적',          cat:'compound',unlockLv:5,
+  {id:'c_moonamu',  e:'🌕',n:'보름달 부적',            cat:'compound',unlockLv:5,
    cost:{},                       craftedCost:{moon2:1,luck:1},
    p:390, tags:['마법','전설','선물'], note:'달빛 부적과 행운의 부적을 하나로 합친 수호물'},
-  {id:'c_fullhp',   e:'❤️',n:'완전 회복 포션',       cat:'compound',unlockLv:5,
+  {id:'c_fullhp',   e:'❤️',n:'완전 회복 포션',         cat:'compound',unlockLv:5,
    cost:{moonstone:1},            craftedCost:{hp:1,anti:1,honeyp:1},
    p:360, tags:['전투','회복','전설'], note:'세 가지 회복 아이템을 합친 궁극의 포션'},
 ];
@@ -502,19 +512,26 @@ const MAX_SUN_RESERVATIONS=3;
 // usedNames: 오늘 이미 뽑힌 이름 Set (중복 방지)
 function makeCust(archetype, usedNames){
   const available=archetype.names.filter(n=>!usedNames.has(n));
-  const pool=available.length>0?available:archetype.names; // 다 쓰면 재사용
+  const pool=available.length>0?available:archetype.names;
   const name=pool[Math.floor(Math.random()*pool.length)];
   usedNames.add(name);
-  return {
-    e:archetype.e,
-    n:name,
-    note:archetype.note,
-    wantTags:archetype.wantTags,
-    bud:archetype.bud,
-    budMax:archetype.budMax,
-    char:archetype.char,
-    archetypeIdx:CUST_ARCHETYPES.indexOf(archetype),
-  };
+  // 트렌드 반영해서 오늘 원하는 태그 선정 — HOT 태그는 3배 가중치
+  const allTags=archetype.wantTags;
+  const numWant=allTags.length<=1?1:(Math.random()<0.55?1:Math.min(2,allTags.length));
+  const todayTrend=getTodayTrend(S&&S.day||1);
+  const hotTags=(todayTrend&&todayTrend.hot)||[];
+  const weighted=allTags.map(t=>({t,w:hotTags.includes(t)?3:1}));
+  const todayWantTags=[];
+  const wpool=[...weighted];
+  for(let i=0;i<numWant&&wpool.length>0;i++){
+    const tot=wpool.reduce((a,b)=>a+b.w,0);
+    let r=Math.random()*tot;
+    for(let j=0;j<wpool.length;j++){r-=wpool[j].w;if(r<=0){todayWantTags.push(wpool[j].t);wpool.splice(j,1);break;}}
+  }
+  return{e:archetype.e,n:name,note:archetype.note,
+    wantTags:archetype.wantTags,todayWantTags,
+    bud:archetype.bud,budMax:archetype.budMax,char:archetype.char,
+    archetypeIdx:CUST_ARCHETYPES.indexOf(archetype)};
 }
 
 // 단골 드로어에서 CUSTS 참조 대신 아키타입 기반으로 조회
@@ -555,11 +572,21 @@ const BARGAIN_LINES={
 };
 
 const LOCATIONS=[
-  {id:'forest',   e:'🌲',n:'초록 숲',   desc:'허브와 열매가 풍부한 숲.',        pool:['herb','berry','flower','leaf','mushroom','seed'],bonusAM:{ids:['herb','berry','leaf'],qty:[2,3]},bonusPM:{ids:['mushroom','wind','shadow'],qty:[1,2]}},
-  {id:'cave',     e:'🪨',n:'깊은 동굴', desc:'광물과 결정이 숨어있는 동굴.',    pool:['crystal','root','flame','shadow','mushroom'],   bonusAM:{ids:['root','mushroom','flame'],qty:[1,2]},bonusPM:{ids:['crystal','stardust','shadow'],qty:[1,1]}},
-  {id:'lake',     e:'🏞️',n:'맑은 호수', desc:'깨끗한 물과 수생 식물의 호수.',   pool:['water','flower','honey','berry','seed'],        bonusAM:{ids:['water','flower','honey'],qty:[2,3]},bonusPM:{ids:['moonstone','stardust','water'],qty:[1,1]}},
-  {id:'ruin',     e:'🏚️',n:'고대 폐허', desc:'마법 잔재가 남은 위험한 장소.',   pool:['flame','wind','shadow','crystal','root'],       bonusAM:{ids:['flame','wind','root'],qty:[1,2]},bonusPM:{ids:['moonstone','crystal','shadow'],qty:[1,2]}},
-  {id:'magicwood',e:'🌌',n:'마법의 숲', desc:'별빛과 달빛이 가득한 신비로운 숲.',pool:['stardust','moonstone','flower','crystal','wind'],bonusAM:{ids:['flower','wind','leaf'],qty:[1,3]},bonusPM:{ids:['stardust','moonstone','crystal'],qty:[1,1]}},
+  {id:'forest',   e:'🌲',n:'초록 숲',   desc:'허브와 열매가 풍부한 숲.',
+   pool:['herb','berry','flower','leaf','mushroom','seed','honey'],
+   bonusAM:{ids:['herb','berry','leaf'],qty:[2,3]},bonusPM:{ids:['mushroom','wind','flower'],qty:[1,2]}},
+  {id:'cave',     e:'🪨',n:'깊은 동굴', desc:'광물과 결정이 숨어있는 동굴.',
+   pool:['crystal','root','flame','shadow','mushroom','herb','seed'],
+   bonusAM:{ids:['root','mushroom','flame'],qty:[1,2]},bonusPM:{ids:['crystal','shadow'],qty:[1,1]}},
+  {id:'lake',     e:'🏞️',n:'맑은 호수', desc:'깨끗한 물과 수생 식물의 호수.',
+   pool:['water','flower','honey','berry','seed','leaf','root'],
+   bonusAM:{ids:['water','flower','honey'],qty:[2,3]},bonusPM:{ids:['moonstone','water','honey'],qty:[1,2]}},
+  {id:'ruin',     e:'🏚️',n:'고대 폐허', desc:'마법 잔재가 남은 위험한 장소.',
+   pool:['flame','wind','shadow','crystal','root','mushroom'],
+   bonusAM:{ids:['flame','wind','root'],qty:[1,2]},bonusPM:{ids:['crystal','shadow','moonstone'],qty:[1,1]}},
+  {id:'magicwood',e:'🌌',n:'마법의 숲', desc:'별빛과 달빛이 가득한 신비로운 숲.',
+   pool:['stardust','moonstone','flower','crystal','wind','herb','leaf'],
+   bonusAM:{ids:['flower','wind','leaf'],qty:[1,3]},bonusPM:{ids:['stardust','moonstone'],qty:[1,1]}},
 ];
 
 // 평일 슬롯 정의 (2개)
@@ -673,7 +700,9 @@ function costStr(r,n=1){
 }
 function isSunday(day){return day%7===0;}
 function getCustWants(cust,shopInv){
-  return shopInv.filter(item=>{const r=byId(allRecipes(),item.id);return r&&r.tags&&r.tags.some(t=>cust.wantTags.includes(t));});
+  if(!cust||!shopInv)return[];
+  const tags=cust.todayWantTags||cust.wantTags||[];
+  return shopInv.filter(item=>{const r=byId(allRecipes(),item.id);return r&&r.tags&&r.tags.some(t=>tags.includes(t));});
 }
 function getDayOfWeek(day){const d=['월','화','수','목','금','토','일'];return d[(day-1)%7];}
 
@@ -698,7 +727,7 @@ function newState(){
     todayReservations:[],
     selUid:null, priceVal:'', custOffer:0,
     queueOpen:true, previewIdx:null,
-    craftCat:'all', craftQty:{},
+    craftCat:'all', craftQty:{}, craftLockedOpen:{},
     todaySalesLog:[],
     tomorrowHints:[],
     showDayReport:false,
@@ -707,7 +736,8 @@ function newState(){
     drawerTab:'shop',
     sunResCount:0,       // 이번 일요일 예약 횟수
     bonusExplore:false,  // 평일 추가 탐험 사용 (상점 포기)
-    wholesaleOffer:null, // 도매 제안 { items, priceMap, total }
+    wholesaleOffer:null,  // 도매 제안 { rate, cart }
+    custBoughtCount:0,    // 현재 손님의 이번 방문 구매 횟수
     gameOver:false, won:false,
   };
 }
@@ -755,20 +785,32 @@ function changeRep(delta){S.reputation=Math.max(0,Math.min(100,S.reputation+delt
 
 // ===== 단골 (친밀도) =====
 const RAPPORT_GRADES=[
-  {min:75,label:'👑 VIP',   color:'var(--gold)',  budBonus:0.20},
-  {min:50,label:'💛 단골',  color:'var(--green)', budBonus:0.10},
-  {min:25,label:'⭐ 단골후보',color:'var(--blue)',budBonus:0},
-  {min:0, label:'🤝 일반',  color:'var(--text3)', budBonus:0},
+  {min:50,label:'👑 VIP',    color:'var(--gold)',  budBonus:0.20},
+  {min:30,label:'💛 단골',   color:'var(--green)', budBonus:0.10},
+  {min:15,label:'⭐ 단골후보',color:'var(--blue)', budBonus:0},
+  {min:0, label:'🤝 일반',   color:'var(--text3)', budBonus:0},
 ];
+// 아키타입별 친밀도 획득 배율 (쉬운 손님 1.5x, 까다로운 손님 0.6x)
+const RAPPORT_MULT={
+  '절약형':1.5,'귀여움':1.5,'친절':1.3,'실용':1.3,'낭만':1.1,
+  '진지':1.0,'공격적':0.9,'호기심':0.9,'집착':0.8,
+  '까다로움':0.7,'귀족':0.6,'교활':0.6,
+};
 function getRapportGrade(name){
   const v=S.rapport[name]||0;
   return RAPPORT_GRADES.find(g=>v>=g.min)||RAPPORT_GRADES[RAPPORT_GRADES.length-1];
 }
 function changeRapport(name,delta){
-  S.rapport[name]=Math.max(0,Math.min(100,(S.rapport[name]||0)+delta));
-  // VIP 달성 시 퀘스트 생성
-  if(delta>0&&S.rapport[name]>=75){
-    const cust=CUSTS.find(c=>c.n===name);
+  const cust=CUSTS.find(c=>c.n===name);
+  const mult=cust?RAPPORT_MULT[cust.char]||1.0:1.0;
+  const adjusted=delta>0?Math.round(delta*mult):delta;
+  S.rapport[name]=Math.max(0,Math.min(75,(S.rapport[name]||0)+adjusted)); // 최대 75 (VIP 50이면 여유)
+  // 단골(30) 달성 & 상점레벨 2 이상 → 의뢰 생성
+  if(delta>0&&(S.rapport[name]||0)>=30&&S.shopLevel>=2){
+    if(cust)maybeGenerateQuest(cust);
+  }
+  // VIP(50) 달성 → 추가 의뢰
+  if(delta>0&&(S.rapport[name]||0)>=50){
     if(cust)maybeGenerateQuest(cust);
   }
 }
@@ -1048,7 +1090,7 @@ function openShop(){
 }
 
 function spawnCust(){
-  S.selUid=null;S.priceVal='';S.custOffer=0;S.previewIdx=null;
+  S.selUid=null;S.priceVal='';S.custOffer=0;S.previewIdx=null;S.custBoughtCount=0;
   let nextIdx=-1;
   for(let i=0;i<S.custQueue.length;i++){if(!S.doneIdxs.has(i)){nextIdx=i;break;}}
   if(nextIdx===-1||S.shopInv.length===0){
@@ -1060,10 +1102,12 @@ function spawnCust(){
     render();return;
   }
   S.custCurIdx=nextIdx;S.cust=S.custQueue[nextIdx];S.custsDone=S.doneIdxs.size;
+  // 절약형 손님은 35% 확률로 원하지 않는 아이템도 깎으려 함 — 방문 시 1회 결정
+  S.cust.todayBud=(S.cust.bud<1.0&&Math.random()<0.35)?S.cust.bud:1.0;
   S.wholesaleOffer=generateWholesaleOffer(S.cust); // 도매 손님이면 자동 제안 생성
   const wanted=getCustWants(S.cust,S.shopInv);
   const hint=S.wholesaleOffer
-    ?`"${S.wholesaleOffer.items.length}개 묶음으로 사고 싶어요. 싸게 해주실 수 있나요?"`
+    ?`"${Object.values(S.wholesaleOffer.cart).reduce((a,b)=>a+b,0)}개 묶음으로 사고 싶어요. 싸게 해주실 수 있나요?"`
     :wanted.length>0?`"${wanted[Math.floor(Math.random()*wanted.length)].n} 있나요?"`:'\"뭔가 좋은 거 없나요?\"';
   log(`${S.cust.e} ${S.cust.n}이(가) 들어왔어요. ${hint}`);
   render();
@@ -1197,9 +1241,11 @@ function selItem(u){
       S.priceVal=String(item.p);
       if(S.cust){
         const isWanted=getCustWants(S.cust,S.shopInv).some(i=>i.uid===u);
-        const varRange=(S.cust.budMax-S.cust.bud)*0.5;
-        const actualMult=S.cust.bud+Math.random()*varRange+(isWanted?varRange*0.5:0);
-        S.custOffer=Math.round(item.p*Math.min(actualMult,S.cust.budMax));
+        const grade=getRapportGrade(S.cust.n);
+        const rapportBonus=grade.budBonus||0;
+        // 원하는 아이템 → budMax, 아닌 아이템 → todayBud (절약형은 낮을 수 있음)
+        const mult=isWanted?(S.cust.budMax+rapportBonus):((S.cust.todayBud||1.0)+rapportBonus);
+        S.custOffer=Math.round(item.p*mult);
       }
     }
   }
@@ -1214,38 +1260,57 @@ function trySell(){
   const price=parseInt(S.priceVal)||0;
   if(!price||price<=0){log('⚠️ 올바른 가격을 입력하세요.');render();return;}
   const isWanted=getCustWants(S.cust,S.shopInv).some(i=>i.uid===S.selUid);
-  const maxPay=S.custOffer>0?S.custOffer:Math.round(item.p*(isWanted?S.cust.budMax:S.cust.bud));
+  const grade=getRapportGrade(S.cust.n);
+  const rapportBudBonus=grade.budBonus||0;
+  // custOffer는 selItem에서 결정론적으로 계산됨 — 없으면 여기서 계산
+  const maxPay=S.custOffer>0?S.custOffer:(()=>{
+    const mult=isWanted
+      ?(S.cust.budMax+rapportBudBonus)
+      :((S.cust.todayBud||1.0)+rapportBudBonus);
+    return Math.round(item.p*mult);
+  })();
   const lines=BARGAIN_LINES[S.cust.char]||BARGAIN_LINES['친절'];
   if(price<=maxPay){
-    S.gold+=price;
-    S.totalRevenue+=price;
-    S.todayRevenue+=price;
-    S.weeklyRevenue+=price;
+    S.gold+=price;S.totalRevenue+=price;S.todayRevenue+=price;S.weeklyRevenue+=price;
     S.todaySalesLog.push({cust:S.cust,item:{...item},price});
     S.shopInv=S.shopInv.filter(i=>i.uid!==S.selUid);
-    S.selUid=null;S.priceVal='';S.custOffer=0;
+    S.selUid=null;S.priceVal='';S.custOffer=0;S.custBoughtCount++;
     const rxn=lines.accept[Math.floor(Math.random()*lines.accept.length)];
-    // 가격 비율로 평판/친밀도 계산
     const ratio=price/maxPay;
-    const isBargain=ratio>0.95; // 95% 초과 = 거의 한도
+    const isBargain=ratio>0.95;
     const rapportDelta=isWanted?(isBargain?4:12):(isBargain?3:8);
-    const repDelta=ratio<=0.8?3:ratio<=0.95?2:-3; // 싸게 팔수록 평판↑, 바가지치면 ↓
-    changeRapport(S.cust.n,rapportDelta);
-    changeRep(repDelta);
-    checkLevelUp();
+    const repDelta=ratio<=0.8?3:ratio<=0.95?2:-3;
+    changeRapport(S.cust.n,rapportDelta);changeRep(repDelta);checkLevelUp();
     const emoji=ratio>0.95?'🤑':ratio>0.8?'✅':'😄';
-    log(`${S.cust.e} "${rxn}" ${emoji} ${price}G! (친밀도+${rapportDelta})`);
-    if(S.shopLevel>=5){S.won=true;S.gameOver=true;render();return;}
-    S.doneIdxs.add(S.custCurIdx);
-    setTimeout(spawnCust,100);
+
+    // 다중 구매 판정: 단골일수록, 싸게 팔수록 더 삼
+    const extraChance=grade.min>=50?0.65:grade.min>=30?0.50:grade.min>=15?0.35:0.22;
+    const canMore=S.custBoughtCount<3&&S.shopInv.length>0&&Math.random()<extraChance;
+    if(canMore){
+      log(`${S.cust.e} "${rxn}" ${emoji} ${price}G! 더 살게요~`);
+      render();
+    } else {
+      log(`${S.cust.e} "${rxn}" ${emoji} ${price}G! (친밀도+${rapportDelta})`);
+      if(S.shopLevel>=5){S.won=true;S.gameOver=true;render();return;}
+      S.doneIdxs.add(S.custCurIdx);setTimeout(spawnCust,100);
+    }
   } else {
     const rxn=lines.reject[Math.floor(Math.random()*lines.reject.length)];
-    // 너무 비쌌으면 친밀도/평판 하락
     const over=price/maxPay;
     if(over>1.2){changeRapport(S.cust.n,-5);changeRep(-4);log(`${S.cust.e} "${rxn}" ❌ 🚨 바가지! (최대 ${maxPay}G, 평판↓)`);}
     else{changeRapport(S.cust.n,-2);log(`${S.cust.e} "${rxn}" ❌ (최대 ${maxPay}G)`);}
     render();
   }
+}
+
+// 자동 흥정: 손님 기분 상하지 않는 선 (최대가의 93~97%) 자동 설정 후 판매
+function autoHaggle(){
+  if(!S.selUid||!S.cust){log('⚠️ 아이템을 먼저 선택하세요.');render();return;}
+  // selItem에서 이미 계산된 custOffer 기준으로 93~97% 설정
+  const maxPay=S.custOffer||0;
+  if(!maxPay){log('⚠️ 가격 정보를 불러올 수 없습니다.');render();return;}
+  S.priceVal=String(Math.round(maxPay*(0.93+Math.random()*0.04)));
+  trySell();
 }
 
 function skipCust(){
@@ -1807,22 +1872,102 @@ function renderCraft(){
   const cat=S.craftCat||'all';
   const curLv=S.shopLevel||1;
   const recipes=allRecipes();
-  // 현재 레벨 이하만 표시 (잠긴 것도 표시하되 구분)
   const filtered=(cat==='all'?recipes:recipes.filter(r=>r.cat===cat))
     .sort((a,b)=>(a.unlockLv||1)-(b.unlockLv||1));
   const craftable=recipes.filter(r=>canCraft(r,S.ingInv)&&(r.unlockLv||1)<=curLv);
   const crafted=S.shopInv.length;
-
-  // 다음 레벨에서 해금될 레시피 수
-  const nextLvUnlock=recipes.filter(r=>(r.unlockLv||1)===curLv+1).length;
-
   const lvColors=['','#2D6A2D','#1565C0','#7B1FA2','#E65100','#B8860B'];
   const lvLabels=['','Lv1','Lv2','Lv3','Lv4','Lv5'];
 
+  // 해금된 것 / 잠긴 것 분리
+  const unlocked=filtered.filter(r=>(r.unlockLv||1)<=curLv);
+  const locked=filtered.filter(r=>(r.unlockLv||1)>curLv);
+  // 잠긴 것을 레벨별로 그룹핑
+  const lockedByLv={};
+  locked.forEach(r=>{const lv=r.unlockLv||1;(lockedByLv[lv]=lockedByLv[lv]||[]).push(r);});
+
+  const renderRow=(r)=>{
+    const rLv=r.unlockLv||1;
+    const ok=canCraft(r,S.ingInv);
+    const maxQ=maxCraftable(r,S.ingInv);
+    const curQty=Math.max(1,Math.min(S.craftQty[r.id]||1,Math.max(1,maxQ)));
+    const isSpecial=!!r.sunOnly;
+    return `<div class="craft-row${ok?' can':''}${isSpecial?' special-recipe':''}">
+      <span class="craft-emoji">${r.e}</span>
+      <div class="craft-info">
+        <div class="craft-name">
+          ${r.n}
+          ${isSpecial?`<span class="chip chip-sun">✨특별</span>`:''}
+          ${rLv>1?`<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:${lvColors[rLv]}22;color:${lvColors[rLv]};border:1px solid ${lvColors[rLv]};font-weight:800">${lvLabels[rLv]}</span>`:''}
+        </div>
+        <div class="craft-cost">${(()=>{
+          const rawParts=Object.entries(r.cost||{}).map(([id,q])=>{
+            const ing=byId(INGR,id);if(!ing)return'';
+            const have=S.ingInv[id]||0;const need=q*(ok?curQty:1);const ok2=have>=need;
+            return `<span style="font-size:10px;font-weight:700;color:${ok2?'var(--text3)':'var(--red)'}">${ing.e}${ing.n}×${need}${ok2?'':` (${have}개)`}</span>`;
+          });
+          const craftedParts=Object.entries(r.craftedCost||{}).map(([cid,q])=>{
+            const ri=byId(allRecipes(),cid);if(!ri)return'';
+            const have=S.shopInv.filter(s=>s.id===cid).length;const need=q*(ok?curQty:1);const ok2=have>=need;
+            return `<span class="craft-mat-item${ok2?'':' miss'}">${ri.e}${ri.n} ×${need}${ok2?'':` (${have}개)`}</span>`;
+          });
+          return [...rawParts,...craftedParts].join(' ');
+        })()}</div>
+        <div class="craft-tags">${r.tags.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
+      </div>
+      <div class="craft-price">${r.p}G</div>
+      <div class="craft-qty-wrap">
+        <span style="font-size:9px;color:${ok?'var(--green)':'var(--text3)'};font-weight:700">최대 ${maxQ}개</span>
+        ${ok&&maxQ>1?`
+          <input type="range" class="craft-slider" min="1" max="${maxQ}" value="${curQty}" oninput="setCraftQty('${r.id}',this.value)">
+          <div class="craft-qty-row">
+            <button class="btn btn-sm" style="padding:3px 7px" onclick="setCraftQty('${r.id}',Math.max(1,(S.craftQty['${r.id}']||1)-1))">−</button>
+            <span class="craft-qty-num">${curQty}</span>
+            <button class="btn btn-sm" style="padding:3px 7px" onclick="setCraftQty('${r.id}',Math.min(${maxQ},(S.craftQty['${r.id}']||1)+1))">＋</button>
+          </div>
+        `:`<span style="font-size:10px;color:var(--text3)">×${ok?curQty:1}</span>`}
+        <button class="btn btn-sm${ok?' btn-purple':''}" ${ok?'':'disabled'} onclick="doCraft('${r.id}')">
+          ${ok?`⚗️ ×${curQty} 제조`:'재료 부족'}
+        </button>
+      </div>
+    </div>`;
+  };
+
+  // 잠긴 레벨 그룹 렌더
+  const lockedSections=Object.entries(lockedByLv).sort((a,b)=>a[0]-b[0]).map(([lv,rs])=>{
+    const isOpen=!!S.craftLockedOpen[lv];
+    const lvInt=parseInt(lv);
+    const shopLvName=SHOP_LEVELS[lvInt-1]?.name||`Lv${lv}`;
+    return `<div style="border:1px solid ${lvColors[lvInt]||'var(--border)'};border-radius:var(--radius-sm);overflow:hidden;margin-bottom:6px">
+      <div onclick="S.craftLockedOpen[${lv}]=!S.craftLockedOpen[${lv}];render()"
+        style="display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;background:${lvColors[lvInt]||'var(--border)'}18">
+        <span style="font-size:11px;font-weight:800;color:${lvColors[lvInt]||'var(--text3)'}">🔒 ${lvLabels[lvInt]} 해금 — ${shopLvName}</span>
+        <span style="font-size:10px;color:var(--text3);flex:1">${rs.length}종</span>
+        <span style="font-size:11px;color:var(--text3)">${isOpen?'▲':'▼'}</span>
+      </div>
+      ${isOpen?`<div class="craft-list" style="border-top:1px solid ${lvColors[lvInt]||'var(--border)'}44;padding:4px 0">
+        ${rs.map(r=>`<div class="craft-row" style="opacity:.5;filter:grayscale(.5);pointer-events:none">
+          <span class="craft-emoji">${r.e}</span>
+          <div class="craft-info">
+            <div class="craft-name" style="color:var(--text3)">${r.n}</div>
+            <div style="font-size:10px;color:var(--text3)">${Object.entries({...r.cost||{},...r.craftedCost||{}}).map(([id,q])=>{const i=byId([...INGR,...allRecipes()],id);return i?`${i.e}${i.n}×${q}`:''}).filter(Boolean).join(' ')}</div>
+          </div>
+          <div class="craft-price" style="color:var(--text3)">${r.p}G</div>
+          <div class="craft-qty-wrap"><span style="font-size:10px;color:var(--text3)">🔒잠김</span></div>
+        </div>`).join('')}
+      </div>`:''}
+    </div>`;
+  }).join('');
+
+  const openBtn=!S.bonusExplore
+    ?`<button class="btn btn-gold" onclick="openShop()">🏪 상점 열기 (${crafted}개 진열)</button>`
+    :`<button class="btn" onclick="skipShopNextDay()">🌙 다음 날로 →</button>`;
+
   return `<div class="panel">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+    <!-- 상단 액션 바 -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap">
       <div class="sec" style="margin-bottom:0">제조 (진열 ${crafted}개 · 제조가능 ${craftable.length}종)</div>
-      ${nextLvUnlock>0?`<div style="font-size:10px;color:var(--text3)">🔒 다음 레벨 해금 ${nextLvUnlock}종</div>`:''}
+      ${openBtn}
     </div>
     <div class="cat-tabs">
       ${CAT_DEFS.filter(c=>c.id==='all'||recipes.some(r=>r.cat===c.id)).map(c=>`
@@ -1831,84 +1976,20 @@ function renderCraft(){
         </div>
       `).join('')}
     </div>
+
+    <!-- 해금된 레시피 -->
     <div class="craft-list">
-      ${filtered.length===0?`<div class="empty">해당 카테고리 레시피 없음</div>`:filtered.map(r=>{
-        const rLv=r.unlockLv||1;
-        const locked=rLv>curLv;
-        const ok=!locked&&canCraft(r,S.ingInv);
-        const maxQ=locked?0:maxCraftable(r,S.ingInv);
-        const curQty=Math.max(1,Math.min(S.craftQty[r.id]||1,Math.max(1,maxQ)));
-        const isSpecial=!!r.sunOnly;
-
-        if(locked){
-          return `<div class="craft-row" style="opacity:.45;filter:grayscale(.6)">
-            <span class="craft-emoji" style="filter:grayscale(1)">${r.e}</span>
-            <div class="craft-info">
-              <div class="craft-name" style="color:var(--text3)">
-                🔒 ${r.n}
-                <span style="font-size:9px;padding:1px 6px;border-radius:8px;background:${lvColors[rLv]}22;color:${lvColors[rLv]};border:1px solid ${lvColors[rLv]};font-weight:800">${lvLabels[rLv]} 해금</span>
-              </div>
-              <div style="font-size:10px;color:var(--text3);margin-top:2px">${SHOP_LEVELS[rLv-1]?.name||''}에서 해금됩니다</div>
-            </div>
-            <div class="craft-price" style="color:var(--text3)">${r.p}G</div>
-            <div class="craft-qty-wrap">
-              <span style="font-size:10px;color:var(--text3)">잠김</span>
-            </div>
-          </div>`;
-        }
-
-        return `<div class="craft-row${ok?' can':''}${isSpecial?' special-recipe':''}">
-          <span class="craft-emoji">${r.e}</span>
-          <div class="craft-info">
-            <div class="craft-name">
-              ${r.n}
-              ${isSpecial?`<span class="chip chip-sun">✨특별</span>`:''}
-              ${rLv>1?`<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:${lvColors[rLv]}22;color:${lvColors[rLv]};border:1px solid ${lvColors[rLv]};font-weight:800">${lvLabels[rLv]}</span>`:''}
-            </div>
-            <div class="craft-cost">${(()=>{
-              const rawParts=Object.entries(r.cost||{}).map(([id,q])=>{
-                const ing=byId(INGR,id);if(!ing)return'';
-                const have=S.ingInv[id]||0;
-                const need=q*(ok?curQty:1);
-                const ok2=have>=need;
-                return `<span style="font-size:10px;font-weight:700;color:${ok2?'var(--text3)':'var(--red)'}">${ing.e}${ing.n}×${need}${ok2?'':` (${have}개)`}</span>`;
-              });
-              const craftedParts=Object.entries(r.craftedCost||{}).map(([cid,q])=>{
-                const ri=byId(allRecipes(),cid);if(!ri)return'';
-                const have=S.shopInv.filter(s=>s.id===cid).length;
-                const need=q*(ok?curQty:1);
-                const ok2=have>=need;
-                return `<span class="craft-mat-item${ok2?'':' miss'}">${ri.e}${ri.n} ×${need}${ok2?'':` (${have}개)`}</span>`;
-              });
-              return [...rawParts,...craftedParts].join(' ');
-            })()}</div>
-            <div class="craft-tags">${r.tags.map(t=>`<span class="chip">${t}</span>`).join('')}</div>
-          </div>
-          <div class="craft-price">${r.p}G</div>
-          <div class="craft-qty-wrap">
-            <span style="font-size:9px;color:${ok?'var(--green)':'var(--text3)'};font-weight:700">
-              최대 ${maxQ}개
-            </span>
-            ${ok&&maxQ>1?`
-              <input type="range" class="craft-slider" min="1" max="${maxQ}" value="${curQty}"
-                oninput="setCraftQty('${r.id}',this.value)">
-              <div class="craft-qty-row">
-                <button class="btn btn-sm" style="padding:3px 7px" onclick="setCraftQty('${r.id}',Math.max(1,(S.craftQty['${r.id}']||1)-1))">−</button>
-                <span class="craft-qty-num">${curQty}</span>
-                <button class="btn btn-sm" style="padding:3px 7px" onclick="setCraftQty('${r.id}',Math.min(${maxQ},(S.craftQty['${r.id}']||1)+1))">＋</button>
-              </div>
-            `:`<span style="font-size:10px;color:var(--text3)">×${ok?curQty:1}</span>`}
-            <button class="btn btn-sm${ok?' btn-purple':''}" ${ok?'':'disabled'} onclick="doCraft('${r.id}')">
-              ${ok?`⚗️ ×${curQty} 제조`:'재료 부족'}
-            </button>
-          </div>
-        </div>`;
-      }).join('')}
+      ${unlocked.length===0?`<div class="empty">해당 카테고리 레시피 없음</div>`:unlocked.map(renderRow).join('')}
     </div>
+
+    <!-- 잠긴 레시피 (레벨별 접힌 섹션) -->
+    ${lockedSections}
+
+    <!-- 하단 버튼 -->
     <div class="btn-row">
       ${S.exploredSlots.length<(isSunday(S.day)?4:2)?`<button class="btn" onclick="setTab('explore')">← 탐험하기</button>`:''}
-      ${!S.bonusExplore?`<button class="btn" onclick="skipShopNextDay()">🌙 영업 건너뛰고 다음 날로</button>`:''}
-      ${!S.bonusExplore?`<button class="btn btn-gold" onclick="openShop()">🏪 상점 열기 (${crafted}개 진열)</button>`:`<button class="btn" onclick="skipShopNextDay()">🌙 다음 날로 →</button>`}
+      ${!S.bonusExplore?`<button class="btn" onclick="skipShopNextDay()">🌙 영업 건너뛰기</button>`:''}
+      ${openBtn}
     </div>
   </div>`;
 }
@@ -1935,8 +2016,32 @@ function renderQueuePanel(){
           ${isBig?`<span style="font-size:9px;font-weight:800;background:#FFF3CC;color:#7A4500;border:1px solid #E8C840;border-radius:8px;padding:1px 6px">👑 큰손</span>`:''}
           ${isWholesale&&!isDone?`<span style="font-size:9px;font-weight:800;background:var(--blue-light);color:var(--blue);border:1px solid #90CAF9;border-radius:8px;padding:1px 6px">🛒 도매</span>`:''}
         </div>
-        <div class="qrow-tags">${c.wantTags.join(' · ')} · ${c.char}</div>
-        ${wanted.length>0&&!isDone?`<div class="qrow-match">${wanted.slice(0,2).map(it=>`<span style="font-size:9px;background:var(--gold-light);border:1px solid var(--border2);border-radius:6px;padding:1px 5px;color:var(--gold2);font-weight:700">${it.e}${it.n}</span>`).join('')}${wanted.length>2?`<span style="font-size:9px;color:var(--text3)">+${wanted.length-2}</span>`:''}</div>`:''}
+        <div class="qrow-tags">
+          오늘: ${(c.todayWantTags||c.wantTags).map(t=>`<span style="font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;background:var(--purple-light);color:var(--purple)">${t}</span>`).join(' ')}
+          <span style="color:var(--text3);font-size:9px"> · ${c.char}</span>
+        </div>
+        <div class="qrow-match">
+          ${(()=>{
+            const tags=c.todayWantTags||c.wantTags;
+            const inShopIds=new Set(S.shopInv.map(i=>i.id));
+            // 원하는 태그에 맞는 레시피 전체 (상점 유무 무관)
+            const matching=allRecipes()
+              .filter(r=>r.tags&&r.tags.some(t=>tags.includes(t)))
+              .sort((a,b)=>{
+                const aIn=inShopIds.has(a.id),bIn=inShopIds.has(b.id);
+                if(aIn&&!bIn)return -1;if(!aIn&&bIn)return 1;
+                return b.p-a.p;
+              }).slice(0,4);
+            if(!matching.length)return`<span style="font-size:9px;color:var(--text3)">해당 아이템 없음</span>`;
+            return matching.map(r=>{
+              const inShop=inShopIds.has(r.id);
+              const est=Math.round(r.p*c.budMax);
+              return inShop
+                ?`<span style="font-size:9px;padding:2px 7px;border-radius:6px;font-weight:800;background:#E8F5E9;border:1.5px solid #43A047;color:#2E7D32">${r.e}${r.n} ~${est}G ✓</span>`
+                :`<span style="font-size:9px;padding:2px 7px;border-radius:6px;font-weight:700;background:var(--bg2);border:1px solid var(--border);color:var(--text3)">${r.e}${r.n} ~${est}G</span>`;
+            }).join('');
+          })()}
+        </div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
         <span class="qrow-status ${isDone?'status-done':isCur?'status-cur':'status-wait'}">${isDone?'✓':isCur?'▶':`${i+1}`}</span>
@@ -1945,32 +2050,7 @@ function renderQueuePanel(){
     </div>`;
   }).join('');
 
-  // 미리보기: 중복 없이 예상가 상위 아이템만
-  let previewHtml='';
-  if(S.previewIdx!==null&&!S.doneIdxs.has(S.previewIdx)&&S.previewIdx!==S.custCurIdx){
-    const pc=S.custQueue[S.previewIdx];
-    const isBigPrev=S.previewIdx===bigSpenderIdx;
-    const items=S.shopInv.map(item=>{
-      const r=byId(allRecipes(),item.id);
-      const isW=r&&r.tags&&r.tags.some(t=>pc.wantTags.includes(t));
-      return{...item,isW,est:Math.round(item.p*(isW?pc.budMax:pc.bud))};
-    }).sort((a,b)=>b.est-a.est).slice(0,4);
-    previewHtml=`<div class="preview-panel">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
-        <span style="font-size:16px">${pc.e}</span>
-        <span style="font-size:11px;font-weight:800;color:var(--gold2)">${pc.n} 예상 구매가</span>
-        ${isBigPrev?`<span style="font-size:9px;font-weight:800;background:#FFF3CC;color:#7A4500;border:1px solid #E8C840;border-radius:8px;padding:1px 6px">👑 큰손</span>`:''}
-      </div>
-      <div class="preview-items">
-        ${items.map(it=>`<div class="preview-item${it.isW?' best':''}">
-          ${it.e}${it.n} <b style="color:var(--gold2)">~${it.est}G</b>${it.isW?' ★':''}
-        </div>`).join('')}
-      </div>
-    </div>`;
-  }
-
-  return `${previewHtml}
-    <div class="qpanel">
+  return `<div class="qpanel">
       <div class="qpanel-hdr" onclick="toggleQueue()">
         <div class="qpanel-hdr-left">👥 오늘 손님 <span style="background:var(--purple-light);color:var(--purple);border-radius:8px;padding:1px 7px;font-size:10px">${waitCount}명 대기 · ${doneCount}명 완료</span>
         ${bigSpenderIdx>=0?`<span style="font-size:9px;font-weight:800;background:#FFF3CC;color:#7A4500;border:1px solid #E8C840;border-radius:8px;padding:1px 6px;margin-left:4px">👑 ${S.custQueue[bigSpenderIdx].n}</span>`:''}
@@ -1978,7 +2058,7 @@ function renderQueuePanel(){
         <span style="font-size:11px;color:var(--text3)">${S.queueOpen?'▲':'▼'}</span>
       </div>
       ${S.queueOpen?`<div class="qpanel-body"><div class="qlist">${rows}</div>
-        <div style="font-size:10px;color:var(--text3);margin-top:6px;text-align:center">클릭→예상가 확인 · [↩먼저]→순서변경</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:6px;text-align:center">[↩먼저] → 순서 변경</div>
       </div>`:''}
     </div>`;
 }
@@ -2086,6 +2166,7 @@ function renderShop(){
             <span style="font-weight:700">G</span>
             <button class="btn btn-gold btn-sm" onclick="trySell()">판매!</button>
             <button class="btn btn-sm btn-green" onclick="sellAtBase()" title="기본가(${selItem.p}G)로 즉시 판매">💰 ${selItem.p}G</button>
+            <button class="btn btn-sm" style="background:var(--purple-light);border-color:var(--purple);color:var(--purple)" onclick="autoHaggle()" title="손님 기분 상하지 않을 최적 가격으로 자동 판매">🤝 자동흥정</button>
             <button class="btn btn-sm" onclick="selItem(${S.selUid})" style="color:var(--text3)">취소</button>
           </div>
           <div class="bm-wrap" id="bm-wrap">
@@ -2333,9 +2414,9 @@ function renderIngInv(){
       `}
     </div>
     ${S.shopInv.length>0?`<div class="panel">
-      <div class="sec">진열 상품 (${S.shopInv.length})</div>
+      <div class="sec">진열 상품 (${S.shopInv.length}개)</div>
       <div class="igrid">
-        ${S.shopInv.map(i=>`<div class="icard"><span class="ie">${i.e}</span><span class="in">${i.n}</span><span class="is">${i.p}G</span></div>`).join('')}
+        ${getStackedInv().map(s=>`<div class="icard"><span class="ie">${s.e}</span><span class="in">${s.n}</span><span class="is">${s.p}G${s.count>1?` <b style="color:var(--purple)">×${s.count}</b>`:''}</span></div>`).join('')}
       </div>
     </div>`:''}
   </div>`;
